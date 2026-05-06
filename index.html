@@ -8,10 +8,9 @@
   <meta property="og:title" content="VidaTech — Intelligent Business Systems" />
   <meta property="og:description" content="End-to-end business automation. From answering your phones to running your marketing and operations." />
   <meta property="og:url" content="https://vidatech.org" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -20,15 +19,15 @@
   <nav class="nav" id="nav">
     <div class="nav__inner">
       <a href="#home" class="nav__logo">
-        <span>Vida</span><span class="gold">Tech</span>
+        <span>Vida</span><span class="nav__logo-gold">Tech</span>
       </a>
       <ul class="nav__links">
         <li><a href="#services">Services</a></li>
         <li><a href="#industries">Industries</a></li>
         <li><a href="#demo">Demo</a></li>
         <li><a href="#how">How We Work</a></li>
-        <li><a href="#contact" class="nav__cta">Get a Free Demo</a></li>
       </ul>
+      <a href="#contact" class="btn btn--gold nav__cta">Get a Free Demo <span>→</span></a>
       <button class="nav__burger" id="burger" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -42,259 +41,465 @@
     <a href="#industries" class="drawer__link">Industries</a>
     <a href="#demo" class="drawer__link">Demo</a>
     <a href="#how" class="drawer__link">How We Work</a>
-    <a href="#contact" class="drawer__link drawer__cta">Get a Free Demo</a>
+    <a href="#contact" class="drawer__cta">Get a Free Demo →</a>
   </div>
   <div class="drawer__overlay" id="drawerOverlay"></div>
 
-  <!-- ═══════════════ HERO ═══════════════ -->
+  <!-- ═══════════ HERO ═══════════ -->
   <section class="hero" id="home">
-    <canvas class="hero__canvas" id="heroCanvas"></canvas>
-    <div class="hero__glow hero__glow--1"></div>
-    <div class="hero__glow hero__glow--2"></div>
+    <canvas id="heroCanvas" class="hero__canvas"></canvas>
 
-    <div class="hero__inner">
-      <div class="hero__text">
-        <div class="hero__eyebrow">
-          <span class="pulse-dot"></span>
-          Systems Online — Serving Businesses Now
+    <div class="hero__orb hero__orb--1"></div>
+    <div class="hero__orb hero__orb--2"></div>
+    <div class="hero__orb hero__orb--3"></div>
+
+    <div class="hero__inner container">
+
+      <div class="hero__left">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          <span>Systems Online — Serving Businesses Worldwide</span>
         </div>
+
         <h1 class="hero__h1">
           We Build Systems That<br />
-          <em>Grow Your Business</em><br />
+          <em class="hero__h1-accent">Grow Your Business</em><br />
           While You Sleep
         </h1>
+
         <p class="hero__sub">
-          VidaTech delivers end-to-end business automation — intelligent receptionists, e-commerce growth engines, custom software, and marketing systems that work around the clock.
+          VidaTech delivers end-to-end business automation — intelligent receptionists, Shopify growth engines, custom software, and marketing systems that work 24 hours a day.
         </p>
+
         <div class="hero__actions">
-          <a href="#contact" class="btn btn--gold">Get a Free Demo <span class="btn-arrow">→</span></a>
-          <a href="#services" class="btn btn--ghost">See Our Services</a>
+          <a href="#contact" class="btn btn--gold btn--lg hero__cta-primary">
+            Get a Free Demo
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5m0 0L9 3.75M14.25 9 9 14.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#services" class="btn btn--ghost btn--lg">See Our Services</a>
+        </div>
+
+        <div class="hero__trust">
+          <div class="hero__trust-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.8 3.6L14 5.3l-3 2.9.7 4.1L8 10.4l-3.7 1.9.7-4.1L2 5.3l4.2-.7L8 1z" fill="#C9A84C"/></svg>
+            <span>500+ businesses served</span>
+          </div>
+          <div class="hero__trust-divider"></div>
+          <div class="hero__trust-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.8 3.6L14 5.3l-3 2.9.7 4.1L8 10.4l-3.7 1.9.7-4.1L2 5.3l4.2-.7L8 1z" fill="#C9A84C"/></svg>
+            <span>98% client retention</span>
+          </div>
+          <div class="hero__trust-divider"></div>
+          <div class="hero__trust-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.8 3.6L14 5.3l-3 2.9.7 4.1L8 10.4l-3.7 1.9.7-4.1L2 5.3l4.2-.7L8 1z" fill="#C9A84C"/></svg>
+            <span>Live in 48 hours</span>
+          </div>
         </div>
       </div>
 
-      <div class="hero__stats">
-        <div class="stat-card">
-          <div class="stat-card__num" data-target="500">0</div>
-          <div class="stat-card__label">Businesses Served</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__num" data-target="98">0</div>
-          <div class="stat-card__label">% Client Retention</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__num" data-target="24">0</div>
-          <div class="stat-card__label">/ 7 Always Running</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__num" data-target="15">0</div>
-          <div class="stat-card__label">Service Departments</div>
+      <div class="hero__right">
+        <div class="hero__card-grid">
+          <div class="hero__stat-card hero__stat-card--lg glass-card">
+            <div class="hero__stat-icon">📞</div>
+            <div class="hero__stat-num" data-target="500" data-suffix="+">0</div>
+            <div class="hero__stat-label">Businesses Automated</div>
+            <div class="hero__stat-bar"></div>
+          </div>
+          <div class="hero__stat-card glass-card">
+            <div class="hero__stat-num hero__stat-num--sm" data-target="98" data-suffix="%">0</div>
+            <div class="hero__stat-label">Client Retention</div>
+          </div>
+          <div class="hero__stat-card glass-card">
+            <div class="hero__stat-num hero__stat-num--sm">24/7</div>
+            <div class="hero__stat-label">Always Running</div>
+          </div>
+          <div class="hero__stat-card hero__stat-card--wide glass-card">
+            <div class="hero__stat-activity">
+              <span class="activity-dot"></span>
+              <span>Systems active right now</span>
+            </div>
+            <div class="hero__stat-bars">
+              <div class="bar-item"><div class="bar-fill" style="--w:85%"></div></div>
+              <div class="bar-item"><div class="bar-fill" style="--w:62%"></div></div>
+              <div class="bar-item"><div class="bar-fill" style="--w:94%"></div></div>
+              <div class="bar-item"><div class="bar-fill" style="--w:71%"></div></div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 
-    <div class="hero__scroll">
+    <div class="hero__scroll-hint">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
       <span>Scroll</span>
-      <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ═══════════════ SERVICES ═══════════════ -->
+  <!-- ═══════════ LOGO BAR ═══════════ -->
+  <div class="logo-bar">
+    <div class="container">
+      <p class="logo-bar__label">Trusted across industries</p>
+      <div class="logo-bar__items">
+        <span>Dental Offices</span>
+        <span>Auto Shops</span>
+        <span>HVAC Companies</span>
+        <span>Law Firms</span>
+        <span>Real Estate</span>
+        <span>Restaurants</span>
+        <span>E-commerce</span>
+        <span>Contractors</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ SERVICES ═══════════ -->
   <section class="services" id="services">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">What We Do</span>
-        <h2>One Partner.<br />Every System Your Business Needs.</h2>
-        <p>We design, build, and operate intelligent business systems — so you can focus on what only you can do.</p>
+      <div class="section-head reveal">
+        <span class="label">What We Do</span>
+        <h2>One Partner.<br /><span class="gradient-text">Every System You Need.</span></h2>
+        <p>We design, build, and run intelligent business systems so you can focus on what only you can do.</p>
       </div>
 
-      <div class="services__grid">
+      <div class="services__bento">
 
-        <div class="service-card service-card--featured reveal">
-          <div class="service-card__badge">Most Requested</div>
-          <div class="service-card__icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4C9.37 4 4 9.37 4 16s5.37 12 12 12 12-5.37 12-12S22.63 4 16 4zm0 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S6 21.52 6 16 10.48 6 16 6zm-1 4v7l6 3.5-.87 1.5L14 18.5V10h1z" fill="currentColor"/></svg>
+        <!-- Featured: full-width top card -->
+        <div class="svc-card svc-card--hero reveal">
+          <div class="svc-card__glow"></div>
+          <div class="svc-card__badge">Most Requested</div>
+          <div class="svc-card__left">
+            <div class="svc-icon svc-icon--lg">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3C8.477 3 4 7.477 4 13s4.477 10 10 10 10-4.477 10-10S19.523 3 14 3zm0 2a8 8 0 110 16A8 8 0 0114 5zm-1 3v6.586l4.707 4.707 1.414-1.414L15 13.414V8h-2z" fill="currentColor"/></svg>
+            </div>
+            <div>
+              <h3>Virtual Receptionist</h3>
+              <p>A fully intelligent front desk that answers every call, qualifies every lead, and books every appointment — 24 hours a day, 365 days a year.</p>
+            </div>
           </div>
-          <h3>Virtual Receptionist</h3>
-          <p>A fully intelligent front desk that answers every call, qualifies every lead, books every appointment — and follows up via text — 24 hours a day.</p>
-          <ul class="service-card__list">
-            <li>Live call answering, any hour</li>
-            <li>Appointment scheduling + reminders</li>
-            <li>Automated SMS follow-up sequences</li>
-            <li>Lead qualification + CRM sync</li>
-          </ul>
-          <a href="#contact" class="btn btn--gold">Start for Free</a>
+          <div class="svc-card__right">
+            <ul class="svc-list">
+              <li><span class="svc-check">✓</span>Live call answering, any hour</li>
+              <li><span class="svc-check">✓</span>Appointment scheduling + reminders</li>
+              <li><span class="svc-check">✓</span>Automated SMS follow-up sequences</li>
+              <li><span class="svc-check">✓</span>Lead qualification + CRM sync</li>
+            </ul>
+            <a href="#contact" class="btn btn--gold svc-card__cta">Start for Free →</a>
+          </div>
         </div>
 
-        <div class="service-card reveal">
-          <div class="service-card__icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M26 6H6a2 2 0 00-2 2v16a2 2 0 002 2h20a2 2 0 002-2V8a2 2 0 00-2-2zm0 18H6V8h20v16zM9 20l4-5 3 4 4-5 5 6H9z" fill="currentColor"/></svg>
+        <!-- 4 equal cards -->
+        <div class="svc-card reveal">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 7h18M7 19h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </div>
           <h3>E-commerce Automation</h3>
-          <p>From product research to post-purchase follow-up — we build and run Shopify stores that sell while you're not watching.</p>
-          <ul class="service-card__list">
-            <li>Trending product research + sourcing</li>
-            <li>Full store build + mobile optimization</li>
-            <li>Email sequences via Klaviyo</li>
-            <li>Daily inventory + revenue tracking</li>
-          </ul>
-          <a href="#contact" class="btn btn--outline">Learn More</a>
+          <p>Shopify stores that research, list, sell, and follow up — while you're not watching. Full store management end-to-end.</p>
+          <a href="#contact" class="svc-link">Learn more <span>→</span></a>
         </div>
 
-        <div class="service-card reveal">
-          <div class="service-card__icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 2L2 9l14 7 14-7-14-7zM2 23l14 7 14-7M2 16l14 7 14-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="svc-card reveal">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4h14v4H4zM4 11h8v4H4zM15 13l5 5M20 13l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3>Business Automation</h3>
-          <p>We map your workflows and replace manual, repetitive work with intelligent systems — no developer required on your end.</p>
-          <ul class="service-card__list">
-            <li>Process mapping + optimization</li>
-            <li>Custom workflow automation</li>
-            <li>CRM + tool integrations</li>
-            <li>Reporting dashboards</li>
-          </ul>
-          <a href="#contact" class="btn btn--outline">Learn More</a>
+          <p>Map your workflows. Replace repetitive manual work with intelligent systems. No developer required on your end.</p>
+          <a href="#contact" class="svc-link">Learn more <span>→</span></a>
         </div>
 
-        <div class="service-card reveal">
-          <div class="service-card__icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 6h20v4H6zm0 8h12v4H6zm0 8h8v4H6zm16 0l4-4 4 4-4-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="svc-card reveal">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M7 12l3 3 5-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <h3>Web & App Development</h3>
-          <p>Software built right — from concept to deployed product. We handle architecture, design, development, and infrastructure.</p>
-          <ul class="service-card__list">
-            <li>Full-stack web applications</li>
-            <li>Mobile-responsive interfaces</li>
-            <li>API integrations + cloud hosting</li>
-            <li>Ongoing maintenance + support</li>
-          </ul>
-          <a href="#contact" class="btn btn--outline">Learn More</a>
+          <h3>Web &amp; App Development</h3>
+          <p>From concept to deployed product. Architecture, design, development, and infrastructure — all handled by VidaTech.</p>
+          <a href="#contact" class="svc-link">Learn more <span>→</span></a>
         </div>
 
-        <div class="service-card reveal">
-          <div class="service-card__icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 28L8 4l8 12 8-12 4 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Wide bottom card -->
+        <div class="svc-card svc-card--wide reveal">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 18L7 4l6 9 6-9 4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <h3>Digital Marketing & SEO</h3>
-          <p>Search rankings, content, email campaigns, and social presence — all built to compound over time and reduce your paid ad dependency.</p>
-          <ul class="service-card__list">
-            <li>SEO strategy + implementation</li>
-            <li>Content calendars + production</li>
-            <li>Email marketing sequences</li>
-            <li>Social media management</li>
-          </ul>
-          <a href="#contact" class="btn btn--outline">Learn More</a>
+          <div>
+            <h3>Digital Marketing &amp; SEO</h3>
+            <p>Search rankings, content calendars, email campaigns, and social presence — all built to compound over time and reduce your paid ad dependency.</p>
+          </div>
         </div>
 
-        <div class="service-card reveal">
-          <div class="service-card__icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="10" r="6" stroke="currentColor" stroke-width="2"/><path d="M4 28c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <div class="svc-card reveal">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </div>
-          <h3>Brand & Creative</h3>
-          <p>Visual identity, messaging, and creative strategy built to command attention and position your business as the obvious choice.</p>
-          <ul class="service-card__list">
-            <li>Logo + brand identity systems</li>
-            <li>Messaging + copywriting</li>
-            <li>Video production + editing</li>
-            <li>PR + media outreach</li>
-          </ul>
-          <a href="#contact" class="btn btn--outline">Learn More</a>
+          <h3>Brand &amp; Creative</h3>
+          <p>Visual identity, messaging, and creative strategy built to position your business as the obvious choice in your market.</p>
+          <a href="#contact" class="svc-link">Learn more <span>→</span></a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ INDUSTRIES ═══════════════ -->
+  <!-- ═══════════ INDUSTRIES ═══════════ -->
   <section class="industries" id="industries">
+    <div class="industries__bg"></div>
     <div class="container">
-      <div class="section-header section-header--light reveal">
-        <span class="eyebrow eyebrow--gold">Industries We Serve</span>
-        <h2>Built for Local Businesses<br />Ready to Operate at Scale</h2>
-        <p>We specialize in service-based businesses where speed, responsiveness, and professionalism win the client every time.</p>
+      <div class="section-head section-head--light reveal">
+        <span class="label label--gold">Industries We Serve</span>
+        <h2>Built for Businesses<br /><span class="gradient-text">Ready to Operate at Scale</span></h2>
+        <p>We specialize in service-based businesses where speed, responsiveness, and professionalism win clients every time.</p>
       </div>
 
-      <div class="industries__grid reveal">
-        <div class="industry-card">
-          <span class="industry-icon">🦷</span>
-          <span>Dental Offices</span>
+      <div class="ind__grid reveal">
+        <div class="ind-card">
+          <div class="ind-card__icon">🦷</div>
+          <div class="ind-card__name">Dental Offices</div>
+          <div class="ind-card__tag">Receptionist + Scheduling</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">🔧</span>
-          <span>Auto Repair</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">🔧</div>
+          <div class="ind-card__name">Auto Repair</div>
+          <div class="ind-card__tag">Appointment + Follow-up</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">❄️</span>
-          <span>HVAC Companies</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">❄️</div>
+          <div class="ind-card__name">HVAC Companies</div>
+          <div class="ind-card__tag">Lead Capture + Dispatch</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">⚖️</span>
-          <span>Law Firms</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">⚖️</div>
+          <div class="ind-card__name">Law Firms</div>
+          <div class="ind-card__tag">Intake + Qualification</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">🏠</span>
-          <span>Real Estate</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">🏠</div>
+          <div class="ind-card__name">Real Estate</div>
+          <div class="ind-card__tag">Lead Nurture + CRM</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">💇</span>
-          <span>Salons & Spas</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">💇</div>
+          <div class="ind-card__name">Salons &amp; Spas</div>
+          <div class="ind-card__tag">Booking + Reminders</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">🍽️</span>
-          <span>Restaurants</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">🍽️</div>
+          <div class="ind-card__name">Restaurants</div>
+          <div class="ind-card__tag">Reservations + Reviews</div>
         </div>
-        <div class="industry-card">
-          <span class="industry-icon">🏗️</span>
-          <span>Contractors</span>
+        <div class="ind-card">
+          <div class="ind-card__icon">🏗️</div>
+          <div class="ind-card__name">Contractors</div>
+          <div class="ind-card__tag">Estimates + Scheduling</div>
         </div>
       </div>
 
-      <div class="industries__callout reveal">
-        <p>Don't see your industry? <a href="#contact">We work with any service business.</a></p>
+      <div class="ind__footer reveal">
+        <p>Don't see your industry?</p>
+        <a href="#contact" class="btn btn--ghost">We work with any service business →</a>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ DEMO ═══════════════ -->
-  <section class="demo-section" id="demo">
+  <!-- ═══════════ DEMO ═══════════ -->
+  <section class="demo" id="demo">
     <div class="container">
-      <div class="demo-section__inner">
-        <div class="demo-section__text reveal">
-          <span class="eyebrow">Live Demo</span>
-          <h2>See Your Receptionist<br />Answer a Call Right Now</h2>
-          <p>Our virtual receptionist is already trained on your industry. Enter your business and see it handle a real inquiry — greet your caller, answer questions, and book an appointment.</p>
-          <ul class="demo-section__list">
-            <li><span class="check">✓</span> Deployed in under 60 seconds</li>
-            <li><span class="check">✓</span> Custom-trained for your business</li>
-            <li><span class="check">✓</span> Works on any phone line</li>
-            <li><span class="check">✓</span> No hardware required</li>
-          </ul>
-          <a href="https://ulio.ai" target="_blank" rel="noopener" class="btn btn--gold">Try the Full Demo →</a>
+      <div class="demo__inner">
+
+        <div class="demo__text reveal">
+          <span class="label">Live Demo</span>
+          <h2>See Your Receptionist<br /><span class="gradient-text">Answer a Call Right Now</span></h2>
+          <p>Our virtual receptionist is already trained on your industry. Watch it handle a real inquiry — greet your caller, answer questions, and book an appointment in real time.</p>
+
+          <div class="demo__features">
+            <div class="demo__feat">
+              <div class="demo__feat-icon">⚡</div>
+              <div>
+                <strong>Deployed in 60 seconds</strong>
+                <span>No setup or hardware required</span>
+              </div>
+            </div>
+            <div class="demo__feat">
+              <div class="demo__feat-icon">🎯</div>
+              <div>
+                <strong>Custom-trained for you</strong>
+                <span>Knows your services, prices, and hours</span>
+              </div>
+            </div>
+            <div class="demo__feat">
+              <div class="demo__feat-icon">📲</div>
+              <div>
+                <strong>Works on any phone line</strong>
+                <span>Plug into your existing number</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo__call-cta">
+            <a href="tel:+18176234977" class="btn btn--gold btn--lg">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 2h3l1.5 4-1.75 1.25A10 10 0 0010.75 11L12 9.25l4 1.5v3C16 15.5 14.5 17 13 17 7.477 17 1 10.523 1 5c0-1.5 1.5-3 2.5-3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Call the Demo Line
+            </a>
+            <div class="demo__phone-number">
+              <span class="demo__phone-label">Live AI Receptionist</span>
+              <a href="tel:+18176234977" class="demo__phone-digits">(817) 623-4977</a>
+              <span class="demo__phone-note">Call this number — hear it answer in real time</span>
+            </div>
+          </div>
         </div>
 
-        <div class="demo-section__mockup reveal">
-          <div class="phone-mockup">
-            <div class="phone-mockup__frame">
-              <div class="phone-mockup__notch"></div>
-              <div class="phone-mockup__screen">
-                <div class="phone-screen-header">
-                  <div class="call-avatar">VT</div>
-                  <div class="call-info">
-                    <div class="call-name">VidaTech Receptionist</div>
-                    <div class="call-status" id="callStatus">Connecting...</div>
+        <div class="demo__phone reveal">
+          <div class="demo__phone-glow"></div>
+          <div class="phone">
+            <div class="phone__frame">
+              <div class="phone__island"></div>
+              <div class="phone__screen">
+                <div class="phone__header">
+                  <div class="phone__avatar">VT</div>
+                  <div class="phone__meta">
+                    <div class="phone__name">VidaTech Receptionist</div>
+                    <div class="phone__status" id="callStatus">Tap Call to start demo</div>
                   </div>
-                  <div class="call-timer" id="callTimer">0:00</div>
+                  <div class="phone__timer" id="callTimer">0:00</div>
                 </div>
-                <div class="phone-screen-chat" id="chatFeed">
-                  <div class="chat-bubble chat-bubble--in">
-                    <span class="typing-indicator"><span></span><span></span><span></span></span>
+                <div class="phone__chat" id="chatFeed">
+                  <div class="chat-msg chat-msg--in">
+                    <span class="typing"><span></span><span></span><span></span></span>
                   </div>
                 </div>
-                <div class="phone-screen-controls">
-                  <button class="ctrl-btn ctrl-btn--mute">🔇</button>
-                  <button class="ctrl-btn ctrl-btn--end" id="demoCallBtn">Call</button>
-                  <button class="ctrl-btn ctrl-btn--speaker">🔊</button>
+                <div class="phone__controls">
+                  <button class="phone__btn phone__btn--side">🔇</button>
+                  <button class="phone__btn phone__btn--call" id="demoCallBtn">Call</button>
+                  <button class="phone__btn phone__btn--side">🔊</button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ HOW WE WORK ═══════════ -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="label">The Process</span>
+        <h2>Simple Start.<br /><span class="gradient-text">Serious Results.</span></h2>
+      </div>
+
+      <div class="how__track">
+        <div class="how__line"></div>
+
+        <div class="how__step reveal">
+          <div class="how__num">01</div>
+          <div class="how__card">
+            <div class="how__card-icon">🗓️</div>
+            <h3>Discovery Call</h3>
+            <p>We spend 30 minutes understanding your business — what's working, what's not, and where automation wins fastest. Zero obligation.</p>
+            <div class="how__card-tag">30 minutes</div>
+          </div>
+        </div>
+
+        <div class="how__step reveal">
+          <div class="how__num">02</div>
+          <div class="how__card">
+            <div class="how__card-icon">⚙️</div>
+            <h3>We Build Your System</h3>
+            <p>Our team designs and deploys your solution fast. Receptionist systems go live within 48 hours. Full automation pipelines within a week.</p>
+            <div class="how__card-tag">48–72 hours</div>
+          </div>
+        </div>
+
+        <div class="how__step reveal">
+          <div class="how__num">03</div>
+          <div class="how__card">
+            <div class="how__card-icon">📈</div>
+            <h3>You See Real Results</h3>
+            <p>Calls get answered. Leads get followed up. Revenue moves. You get full reporting so you see exactly what's happening and what it's generating.</p>
+            <div class="how__card-tag">Full reporting</div>
+          </div>
+        </div>
+
+        <div class="how__step reveal">
+          <div class="how__num">04</div>
+          <div class="how__card">
+            <div class="how__card-icon">🚀</div>
+            <h3>We Scale Together</h3>
+            <p>As your business grows, your systems grow with it. New services, new markets, new automations — all handled by VidaTech.</p>
+            <div class="how__card-tag">Ongoing partnership</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ STATS BAR ═══════════ -->
+  <section class="stats">
+    <div class="stats__bg"></div>
+    <div class="container">
+      <div class="stats__grid reveal">
+        <div class="stats__item">
+          <div class="stats__num" data-target="500" data-suffix="+">0</div>
+          <div class="stats__label">Businesses Automated</div>
+        </div>
+        <div class="stats__divider"></div>
+        <div class="stats__item">
+          <div class="stats__num" data-target="98" data-suffix="%">0</div>
+          <div class="stats__label">Client Retention Rate</div>
+        </div>
+        <div class="stats__divider"></div>
+        <div class="stats__item">
+          <div class="stats__num" data-target="40" data-suffix="K+">0</div>
+          <div class="stats__label">Hours Saved Monthly</div>
+        </div>
+        <div class="stats__divider"></div>
+        <div class="stats__item">
+          <div class="stats__num">24/7</div>
+          <div class="stats__label">Always Online</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TESTIMONIALS ═══════════ -->
+  <section class="testi">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="label">Client Results</span>
+        <h2>What Our Clients <span class="gradient-text">Actually Say</span></h2>
+      </div>
+      <div class="testi__grid">
+        <div class="testi-card reveal">
+          <div class="testi-card__stars">★★★★★</div>
+          <p>"VidaTech set up our AI receptionist in two days. We stopped missing calls completely. Our booking rate is up 40% and we didn't hire a single person."</p>
+          <div class="testi-card__author">
+            <div class="testi-card__avatar">DR</div>
+            <div>
+              <strong>Dr. R. Castillo</strong>
+              <span>Castillo Family Dental</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-card__stars">★★★★★</div>
+          <p>"The Shopify automation they built runs itself. Product research, listings, email follow-ups — all handled. Revenue went from $8K to $31K in 60 days."</p>
+          <div class="testi-card__author">
+            <div class="testi-card__avatar">MJ</div>
+            <div>
+              <strong>Marcus J.</strong>
+              <span>E-commerce Entrepreneur</span>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-card__stars">★★★★★</div>
+          <p>"We were losing 60% of leads who called after hours. VidaTech fixed it in 48 hours. The system qualifies every lead and books them directly into our CRM."</p>
+          <div class="testi-card__author">
+            <div class="testi-card__avatar">SL</div>
+            <div>
+              <strong>Sarah L.</strong>
+              <span>Premier HVAC Services</span>
             </div>
           </div>
         </div>
@@ -302,178 +507,113 @@
     </div>
   </section>
 
-  <!-- ═══════════════ HOW WE WORK ═══════════════ -->
-  <section class="how" id="how">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">The Process</span>
-        <h2>Simple Start.<br />Serious Results.</h2>
-      </div>
-
-      <div class="how__steps">
-        <div class="how-step reveal">
-          <div class="how-step__num">01</div>
-          <div class="how-step__body">
-            <h3>Discovery Call</h3>
-            <p>We spend 30 minutes understanding your business — what's working, what's not, and where automation wins fastest. No obligation.</p>
-          </div>
-        </div>
-        <div class="how-step__connector"></div>
-        <div class="how-step reveal">
-          <div class="how-step__num">02</div>
-          <div class="how-step__body">
-            <h3>We Build Your System</h3>
-            <p>Our team designs and deploys your solution — fast. Receptionist systems go live within 48 hours. Full automation pipelines within a week.</p>
-          </div>
-        </div>
-        <div class="how-step__connector"></div>
-        <div class="how-step reveal">
-          <div class="how-step__num">03</div>
-          <div class="how-step__body">
-            <h3>You See Real Results</h3>
-            <p>Calls get answered. Leads get followed up. Revenue moves. You get full reporting so you see exactly what's happening and what it's generating.</p>
-          </div>
-        </div>
-        <div class="how-step__connector"></div>
-        <div class="how-step reveal">
-          <div class="how-step__num">04</div>
-          <div class="how-step__body">
-            <h3>We Scale Together</h3>
-            <p>As your business grows, your systems grow with it. New services, new markets, new automations — all handled by VidaTech.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ STATS BAR ═══════════════ -->
-  <section class="stats-bar">
-    <div class="container">
-      <div class="stats-bar__grid reveal">
-        <div class="stats-bar__item">
-          <div class="stats-bar__num" data-target="500">0</div>
-          <div class="stats-bar__label">Businesses Automated</div>
-        </div>
-        <div class="stats-bar__item">
-          <div class="stats-bar__num" data-target="98">0</div>
-          <div class="stats-bar__label">% Client Retention Rate</div>
-        </div>
-        <div class="stats-bar__item">
-          <div class="stats-bar__num" data-target="40000">0</div>
-          <div class="stats-bar__label">Hours Saved Monthly</div>
-        </div>
-        <div class="stats-bar__item">
-          <div class="stats-bar__num" data-target="15">0</div>
-          <div class="stats-bar__label">Service Specializations</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ CONTACT ═══════════════ -->
+  <!-- ═══════════ CONTACT ═══════════ -->
   <section class="contact" id="contact">
     <div class="container">
       <div class="contact__inner">
+
         <div class="contact__left reveal">
-          <span class="eyebrow">Get Started</span>
-          <h2>Let's Build Your System.</h2>
-          <p>Tell us about your business. We'll show you exactly how VidaTech can automate your operations and grow your revenue — with a free, no-commitment demo.</p>
+          <span class="label">Get Started</span>
+          <h2>Let's Build<br /><span class="gradient-text">Your System.</span></h2>
+          <p>Tell us about your business. We'll show you exactly how VidaTech can automate your operations and grow your revenue — free, no commitment.</p>
+
           <div class="contact__trust">
-            <div class="trust-item">
-              <span class="check">✓</span>
-              <span>Free consultation — no obligation</span>
+            <div class="contact__trust-item">
+              <div class="contact__trust-icon">✓</div>
+              <span>Free consultation, zero obligation</span>
             </div>
-            <div class="trust-item">
-              <span class="check">✓</span>
+            <div class="contact__trust-item">
+              <div class="contact__trust-icon">✓</div>
               <span>Systems live within 48–72 hours</span>
             </div>
-            <div class="trust-item">
-              <span class="check">✓</span>
+            <div class="contact__trust-item">
+              <div class="contact__trust-icon">✓</div>
               <span>No long-term contracts required</span>
             </div>
-            <div class="trust-item">
-              <span class="check">✓</span>
+            <div class="contact__trust-item">
+              <div class="contact__trust-icon">✓</div>
               <span>Full reporting from day one</span>
             </div>
           </div>
-          <div class="contact__direct">
-            <a href="mailto:coo@vidatech.org" class="contact__email">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 4h16v12H2V4zm0 0l8 7 8-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              coo@vidatech.org
-            </a>
-          </div>
+
+          <a href="mailto:coo@vidatech.org" class="contact__email">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 6l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            coo@vidatech.org
+          </a>
         </div>
 
         <div class="contact__right reveal">
-          <form class="contact__form" id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fname">Your Name</label>
-                <input type="text" id="fname" name="name" placeholder="John Smith" required />
+          <div class="contact__form-wrap">
+            <form class="contact__form" id="contactForm" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fname">Your Name</label>
+                  <input type="text" id="fname" name="name" placeholder="John Smith" required />
+                </div>
+                <div class="form-group">
+                  <label for="femail">Email Address</label>
+                  <input type="email" id="femail" name="email" placeholder="john@company.com" required />
+                </div>
               </div>
               <div class="form-group">
-                <label for="femail">Business Email</label>
-                <input type="email" id="femail" name="email" placeholder="john@company.com" required />
+                <label for="fbiz">Business Name</label>
+                <input type="text" id="fbiz" name="business" placeholder="Smith Auto Repair" />
               </div>
-            </div>
-            <div class="form-group">
-              <label for="fbusiness">Business Name</label>
-              <input type="text" id="fbusiness" name="business" placeholder="Smith Auto Repair" />
-            </div>
-            <div class="form-group">
-              <label for="ftype">What best describes your business?</label>
-              <select id="ftype" name="type">
-                <option value="">Select an option...</option>
-                <option>Dental / Medical Office</option>
-                <option>Auto Repair / Service</option>
-                <option>HVAC / Plumbing / Electrical</option>
-                <option>Law Firm / Legal Services</option>
-                <option>Real Estate</option>
-                <option>Salon / Spa / Beauty</option>
-                <option>Restaurant / Food Service</option>
-                <option>Contractor / Construction</option>
-                <option>E-commerce / Retail</option>
-                <option>SaaS / Technology</option>
-                <option>Agency / Marketing</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="fmessage">What do you want to automate or improve?</label>
-              <textarea id="fmessage" name="message" rows="4" placeholder="Tell us what's slowing your business down or what you'd like to have running on autopilot..."></textarea>
-            </div>
-            <button type="submit" class="btn btn--gold btn--full" id="formSubmit">
-              <span id="formBtnText">Get My Free Demo →</span>
-              <span id="formBtnLoading" style="display:none;">Sending...</span>
-            </button>
-            <div class="form-success" id="formSuccess" style="display:none;">
-              <span>✓</span> We received your message. Expect a response within 24 hours.
-            </div>
-            <div class="form-error" id="formError" style="display:none;">
-              Something went wrong. Email us directly at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a>
-            </div>
-          </form>
+              <div class="form-group">
+                <label for="ftype">Industry</label>
+                <select id="ftype" name="type">
+                  <option value="">Select your industry...</option>
+                  <option>Dental / Medical Office</option>
+                  <option>Auto Repair / Service</option>
+                  <option>HVAC / Plumbing / Electrical</option>
+                  <option>Law Firm / Legal Services</option>
+                  <option>Real Estate</option>
+                  <option>Salon / Spa / Beauty</option>
+                  <option>Restaurant / Food Service</option>
+                  <option>Contractor / Construction</option>
+                  <option>E-commerce / Retail</option>
+                  <option>SaaS / Technology</option>
+                  <option>Agency / Marketing</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fmsg">What do you want to automate?</label>
+                <textarea id="fmsg" name="message" rows="4" placeholder="Tell us what's slowing your business down, or what you'd like running on autopilot..."></textarea>
+              </div>
+              <button type="submit" class="btn btn--gold btn--full btn--lg" id="formSubmit">
+                <span id="formBtnText">Get My Free Demo →</span>
+                <span id="formBtnLoading" style="display:none">Sending...</span>
+              </button>
+              <div class="form-success" id="formSuccess" style="display:none">
+                ✓ Received! We'll be in touch within 24 hours.
+              </div>
+              <div class="form-error" id="formError" style="display:none">
+                Something went wrong. Email us at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a>
+              </div>
+            </form>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <!-- ═══════════ FOOTER ═══════════ -->
   <footer class="footer">
+    <div class="footer__top-line"></div>
     <div class="container">
       <div class="footer__inner">
         <div class="footer__brand">
-          <a href="#home" class="nav__logo footer__logo">
-            <span>Vida</span><span class="gold">Tech</span>
-          </a>
+          <a href="#home" class="footer__logo"><span>Vida</span><span class="nav__logo-gold">Tech</span></a>
           <p>Intelligent business systems for companies ready to operate at a higher level.</p>
-          <div class="footer__contact-links">
+          <div class="footer__emails">
             <a href="mailto:coo@vidatech.org">coo@vidatech.org</a>
             <a href="mailto:biz@vidatech.org">biz@vidatech.org</a>
           </div>
         </div>
 
-        <div class="footer__links">
+        <div class="footer__cols">
           <div class="footer__col">
             <h5>Services</h5>
             <a href="#services">Virtual Receptionist</a>
@@ -497,14 +637,14 @@
             <a href="#demo">Live Demo</a>
             <a href="#how">How We Work</a>
             <a href="#contact">Get Started</a>
-            <a href="mailto:coo@vidatech.org">Contact Us</a>
+            <a href="mailto:coo@vidatech.org">Contact</a>
           </div>
         </div>
       </div>
 
       <div class="footer__bottom">
-        <p>© 2025 VidaTech. All rights reserved.</p>
-        <p>vidatech.org</p>
+        <p>© 2025 VidaTech. All rights reserved. · vidatech.org</p>
+        <p class="footer__powered">Powered by VidaTech Technology</p>
       </div>
     </div>
   </footer>
