@@ -6,34 +6,41 @@
 /* Wait for everything to be ready */
 window.addEventListener('load', () => {
 
+  /* Skip loader for reduced-motion / slow connections */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   /* ─────────────────────────────────────
      1. LOADING SCREEN
   ───────────────────────────────────── */
   const loader      = document.getElementById('loader');
-  const loaderFill  = loader.querySelector('.loader__fill');
+  const loaderFill  = loader ? loader.querySelector('.loader__fill') : null;
   const loaderCount = document.getElementById('loaderCounter');
 
-  let progress = 0;
-  const fillInterval = setInterval(() => {
-    progress += Math.random() * 18;
-    if (progress >= 100) { progress = 100; clearInterval(fillInterval); }
-    loaderFill.style.width = progress + '%';
-    loaderCount.textContent = Math.floor(progress);
-    if (progress === 100) {
-      setTimeout(() => {
-        // Slide loader up
-        if (window.gsap) {
-          gsap.to(loader, {
-            yPercent: -100, duration: 1, ease: 'power3.inOut',
-            onComplete: () => { loader.remove(); startSite(); }
-          });
-        } else {
-          loader.style.display = 'none';
-          startSite();
-        }
-      }, 300);
-    }
-  }, 60);
+  if (prefersReduced || !loader) {
+    if (loader) loader.remove();
+    startSite();
+  } else {
+    let progress = 0;
+    const fillInterval = setInterval(() => {
+      progress += Math.random() * 18;
+      if (progress >= 100) { progress = 100; clearInterval(fillInterval); }
+      if (loaderFill) loaderFill.style.width = progress + '%';
+      if (loaderCount) loaderCount.textContent = Math.floor(progress);
+      if (progress === 100) {
+        setTimeout(() => {
+          if (window.gsap) {
+            gsap.to(loader, {
+              yPercent: -100, duration: 1, ease: 'power3.inOut',
+              onComplete: () => { loader.remove(); startSite(); }
+            });
+          } else {
+            loader.style.display = 'none';
+            startSite();
+          }
+        }, 300);
+      }
+    }, 60);
+  }
 
   function startSite() {
     initAll();
