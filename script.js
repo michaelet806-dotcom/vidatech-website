@@ -666,30 +666,11 @@ function initContactForm() {
     btnLoad.style.display = 'inline';
     submit.disabled = true;
 
-    const html = `
-      <div style="font-family:Inter,sans-serif;max-width:580px;padding:32px;background:#f8f6f0;border-radius:12px">
-        <h2 style="color:#0A1628;margin:0 0 24px">🎯 New Lead — VidaTech.org</h2>
-        <table style="width:100%;border-collapse:collapse">
-          <tr><td style="padding:7px 0;color:#64748b;font-size:13px;width:130px">Name</td><td style="padding:7px 0;color:#1e293b;font-weight:600">${name}</td></tr>
-          <tr><td style="padding:7px 0;color:#64748b;font-size:13px">Email</td><td style="padding:7px 0"><a href="mailto:${email}" style="color:#1A3A6B">${email}</a></td></tr>
-          ${business?`<tr><td style="padding:7px 0;color:#64748b;font-size:13px">Business</td><td style="padding:7px 0;color:#1e293b">${business}</td></tr>`:''}
-          ${type?`<tr><td style="padding:7px 0;color:#64748b;font-size:13px">Industry</td><td style="padding:7px 0;color:#1e293b">${type}</td></tr>`:''}
-        </table>
-        ${message?`<div style="margin-top:20px;padding:18px;background:#fff;border-radius:8px;border-left:3px solid #C9A84C"><p style="color:#334155;margin:0;font-size:13.5px;line-height:1.7">${message.replace(/\n/g,'<br>')}</p></div>`:''}
-        <p style="margin-top:18px;color:#94a3b8;font-size:11px">Sent via vidatech.org contact form</p>
-      </div>`;
-
     try {
-      const res = await fetch('https://api.resend.com/emails', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer re_cjU8bsN8_CgoKTSi22ZEfzjsJmEh86kHd' },
-        body: JSON.stringify({
-          from: 'VidaTech Contact <coo@vidatech.org>',
-          to: ['vidaholdingsgroup@gmail.com'],
-          reply_to: email,
-          subject: `New Inquiry — ${name}${business?' · '+business:''}`,
-          html
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, business, type, message })
       });
       if (res.ok) { form.reset(); success.style.display = 'block'; }
       else throw new Error();
