@@ -656,9 +656,23 @@ ul{list-style:none}
 }
 .founder__photo{
   width:100%;aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;
-  background:var(--ink);
+  background:var(--ink);position:relative;
 }
 .founder__photo svg{width:100%;height:100%}
+.founder__photo--portrait img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:contrast(1.12) saturate(0.65) brightness(0.94) sepia(0.18);
+}
+.founder__photo--portrait::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 35%, transparent 45%, rgba(26,22,17,0.45) 95%);
+  mix-blend-mode:multiply;
+}
+.founder__photo--portrait::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(245,241,232,0.1);
+  border-radius:inherit;z-index:1;
+}
 .founder__photo--crest{
   aspect-ratio:1;width:100%;max-width:280px;border-radius:6px;
   background:
