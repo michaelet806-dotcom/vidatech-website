@@ -364,7 +364,7 @@ body.cursor--drag .cursor__ring{width:70px;height:70px;border-color:var(--g2);ba
 .marquee-track{display:flex}
 .marquee-inner{
   display:flex;align-items:center;gap:0;flex-shrink:0;
-  animation:marqueeScroll 30s linear infinite;
+  animation:marqueeScroll 45s linear infinite;
 }
 .marquee-inner span{
   font-size:.82rem;font-weight:500;color:var(--gr4);

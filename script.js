@@ -303,10 +303,11 @@ function initLenis() {
   if (!window.Lenis) return;
 
   const lenis = new Lenis({
-    duration: 1.3,
+    duration: 1.8,
     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
     smoothTouch: false,
+    wheelMultiplier: 0.85,
   });
 
   function raf(time) {
@@ -472,14 +473,13 @@ function initMarquee() {
 
   window.addEventListener('scroll', () => {
     const delta = window.scrollY - lastScroll;
-    speed = 1 + Math.min(Math.abs(delta) * 0.12, 4);
+    speed = 1 + Math.min(Math.abs(delta) * 0.03, 1.2);
     lastScroll = window.scrollY;
-    inners.forEach(el => el.style.animationDuration = (30 / speed) + 's');
-    // decay speed back
+    inners.forEach(el => el.style.animationDuration = (45 / speed) + 's');
     clearTimeout(window._marqueeTimer);
     window._marqueeTimer = setTimeout(() => {
-      inners.forEach(el => el.style.animationDuration = '30s');
-    }, 300);
+      inners.forEach(el => el.style.animationDuration = '45s');
+    }, 500);
   }, { passive: true });
 }
 
