@@ -14,10 +14,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=10" />
+<link rel="stylesheet" href="style.css?v=20" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D4513F'/%3E%3Cpath d='M9 9l7 14 7-14' stroke='%23F5F1E8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 </head>
 <body>
+
+<!-- ─────────  EDITORIAL OVERLAYS  ───────── -->
+<svg class="grain" aria-hidden="true">
+  <filter id="grainFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#grainFilter)"/>
+</svg>
+<div id="scrollMark" class="scroll-mark" aria-hidden="true"></div>
 
 <!-- ─────────  NAV  ───────── -->
 <header class="nav" id="nav">
@@ -58,7 +65,7 @@
 
     <h1 class="display">
       Your business,<br />
-      <em>fully staffed.</em>
+      <em>fully staffed.<svg class="underline" viewBox="0 0 240 8" aria-hidden="true"><path d="M3,5 Q60,2 120,4 T237,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em>
     </h1>
 
     <p class="lede">
@@ -66,7 +73,7 @@
     </p>
 
     <div class="hero__cta">
-      <a href="#contact" class="btn btn--ink btn--lg">Book a 20-min audit</a>
+      <a href="#contact" class="btn btn--ink btn--lg" data-magnetic>Book a 20-min audit</a>
       <a href="#receptionist" class="link link--arrow">See it answer a call →</a>
     </div>
 
@@ -105,13 +112,14 @@
 </section>
 
 <!-- ─────────  2. THE LIVING CALL  ───────── -->
-<section class="reveal" id="receptionist">
+<section class="reveal section-folio" id="receptionist" data-folio="01">
   <div class="container">
     <div class="section-head">
+      <hr class="rule" />
       <div class="mono mono--mute">01 — The Receptionist</div>
       <h2 class="display display--md">
         She answers in two seconds.<br />
-        <em>The booking lands on your calendar.</em>
+        <em>The booking lands on your calendar.<svg class="underline" viewBox="0 0 380 8" aria-hidden="true"><path d="M3,5 Q90,2 190,4 T377,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em>
       </h2>
       <p class="lede lede--narrow">
         A trained front-desk system that picks up every call — greeting the caller in your business voice, qualifying the lead, and dropping the booking straight into your scheduling tool. No app to check. No missed appointments.
@@ -211,12 +219,13 @@
 </section>
 
 <!-- ─────────  3. SERVICES BENTO  ───────── -->
-<section class="services" id="services">
+<section class="services section-folio" id="services" data-folio="02">
   <div class="container">
     <div class="section-head section-head--row">
       <div>
+        <hr class="rule" />
         <div class="mono mono--mute">02 — The Suite</div>
-        <h2 class="display display--md">Six systems.<br /><em>One operator.</em></h2>
+        <h2 class="display display--md">Six systems.<br /><em>One operator.<svg class="underline" viewBox="0 0 220 8" aria-hidden="true"><path d="M3,5 Q60,2 110,4 T217,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
       </div>
       <p class="lede lede--narrow">
         Most agencies stop at one. VidaTech runs the stack — every system that touches a customer or a dollar, integrated and accountable to the same number: revenue captured.
@@ -303,11 +312,12 @@
 </section>
 
 <!-- ─────────  4. HOW IT DEPLOYS  ───────── -->
-<section class="deploy" id="deploy">
+<section class="deploy section-folio" id="deploy" data-folio="03">
   <div class="container">
     <div class="section-head">
+      <hr class="rule" />
       <div class="mono mono--mute">03 — How It Deploys</div>
-      <h2 class="display display--md">Live on your business in <em>48 hours.</em></h2>
+      <h2 class="display display--md">Live on your business in <em>48 hours.<svg class="underline" viewBox="0 0 200 8" aria-hidden="true"><path d="M3,5 Q50,2 100,4 T197,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
     </div>
 
     <div class="steps">
@@ -340,11 +350,12 @@
 </section>
 
 <!-- ─────────  5. THE $300K MATH  ───────── -->
-<section class="math">
+<section class="math section-folio" data-folio="04">
   <div class="container">
     <div class="section-head">
+      <hr class="rule" />
       <div class="mono mono--mute">04 — The Math</div>
-      <h2 class="display display--md">The team you can't afford,<br /><em>without the team.</em></h2>
+      <h2 class="display display--md">The team you can't afford,<br /><em>without the team.<svg class="underline" viewBox="0 0 360 8" aria-hidden="true"><path d="M3,5 Q90,2 180,4 T357,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
     </div>
 
     <div class="ledger">
@@ -380,11 +391,12 @@
 </section>
 
 <!-- ─────────  6. TECH STACK + FOUNDER  ───────── -->
-<section class="proof">
+<section class="proof section-folio" data-folio="05">
   <div class="container proof__inner">
     <div class="proof__left">
+      <hr class="rule" />
       <div class="mono mono--mute">05 — What Powers It</div>
-      <h2 class="display display--md">Built on the same stack <em>the big companies use.</em></h2>
+      <h2 class="display display--md">Built on the same stack <em>the big companies use.<svg class="underline" viewBox="0 0 380 8" aria-hidden="true"><path d="M3,5 Q90,2 190,4 T377,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
       <p class="lede">Voice models from OpenAI &amp; Anthropic. Telephony on Twilio. Payments on Stripe. Scheduling on Calendly &amp; Google Workspace. Infrastructure on Cloudflare. Nothing fragile, nothing experimental.</p>
       <div class="stack">
         <span class="stack__chip">OpenAI</span>
@@ -399,12 +411,11 @@
     </div>
 
     <aside class="founder">
-      <div class="founder__photo">
-        <svg viewBox="0 0 200 200" aria-hidden="true">
-          <rect width="200" height="200" fill="#1A1611"/>
-          <circle cx="100" cy="80" r="32" fill="#F5F1E8" opacity=".9"/>
-          <path d="M40 200 Q40 130 100 130 Q160 130 160 200 Z" fill="#F5F1E8" opacity=".9"/>
-        </svg>
+      <div class="founder__photo founder__photo--crest" aria-hidden="true">
+        <span class="crest__mono">EST. MMXXIV</span>
+        <span class="crest__mark">MT</span>
+        <span class="crest__rule"></span>
+        <span class="crest__line">VIDATECH · FOUNDER</span>
       </div>
       <div class="founder__sig mono">— signed,</div>
       <p class="founder__quote">"We don't sell software or hours. We answer for the outcomes — every call, every booking, every dollar. If a system breaks, that's on us, not you."</p>
@@ -415,11 +426,12 @@
 </section>
 
 <!-- ─────────  7. FAQ  ───────── -->
-<section class="faq" id="faq">
+<section class="faq section-folio" id="faq" data-folio="06">
   <div class="container">
     <div class="section-head">
+      <hr class="rule" />
       <div class="mono mono--mute">06 — The Honest Questions</div>
-      <h2 class="display display--md">Before you book a call.</h2>
+      <h2 class="display display--md">Before you <em>book a call.<svg class="underline" viewBox="0 0 200 8" aria-hidden="true"><path d="M3,5 Q50,2 100,4 T197,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
     </div>
 
     <div class="faq__grid">
@@ -439,10 +451,11 @@
 </section>
 
 <!-- ─────────  8. FINAL CTA  ───────── -->
-<section class="close" id="contact">
+<section class="close section-folio section-folio--dark" id="contact" data-folio="07">
   <div class="container close__inner">
+    <hr class="rule rule--cream" />
     <div class="mono mono--mute">07 — Let's Go</div>
-    <h2 class="display display--xl">Book the<br /><em>20-minute audit.</em></h2>
+    <h2 class="display display--xl">Book the<br /><em>20-minute audit.<svg class="underline" viewBox="0 0 440 8" aria-hidden="true"><path d="M3,5 Q110,2 220,4 T437,3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></em></h2>
     <p class="lede lede--narrow">Tell us where your business leaks calls, leads, or revenue. You'll leave the call with a punch list — even if you never hire us.</p>
 
     <form class="form" id="contactForm" novalidate>
@@ -471,7 +484,7 @@
       <label class="form__full"><span class="mono mono--mute">WHERE IS YOUR BUSINESS LEAKING?</span><textarea name="message" rows="3" placeholder="Missed calls, slow follow-up, manual scheduling…"></textarea></label>
 
       <div class="form__submit-row">
-        <button type="submit" class="btn btn--ink btn--lg" id="formSubmit">
+        <button type="submit" class="btn btn--ink btn--lg" data-magnetic id="formSubmit">
           <span id="formBtnText">Book the audit →</span>
           <span id="formBtnLoading" style="display:none">Sending…</span>
         </button>
@@ -507,8 +520,14 @@
       <a href="mailto:coo@vidatech.org" class="mono">coo@vidatech.org</a>
     </div>
   </div>
+  <div class="container footer__crest" aria-hidden="true">
+    <span class="footer__rule"></span>
+    <span class="footer__mark">VT</span>
+    <span class="footer__est">EST. MMXXIV</span>
+    <span class="footer__rule"></span>
+  </div>
 </footer>
 
-<script src="script.js?v=10"></script>
+<script src="script.js?v=20"></script>
 </body>
 </html>

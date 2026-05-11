@@ -1,0 +1,15 @@
+.wrangler/
+.DS_Store
+node_modules/
+.env
+.env.local
+.vscode/
+.idea/
+*.log
+.playwright-mcp/
+verify-*.png
+section-*.png
+v6-*.png
+check-*.png
+current-site.png
+v2-*.png

@@ -18,7 +18,13 @@
     initCounters();
     initStepsLine();
     initForm();
-    initTileTilt();
+    initScrollMark();
+    initRules();
+    initUnderlines();
+    initScrollVelocity();
+    initMagnetic();
+    initCursorRing();
+    initRevealFallback();
   }
 
   /* ─── 1. NAV ─── */
@@ -72,25 +78,24 @@
     if (!chat || !stage) return;
 
     const script = [
-      { side: 'them', text: 'Hi — is this Vida Auto Body?', delay: 600 },
-      { side: 'ai',   text: 'Vida Auto Body, this is the front desk — how can I help?', delay: 1100, typing: 700 },
-      { side: 'them', text: "I think my brakes are grinding. Can someone look at it?", delay: 1500 },
-      { side: 'ai',   text: "Absolutely. I can get you in tomorrow at 2:30 or Thursday at 10. Which works?", delay: 1400, typing: 800 },
-      { side: 'them', text: "Tomorrow at 2:30, please.", delay: 1500 },
-      { side: 'ai',   text: "Booked. I'll send a text confirmation now. Anything else?", delay: 1200, typing: 700, onShow: () => flyBooking() },
+      { side: 'caller', text: 'Hi — is this Vida Auto Body?', delay: 600 },
+      { side: 'ai',     text: 'Vida Auto Body, this is the front desk — how can I help?', delay: 1100, typing: 700 },
+      { side: 'caller', text: "I think my brakes are grinding. Can someone look at it?", delay: 1500 },
+      { side: 'ai',     text: "Absolutely. I can get you in tomorrow at 2:30 or Thursday at 10. Which works?", delay: 1400, typing: 800 },
+      { side: 'caller', text: "Tomorrow at 2:30, please.", delay: 1500 },
+      { side: 'ai',     text: "Booked. I'll send a text confirmation now. Anything else?", delay: 1200, typing: 700, onShow: () => flyBooking() },
     ];
 
     let started = false;
     let timeoutIds = [];
 
     const flyBooking = () => {
-      if (!fly) return;
-      fly.classList.remove('is-flying');
-      void fly.offsetWidth;
-      fly.classList.add('is-flying');
+      stage.classList.remove('is-live');
+      void stage.offsetWidth;
+      stage.classList.add('is-live');
       setTimeout(() => {
         if (calNew) calNew.classList.add('is-in');
-      }, 1800);
+      }, 2200);
     };
 
     const runScript = () => {
@@ -116,7 +121,7 @@
 
     const showTyping = (side) => {
       const b = document.createElement('div');
-      b.className = `bubble bubble--${side === 'them' ? 'them' : 'ai'} is-typing`;
+      b.className = `bubble bubble--${side === 'caller' ? 'caller' : 'ai'} is-typing`;
       b.innerHTML = `<span class="typing"><span></span><span></span><span></span></span>`;
       chat.appendChild(b);
       requestAnimationFrame(() => b.classList.add('is-in'));
@@ -127,7 +132,7 @@
       const typing = chat.querySelector('.is-typing');
       if (typing) typing.remove();
       const b = document.createElement('div');
-      b.className = `bubble bubble--${line.side === 'them' ? 'them' : 'ai'}`;
+      b.className = `bubble bubble--${line.side === 'caller' ? 'caller' : 'ai'}`;
       b.textContent = line.text;
       chat.appendChild(b);
       requestAnimationFrame(() => b.classList.add('is-in'));
@@ -143,7 +148,7 @@
       // Static state for reduced motion: show last 3 exchanges
       script.slice(-3).forEach(line => {
         const b = document.createElement('div');
-        b.className = `bubble bubble--${line.side === 'them' ? 'them' : 'ai'} is-in`;
+        b.className = `bubble bubble--${line.side === 'caller' ? 'caller' : 'ai'} is-in`;
         b.textContent = line.text;
         chat.appendChild(b);
       });
@@ -268,6 +273,142 @@
         submit.disabled = false;
       }
     });
+  }
+
+  /* ─── 8. SCROLL PROGRESS MARK ─── */
+  function initScrollMark() {
+    const m = $('#scrollMark');
+    if (!m || reduced) return;
+    let raf;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const pct = max > 0 ? (scrollY / max) * 100 : 0;
+      m.style.width = pct.toFixed(2) + '%';
+    };
+    update();
+    window.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    }, { passive: true });
+  }
+
+  /* ─── 9. SELF-DRAWING SECTION RULES ─── */
+  function initRules() {
+    const rules = $$('.rule');
+    if (!rules.length) return;
+    if (reduced) { rules.forEach(r => r.classList.add('is-in')); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.6 });
+    rules.forEach(r => io.observe(r));
+  }
+
+  /* ─── 10. HAND-DRAWN UNDERLINE TRIGGER ─── */
+  function initUnderlines() {
+    const ems = $$('.display em');
+    if (!ems.length) return;
+    if (reduced) { ems.forEach(e => e.classList.add('is-in-view')); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    ems.forEach(e => io.observe(e));
+  }
+
+  /* ─── 11. SCROLL VELOCITY CSS VAR ─── */
+  function initScrollVelocity() {
+    if (reduced) return;
+    let lastY = scrollY, lastT = performance.now(), v = 0, raf;
+    const root = document.documentElement;
+    const decay = () => {
+      v *= 0.9;
+      root.style.setProperty('--scroll-velocity', v.toFixed(3));
+      if (Math.abs(v) > 0.01) raf = requestAnimationFrame(decay);
+    };
+    window.addEventListener('scroll', () => {
+      const now = performance.now();
+      const dt = Math.max(now - lastT, 1);
+      v = Math.max(-1, Math.min(1, (scrollY - lastY) / dt * 0.05));
+      lastY = scrollY; lastT = now;
+      root.style.setProperty('--scroll-velocity', v.toFixed(3));
+      cancelAnimationFrame(raf); raf = requestAnimationFrame(decay);
+    }, { passive: true });
+  }
+
+  /* ─── 12. MAGNETIC CTA ─── */
+  function initMagnetic() {
+    if (reduced) return;
+    if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    const btns = $$('[data-magnetic]');
+    btns.forEach(btn => {
+      const strength = 0.32, radius = 90;
+      let rect, raf;
+      const update = (x, y) => {
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = x - cx, dy = y - cy;
+        const dist = Math.hypot(dx, dy);
+        if (dist < radius + Math.max(rect.width, rect.height) / 2) {
+          btn.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+        } else {
+          btn.style.transform = '';
+        }
+      };
+      btn.addEventListener('pointerenter', () => rect = btn.getBoundingClientRect());
+      window.addEventListener('pointermove', (e) => {
+        if (!rect) return;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => update(e.clientX, e.clientY));
+      });
+      btn.addEventListener('pointerleave', () => btn.style.transform = '');
+      window.addEventListener('scroll', () => { rect = btn.getBoundingClientRect(); }, { passive: true });
+    });
+  }
+
+  /* ─── 13. CUSTOM CURSOR RING ─── */
+  function initCursorRing() {
+    if (reduced) return;
+    if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    const ring = document.createElement('div');
+    ring.className = 'cursor-ring';
+    document.body.appendChild(ring);
+
+    let tx = 0, ty = 0, x = 0, y = 0;
+    let active = false;
+    window.addEventListener('pointermove', e => {
+      tx = e.clientX; ty = e.clientY;
+      if (!active) { active = true; ring.classList.add('is-active'); x = tx; y = ty; }
+    }, { passive: true });
+    window.addEventListener('pointerleave', () => { ring.classList.remove('is-active'); active = false; });
+
+    const tick = () => {
+      x += (tx - x) * 0.18;
+      y += (ty - y) * 0.18;
+      ring.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(tick);
+    };
+    tick();
+
+    const interactive = 'a, button, [data-magnetic], input, textarea, select, summary, [role="button"], .tile';
+    document.addEventListener('pointerover', e => {
+      ring.classList.toggle('is-hot', !!e.target.closest(interactive));
+    });
+  }
+
+  /* ─── 14. REVEAL FALLBACK (for browsers without animation-timeline) ─── */
+  function initRevealFallback() {
+    if (CSS.supports && CSS.supports('animation-timeline: view()')) return;
+    const targets = $$('.in-view-target, .reveal-up, .reveal-side-l, .reveal-side-r, .reveal-scale');
+    if (!targets.length) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in-view', 'in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(t => io.observe(t));
   }
 
 })();
