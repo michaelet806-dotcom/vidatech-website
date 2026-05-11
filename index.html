@@ -1,607 +1,514 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>VidaTech — Intelligent Business Systems</title>
-  <meta name="description" content="VidaTech builds intelligent business systems — virtual receptionists, e-commerce automation, digital marketing, and custom software for businesses ready to grow." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="color-scheme" content="light" />
+<title>VidaTech — Operated Infrastructure for Service Businesses</title>
+<meta name="description" content="VidaTech builds and operates the front-office and back-office systems small businesses can't staff for — answering calls, closing leads, running daily operations on autopilot." />
+<meta property="og:title" content="VidaTech — Your business, fully staffed." />
+<meta property="og:description" content="The operating layer for service businesses. Receptionist, e-commerce, automation, dev, marketing — one team, accountable to outcomes." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://vidatech.org" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" />
-
-  <!-- Libs -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js" defer></script>
-
-  <link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=10" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D4513F'/%3E%3Cpath d='M9 9l7 14 7-14' stroke='%23F5F1E8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 </head>
 <body>
 
-<!-- ═══ LOADER ═══ -->
-<div class="loader" id="loader">
-  <div class="loader__logo">Vida<span>Tech</span></div>
-  <div class="loader__line"><div class="loader__fill"></div></div>
-  <div class="loader__counter" id="loaderCounter">0</div>
-</div>
-
-<!-- ═══ CURSOR ═══ -->
-<div class="cursor" id="cursor">
-  <div class="cursor__dot" id="cursorDot"></div>
-  <div class="cursor__ring" id="cursorRing"></div>
-  <div class="cursor__text" id="cursorText"></div>
-</div>
-
-<!-- ═══ NAV ═══ -->
-<nav class="nav" id="nav">
-  <div class="nav__inner">
-    <a href="#home" class="nav__logo" data-cursor="logo">
-      <span>Vida</span><span class="gold">Tech</span>
+<!-- ─────────  NAV  ───────── -->
+<header class="nav" id="nav">
+  <div class="nav__inner container">
+    <a href="#top" class="logo" aria-label="VidaTech home">
+      <svg class="logo__mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M9 9l7 14 7-14" stroke="#F5F1E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <span class="logo__word">VidaTech</span>
     </a>
-    <ul class="nav__links">
-      <li><a href="#services" data-cursor="link">Services</a></li>
-      <li><a href="#industries" data-cursor="link">Industries</a></li>
-      <li><a href="#demo" data-cursor="link">Demo</a></li>
-      <li><a href="#how" data-cursor="link">Process</a></li>
-    </ul>
-    <div class="magnetic">
-      <a href="#contact" class="btn btn--gold nav__cta" data-cursor="button">Get a Free Demo →</a>
-    </div>
-    <button class="nav__burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#receptionist">Receptionist</a>
+      <a href="#services">Services</a>
+      <a href="#deploy">Process</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#contact" class="btn btn--ink btn--sm">Book a 20-min audit</a>
+    <button class="nav__menu" id="navMenu" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
     </button>
   </div>
-</nav>
-
-<!-- ═══ DRAWER ═══ -->
-<div class="drawer" id="drawer">
-  <button class="drawer__close" id="drawerClose">✕</button>
-  <a href="#services"  class="drawer__link">Services</a>
-  <a href="#industries" class="drawer__link">Industries</a>
-  <a href="#demo"      class="drawer__link">Demo</a>
-  <a href="#how"       class="drawer__link">Process</a>
-  <a href="#contact"   class="drawer__cta">Get a Free Demo →</a>
-</div>
-<div class="drawer__overlay" id="drawerOverlay"></div>
-
-<!-- ═══════════════════════════════════════
-     HERO
-═══════════════════════════════════════ -->
-<section class="hero" id="home">
-  <canvas id="heroCanvas" class="hero__canvas"></canvas>
-  <div class="hero__spotlight" id="heroSpotlight"></div>
-
-  <div class="hero__inner container">
-    <div class="hero__left">
-
-      <div class="hero__badge hero-anim" data-anim="badge">
-        <span class="hero__badge-dot"></span>
-        Systems Online — Serving Businesses Worldwide
-      </div>
-
-      <h1 class="hero__h1" id="heroTitle">
-        We Build Systems That<br>
-        <em class="hero__h1-em">Grow Your Business</em><br>
-        While You Sleep
-      </h1>
-
-      <p class="hero__sub hero-anim" data-anim="sub">
-        VidaTech delivers end-to-end business automation — intelligent receptionists, Shopify growth engines, custom software, and marketing systems that never clock out.
-      </p>
-
-      <div class="hero__actions hero-anim" data-anim="actions">
-        <div class="magnetic">
-          <a href="#contact" class="btn btn--gold btn--lg" data-cursor="button">
-            Get a Free Demo
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5m0 0L9 3.75M14.25 9 9 14.25" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-        <div class="magnetic">
-          <a href="#services" class="btn btn--ghost btn--lg" data-cursor="button">See Our Services</a>
-        </div>
-      </div>
-
-      <div class="hero__trust hero-anim" data-anim="trust">
-        <span>★ End-to-end coverage</span>
-        <span class="trust-sep"></span>
-        <span>★ 24/7 always on</span>
-        <span class="trust-sep"></span>
-        <span>★ 48-hour setup</span>
-      </div>
-
-    </div>
-
-    <div class="hero__right hero-anim" data-anim="cards">
-      <div class="hero__card-grid">
-
-        <div class="hcard hcard--wide glass-card">
-          <div class="hcard__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.09 12.97a1 1 0 00.78 1.63h6.13l-1 7.4a.5.5 0 00.9.34l8.13-11a1 1 0 00-.78-1.63h-6.13l1-7.4a.5.5 0 00-.9-.34z"/></svg>
-          </div>
-          <div class="hcard__info">
-            <div class="hcard__num" data-target="6">0</div>
-            <div class="hcard__label">Service Lines · End-to-End</div>
-          </div>
-          <div class="hcard__progress">
-            <div class="hcard__bar" style="--w:100%"></div>
-          </div>
-        </div>
-
-        <div class="hcard glass-card">
-          <div class="hcard__num hcard__num--sm">48hr</div>
-          <div class="hcard__label">Setup</div>
-        </div>
-
-        <div class="hcard glass-card">
-          <div class="hcard__num hcard__num--sm">24/7</div>
-          <div class="hcard__label">Always On</div>
-        </div>
-
-        <div class="hcard hcard--wide glass-card hcard--live">
-          <div class="hcard__live-row">
-            <span class="live-dot"></span>
-            <span>Systems active right now</span>
-          </div>
-          <div class="hcard__bars">
-            <div class="hbar"><div class="hbar__fill" style="--w:88%"></div></div>
-            <div class="hbar"><div class="hbar__fill" style="--w:64%"></div></div>
-            <div class="hbar"><div class="hbar__fill" style="--w:95%"></div></div>
-            <div class="hbar"><div class="hbar__fill" style="--w:73%"></div></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <a href="#receptionist">Receptionist</a>
+    <a href="#services">Services</a>
+    <a href="#deploy">Process</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact" class="btn btn--ink">Book a 20-min audit</a>
   </div>
+</header>
 
-  <div class="hero__scroll">
-    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-    <span>Scroll</span>
+<main id="top">
+
+<!-- ─────────  1. HERO  ───────── -->
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="eyebrow">
+      <span class="eyebrow__dot"></span>
+      <span>Operated Infrastructure · Est. 2024</span>
+    </div>
+
+    <h1 class="display">
+      Your business,<br />
+      <em>fully staffed.</em>
+    </h1>
+
+    <p class="lede">
+      VidaTech builds and operates the front-office and back-office systems small businesses can't staff for — answering calls, closing leads, and running daily operations on autopilot.
+    </p>
+
+    <div class="hero__cta">
+      <a href="#contact" class="btn btn--ink btn--lg">Book a 20-min audit</a>
+      <a href="#receptionist" class="link link--arrow">See it answer a call →</a>
+    </div>
+
+    <div class="hero__strip">
+      <div class="hero__strip-item">
+        <div class="mono">SYSTEM 01</div>
+        <div>Receptionist</div>
+      </div>
+      <div class="hero__strip-item">
+        <div class="mono">SYSTEM 02</div>
+        <div>E-commerce</div>
+      </div>
+      <div class="hero__strip-item">
+        <div class="mono">SYSTEM 03</div>
+        <div>Automation</div>
+      </div>
+      <div class="hero__strip-item">
+        <div class="mono">SYSTEM 04</div>
+        <div>Web &amp; App</div>
+      </div>
+      <div class="hero__strip-item">
+        <div class="mono">SYSTEM 05</div>
+        <div>Marketing</div>
+      </div>
+      <div class="hero__strip-item">
+        <div class="mono">SYSTEM 06</div>
+        <div>Brand</div>
+      </div>
+    </div>
+
+    <div class="hero__wave" aria-hidden="true">
+      <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="mono mono--mute">LIVE — Receptionist line</div>
+    </div>
   </div>
 </section>
 
-<!-- ═══ MARQUEE ═══ -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track" id="marqueeTrack">
-    <div class="marquee-inner">
-      <span>Dental Offices</span><span class="mx">✦</span>
-      <span>Auto Repair Shops</span><span class="mx">✦</span>
-      <span>HVAC Companies</span><span class="mx">✦</span>
-      <span>Law Firms</span><span class="mx">✦</span>
-      <span>Real Estate</span><span class="mx">✦</span>
-      <span>Salons &amp; Spas</span><span class="mx">✦</span>
-      <span>Restaurants</span><span class="mx">✦</span>
-      <span>Contractors</span><span class="mx">✦</span>
-      <span>E-commerce Brands</span><span class="mx">✦</span>
-      <span>SaaS Companies</span><span class="mx">✦</span>
+<!-- ─────────  2. THE LIVING CALL  ───────── -->
+<section class="reveal" id="receptionist">
+  <div class="container">
+    <div class="section-head">
+      <div class="mono mono--mute">01 — The Receptionist</div>
+      <h2 class="display display--md">
+        She answers in two seconds.<br />
+        <em>The booking lands on your calendar.</em>
+      </h2>
+      <p class="lede lede--narrow">
+        A trained front-desk system that picks up every call — greeting the caller in your business voice, qualifying the lead, and dropping the booking straight into your scheduling tool. No app to check. No missed appointments.
+      </p>
     </div>
-    <div class="marquee-inner" aria-hidden="true">
-      <span>Dental Offices</span><span class="mx">✦</span>
-      <span>Auto Repair Shops</span><span class="mx">✦</span>
-      <span>HVAC Companies</span><span class="mx">✦</span>
-      <span>Law Firms</span><span class="mx">✦</span>
-      <span>Real Estate</span><span class="mx">✦</span>
-      <span>Salons &amp; Spas</span><span class="mx">✦</span>
-      <span>Restaurants</span><span class="mx">✦</span>
-      <span>Contractors</span><span class="mx">✦</span>
-      <span>E-commerce Brands</span><span class="mx">✦</span>
-      <span>SaaS Companies</span><span class="mx">✦</span>
+
+    <div class="stage" id="callStage" aria-label="Live call demonstration">
+      <!-- Phone -->
+      <div class="phone" aria-hidden="true">
+        <div class="phone__notch"></div>
+        <div class="phone__screen">
+          <div class="phone__status">
+            <span class="phone__time" id="phoneTime">9:41</span>
+            <span class="phone__icons">
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><rect x="0" y="6" width="2" height="4" rx=".5"/><rect x="4" y="4" width="2" height="6" rx=".5"/><rect x="8" y="2" width="2" height="8" rx=".5"/><rect x="12" y="0" width="2" height="10" rx=".5"/></svg>
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 5a6 6 0 0112 0M3 6a4 4 0 018 0M5 7a2 2 0 014 0"/></svg>
+              <span class="phone__battery"><span></span></span>
+            </span>
+          </div>
+          <div class="phone__call-head">
+            <div class="phone__caller-av">JR</div>
+            <div>
+              <div class="phone__caller">James Reilly</div>
+              <div class="phone__num mono">Incoming · 00:14</div>
+            </div>
+            <span class="live-pulse" aria-hidden="true"></span>
+          </div>
+          <div class="phone__chat" id="phoneChat">
+            <!-- bubbles injected by JS -->
+          </div>
+          <div class="phone__dock">
+            <button class="phone__btn phone__btn--mute" aria-label="Mute">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+            </button>
+            <button class="phone__btn phone__btn--end" aria-label="End call">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8a14 14 0 01-2 .2 14 14 0 01-14-14 14 14 0 01.2-2L5 0 8 6l-2 3a14 14 0 005 5l3-2 6 3z"/></svg>
+            </button>
+            <button class="phone__btn phone__btn--keypad" aria-label="Keypad">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="18" cy="6" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/><circle cx="6" cy="18" r="1.5"/><circle cx="12" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Connector -->
+      <svg class="connector" viewBox="0 0 200 40" aria-hidden="true">
+        <path d="M0 20 Q100 20 200 20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="4 6" />
+      </svg>
+
+      <!-- Flying booking -->
+      <div class="booking-fly" id="bookingFly" aria-hidden="true">
+        <div class="booking-fly__inner">
+          <div class="mono">CALENDAR · Tue, Mar 12</div>
+          <div class="booking-fly__title">James Reilly — Brake check</div>
+          <div class="booking-fly__time">2:30 PM · 30 min</div>
+        </div>
+      </div>
+
+      <!-- Laptop -->
+      <div class="laptop" aria-hidden="true">
+        <div class="laptop__screen">
+          <div class="laptop__chrome">
+            <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+            <span class="laptop__url mono">vidatech.dash / calendar</span>
+          </div>
+          <div class="laptop__body">
+            <div class="laptop__col">
+              <div class="mono mono--mute">TUE — MARCH 12</div>
+              <div class="cal-slot">10:00 — Oil change · M. Patel</div>
+              <div class="cal-slot">11:30 — Tire rotation · A. Singh</div>
+              <div class="cal-slot cal-slot--new" id="calSlotNew">
+                <span class="cal-slot__time">2:30 PM</span>
+                <span class="cal-slot__name">James Reilly — Brake check</span>
+                <span class="cal-slot__badge">NEW</span>
+              </div>
+              <div class="cal-slot">4:00 — Diagnostics · L. Tan</div>
+            </div>
+            <div class="laptop__col laptop__col--right">
+              <div class="mono mono--mute">TODAY</div>
+              <div class="metric"><span class="metric__num" data-target="14">0</span><span class="metric__lbl">calls answered</span></div>
+              <div class="metric"><span class="metric__num" data-target="9">0</span><span class="metric__lbl">bookings created</span></div>
+              <div class="metric"><span class="metric__num">0</span><span class="metric__lbl">missed</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="laptop__base"></div>
+      </div>
+    </div>
+
+    <div class="reveal__facts">
+      <div class="fact"><div class="mono mono--mute">Pickup</div><div class="fact__num">&lt; 2s</div></div>
+      <div class="fact"><div class="mono mono--mute">Coverage</div><div class="fact__num">24/7</div></div>
+      <div class="fact"><div class="mono mono--mute">Setup</div><div class="fact__num">48 hr</div></div>
+      <div class="fact"><div class="mono mono--mute">Missed calls</div><div class="fact__num">0</div></div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══════════════════════════════════════
-     SERVICES
-═══════════════════════════════════════ -->
+<!-- ─────────  3. SERVICES BENTO  ───────── -->
 <section class="services" id="services">
   <div class="container">
-
-    <div class="section-head">
-      <div class="sh__label">What We Do</div>
-      <h2 class="sh__title split-title">One Partner.<br><span class="g-text">Every System You Need.</span></h2>
-      <p class="sh__sub">We design, build, and run intelligent business systems so you can focus on what only you can do.</p>
+    <div class="section-head section-head--row">
+      <div>
+        <div class="mono mono--mute">02 — The Suite</div>
+        <h2 class="display display--md">Six systems.<br /><em>One operator.</em></h2>
+      </div>
+      <p class="lede lede--narrow">
+        Most agencies stop at one. VidaTech runs the stack — every system that touches a customer or a dollar, integrated and accountable to the same number: revenue captured.
+      </p>
     </div>
 
-    <div class="svc-grid">
+    <div class="bento">
 
-      <!-- Featured -->
-      <div class="svc-card svc-card--hero" data-tilt data-tilt-max="4" data-tilt-speed="600" data-tilt-glare data-tilt-max-glare="0.1">
-        <div class="svc-card__inner">
-          <div class="svc-card__glow"></div>
-          <span class="svc-card__badge">Most Requested</span>
-          <div class="svc-top">
-            <div class="svc-icon svc-icon--lg">
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M3 3h3.5L8 8.5 5.75 10A14 14 0 0016 20.25L17.5 18l5.5 1.5v3.5C23 24.7 21 26 19.5 26 9.4 26 0 16.6 0 6.5 0 5 1.3 3 3 3z" fill="currentColor"/></svg>
-            </div>
-            <div class="svc-meta">
-              <h3>Virtual Receptionist</h3>
-              <p>A fully intelligent front desk that answers every call, qualifies every lead, and books every appointment — 24 hours a day, 365 days a year.</p>
-            </div>
-          </div>
-          <ul class="svc-list">
-            <li><span class="svc-check">✓</span>Live call answering, any hour</li>
-            <li><span class="svc-check">✓</span>Appointment scheduling + reminders</li>
-            <li><span class="svc-check">✓</span>Automated SMS follow-up</li>
-            <li><span class="svc-check">✓</span>Lead qualification + CRM sync</li>
-          </ul>
-          <div class="magnetic" style="width:fit-content">
-            <a href="#contact" class="btn btn--gold" data-cursor="button">Start for Free →</a>
-          </div>
+      <article class="tile tile--hero" data-tile="receptionist">
+        <div class="tile__head">
+          <div class="mono">SYSTEM 01</div>
+          <h3>Receptionist</h3>
         </div>
-      </div>
+        <p>Picks up every call. Qualifies, books, sends the SMS. Trained on your business voice.</p>
+        <div class="tile__viz tile__viz--wave">
+          <svg viewBox="0 0 240 60" preserveAspectRatio="none"><path d="M0 30 Q15 10 30 30 T60 30 T90 30 T120 30 T150 30 T180 30 T210 30 T240 30" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+        </div>
+      </article>
 
-      <!-- Card 2 -->
-      <div class="svc-card" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.08">
-        <div class="svc-card__inner">
-          <div class="svc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 7h18M7 19h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </div>
-          <h3>E-commerce Automation</h3>
-          <p>Shopify stores that research, list, sell, and follow up — end-to-end, while you're not watching.</p>
-          <a href="#contact" class="svc-link" data-cursor="link">Explore →</a>
+      <article class="tile" data-tile="ecom">
+        <div class="tile__head">
+          <div class="mono">SYSTEM 02</div>
+          <h3>E-commerce</h3>
         </div>
-      </div>
+        <p>Shopify stores that research, list, and follow up — end-to-end.</p>
+        <div class="tile__viz tile__viz--cart">
+          <span class="cart-bar" style="--w:40%"></span>
+          <span class="cart-bar" style="--w:72%"></span>
+          <span class="cart-bar" style="--w:55%"></span>
+        </div>
+      </article>
 
-      <!-- Card 3 -->
-      <div class="svc-card" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.08">
-        <div class="svc-card__inner">
-          <div class="svc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4h14v4H4zM4 11h8v4H4z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 13l5 5M20 13l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Business Automation</h3>
-          <p>Replace manual repetitive work with intelligent workflows. No developer needed on your end.</p>
-          <a href="#contact" class="svc-link" data-cursor="link">Explore →</a>
+      <article class="tile" data-tile="auto">
+        <div class="tile__head">
+          <div class="mono">SYSTEM 03</div>
+          <h3>Automation</h3>
         </div>
-      </div>
+        <p>The repetitive work — gone. Workflows that run every hour without you.</p>
+        <div class="tile__viz tile__viz--nodes">
+          <span class="node"></span><span class="node"></span><span class="node"></span><span class="node"></span>
+          <svg viewBox="0 0 200 60"><line x1="20" y1="30" x2="80" y2="30"/><line x1="80" y1="30" x2="140" y2="10"/><line x1="80" y1="30" x2="140" y2="50"/></svg>
+        </div>
+      </article>
 
-      <!-- Card 4 -->
-      <div class="svc-card" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.08">
-        <div class="svc-card__inner">
-          <div class="svc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M7 12l3 3 5-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Web &amp; App Development</h3>
-          <p>From concept to deployed product — architecture, design, development, and infrastructure.</p>
-          <a href="#contact" class="svc-link" data-cursor="link">Explore →</a>
+      <article class="tile" data-tile="dev">
+        <div class="tile__head">
+          <div class="mono">SYSTEM 04</div>
+          <h3>Web &amp; App</h3>
         </div>
-      </div>
+        <p>From concept to deployed product. Architecture, design, infrastructure — handled.</p>
+        <div class="tile__viz tile__viz--code mono">
+          <span>$ deploy</span>
+          <span>✓ build complete</span>
+          <span>✓ live in 9.4s</span>
+        </div>
+      </article>
 
-      <!-- Card 5 -->
-      <div class="svc-card" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.08">
-        <div class="svc-card__inner">
-          <div class="svc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 18L7 4l6 9 6-9 4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Digital Marketing &amp; SEO</h3>
-          <p>Rankings, content, email, social — all built to compound over time and reduce your ad spend.</p>
-          <a href="#contact" class="svc-link" data-cursor="link">Explore →</a>
+      <article class="tile" data-tile="mkt">
+        <div class="tile__head">
+          <div class="mono">SYSTEM 05</div>
+          <h3>Marketing</h3>
         </div>
-      </div>
+        <p>Rankings, content, email, social. Compounding visibility, lower ad spend.</p>
+        <div class="tile__viz tile__viz--chart">
+          <svg viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M0 50 L40 42 L80 30 L120 22 L160 14 L200 6" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        </div>
+      </article>
 
-      <!-- Card 6 -->
-      <div class="svc-card" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.08">
-        <div class="svc-card__inner">
-          <div class="svc-icon">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M3 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Brand &amp; Creative</h3>
-          <p>Identity, messaging, video, and PR that position your business as the obvious choice.</p>
-          <a href="#contact" class="svc-link" data-cursor="link">Explore →</a>
+      <article class="tile" data-tile="brand">
+        <div class="tile__head">
+          <div class="mono">SYSTEM 06</div>
+          <h3>Brand</h3>
         </div>
-      </div>
+        <p>Identity, messaging, video. The version of your business worth talking about.</p>
+        <div class="tile__viz tile__viz--brand">
+          <span class="swatch" style="--c:#1A1611"></span>
+          <span class="swatch" style="--c:#D4513F"></span>
+          <span class="swatch" style="--c:#F5F1E8"></span>
+        </div>
+      </article>
 
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     DEMO
-═══════════════════════════════════════ -->
-<section class="demo" id="demo">
-  <div class="demo__bg"></div>
-  <div class="container">
-    <div class="demo__inner">
-
-      <div class="demo__left">
-        <div class="sh__label sh__label--gold">Live Demo</div>
-        <h2 class="split-title">Hear It Answer<br><span class="g-text">Your Phone Right Now</span></h2>
-        <p>Our AI receptionist is already trained on your industry. Call this number and hear it handle a real inquiry — greet your caller, answer questions, book the appointment.</p>
-
-        <div class="demo__number-block" data-cursor="button">
-          <div class="demo__number-label">Live AI Receptionist Line</div>
-          <a href="tel:+18176234977" class="demo__number">(817) 623-4977</a>
-          <div class="demo__number-sub">Call now — it answers instantly, 24/7</div>
-        </div>
-
-        <div class="demo__feats">
-          <div class="demo__feat"><span>⚡</span><div><strong>Live in 60 seconds</strong><em>No setup required</em></div></div>
-          <div class="demo__feat"><span>🎯</span><div><strong>Trained on your business</strong><em>Knows your services &amp; hours</em></div></div>
-          <div class="demo__feat"><span>📲</span><div><strong>Any phone line</strong><em>Plug into your existing number</em></div></div>
-        </div>
-      </div>
-
-      <div class="demo__right">
-        <div class="demo__phone-wrap">
-          <div class="demo__glow"></div>
-          <div class="phone" data-tilt data-tilt-max="6" data-tilt-speed="800" data-tilt-glare data-tilt-max-glare="0.05">
-            <div class="phone__frame">
-              <div class="phone__island"></div>
-              <div class="phone__screen">
-                <div class="phone__header">
-                  <div class="phone__avatar">VT</div>
-                  <div class="phone__meta">
-                    <div class="phone__name">VidaTech Receptionist</div>
-                    <div class="phone__status" id="callStatus">Tap Call to start demo</div>
-                  </div>
-                  <div class="phone__timer" id="callTimer">0:00</div>
-                </div>
-                <div class="phone__chat" id="chatFeed">
-                  <div class="chat-msg chat-msg--in">
-                    <span class="typing"><span></span><span></span><span></span></span>
-                  </div>
-                </div>
-                <div class="phone__controls">
-                  <button class="phone__btn phone__btn--side">🔇</button>
-                  <button class="phone__btn phone__btn--call" id="demoCallBtn" data-cursor="button">Call</button>
-                  <button class="phone__btn phone__btn--side">🔊</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════
-     PROCESS
-═══════════════════════════════════════ -->
-<section class="process" id="how">
+<!-- ─────────  4. HOW IT DEPLOYS  ───────── -->
+<section class="deploy" id="deploy">
   <div class="container">
     <div class="section-head">
-      <div class="sh__label">The Process</div>
-      <h2 class="split-title">Simple Start.<br><span class="g-text">Serious Results.</span></h2>
+      <div class="mono mono--mute">03 — How It Deploys</div>
+      <h2 class="display display--md">Live on your business in <em>48 hours.</em></h2>
     </div>
 
-    <div class="process__track">
-      <div class="process__line-wrap">
-        <div class="process__line" id="processLine"></div>
+    <div class="steps">
+      <svg class="steps__line" id="stepsLine" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M40 30 L960 30" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 6" />
+      </svg>
+
+      <div class="step">
+        <div class="step__num">01</div>
+        <h3>Audit</h3>
+        <p>20-min call. We map every place a customer or dollar leaks. You leave with a punch list whether you hire us or not.</p>
+        <div class="mono mono--mute">DAY 0 · FREE</div>
       </div>
 
-      <div class="process__step">
-        <div class="process__node">01</div>
-        <div class="process__card" data-tilt data-tilt-max="5" data-tilt-speed="600">
-          <div class="process__emoji">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-          </div>
-          <h3>Discovery Call</h3>
-          <p>30 minutes. We understand your business — what's working, what's broken, where automation wins fastest.</p>
-          <div class="process__tag">30 min · Free</div>
-        </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <h3>Build</h3>
+        <p>We wire the systems — voice agent trained, calendar synced, follow-ups armed, dashboards live. No homework on your side.</p>
+        <div class="mono mono--mute">DAY 1–2</div>
       </div>
 
-      <div class="process__step">
-        <div class="process__node">02</div>
-        <div class="process__card" data-tilt data-tilt-max="5" data-tilt-speed="600">
-          <div class="process__emoji">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-          </div>
-          <h3>We Build It</h3>
-          <p>Our team designs and deploys your solution fast. Receptionist live in 48 hours. Full automation in a week.</p>
-          <div class="process__tag">48–72 hours</div>
-        </div>
-      </div>
-
-      <div class="process__step">
-        <div class="process__node">03</div>
-        <div class="process__card" data-tilt data-tilt-max="5" data-tilt-speed="600">
-          <div class="process__emoji">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-          </div>
-          <h3>You See Results</h3>
-          <p>Calls answered. Leads followed up. Revenue moves. Full reporting from day one so you see exactly what's working.</p>
-          <div class="process__tag">Full reporting</div>
-        </div>
-      </div>
-
-      <div class="process__step">
-        <div class="process__node">04</div>
-        <div class="process__card" data-tilt data-tilt-max="5" data-tilt-speed="600">
-          <div class="process__emoji">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
-          </div>
-          <h3>We Scale Together</h3>
-          <p>As your business grows, your systems grow with it. New services, new markets — all handled.</p>
-          <div class="process__tag">Ongoing</div>
-        </div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <h3>Run</h3>
+        <p>The systems operate. We watch the metrics. You see the calls, the bookings, the revenue — daily.</p>
+        <div class="mono mono--mute">DAY 3 → ONGOING</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     STATS
-═══════════════════════════════════════ -->
-<section class="stats" id="stats">
-  <div class="stats__bg"></div>
-  <div class="stats__grid container">
-
-    <div class="stat-item">
-      <div class="stat-item__num" data-target="6">0</div>
-      <div class="stat-item__label">Service Lines</div>
-    </div>
-    <div class="stat-item__sep"></div>
-    <div class="stat-item">
-      <div class="stat-item__num">24/7</div>
-      <div class="stat-item__label">Always Running</div>
-    </div>
-    <div class="stat-item__sep"></div>
-    <div class="stat-item">
-      <div class="stat-item__num">48hr</div>
-      <div class="stat-item__label">Average Setup</div>
-    </div>
-    <div class="stat-item__sep"></div>
-    <div class="stat-item">
-      <div class="stat-item__num">0</div>
-      <div class="stat-item__label">Missed Calls After Hours</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════
-     CTA BAND
-═══════════════════════════════════════ -->
-<section class="cta-band">
-  <div class="cta-band__bg"></div>
+<!-- ─────────  5. THE $300K MATH  ───────── -->
+<section class="math">
   <div class="container">
-    <div class="cta-band__inner">
-      <div class="cta-band__text">
-        <h2 class="split-title">Ready to stop losing business<br>to a phone that goes unanswered?</h2>
+    <div class="section-head">
+      <div class="mono mono--mute">04 — The Math</div>
+      <h2 class="display display--md">The team you can't afford,<br /><em>without the team.</em></h2>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger__col">
+        <div class="ledger__title mono">HIRING IT</div>
+        <ul>
+          <li><span>Senior receptionist</span><span>$48K</span></li>
+          <li><span>Ops manager</span><span>$74K</span></li>
+          <li><span>Marketing lead</span><span>$82K</span></li>
+          <li><span>Developer</span><span>$120K</span></li>
+          <li><span>Benefits &amp; overhead (~30%)</span><span>$97K</span></li>
+        </ul>
+        <div class="ledger__total"><span>Annual</span><span>$421K</span></div>
+        <div class="ledger__note mono mono--mute">Plus: 8-week hire cycle. No nights, no weekends.</div>
       </div>
-      <div class="cta-band__action">
-        <div class="magnetic">
-          <a href="#contact" class="btn btn--dark btn--lg" data-cursor="button">Start for Free →</a>
-        </div>
-        <a href="tel:+18176234977" class="cta-band__call" data-cursor="link">or call (817) 623-4977</a>
+
+      <div class="ledger__or"><span>vs.</span></div>
+
+      <div class="ledger__col ledger__col--us">
+        <div class="ledger__title mono">RUNNING VIDATECH</div>
+        <ul>
+          <li><span>Receptionist system</span><span>included</span></li>
+          <li><span>Operations layer</span><span>included</span></li>
+          <li><span>Marketing engine</span><span>included</span></li>
+          <li><span>Dev &amp; product</span><span>included</span></li>
+          <li><span>Always on, accountable to outcomes</span><span>—</span></li>
+        </ul>
+        <div class="ledger__total"><span>Starts at</span><span>$3.5K/mo</span></div>
+        <div class="ledger__note mono mono--mute">Live in 48 hours. Cancel anytime.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     CONTACT
-═══════════════════════════════════════ -->
-<section class="contact" id="contact">
+<!-- ─────────  6. TECH STACK + FOUNDER  ───────── -->
+<section class="proof">
+  <div class="container proof__inner">
+    <div class="proof__left">
+      <div class="mono mono--mute">05 — What Powers It</div>
+      <h2 class="display display--md">Built on the same stack <em>the big companies use.</em></h2>
+      <p class="lede">Voice models from OpenAI &amp; Anthropic. Telephony on Twilio. Payments on Stripe. Scheduling on Calendly &amp; Google Workspace. Infrastructure on Cloudflare. Nothing fragile, nothing experimental.</p>
+      <div class="stack">
+        <span class="stack__chip">OpenAI</span>
+        <span class="stack__chip">Anthropic</span>
+        <span class="stack__chip">Twilio</span>
+        <span class="stack__chip">Stripe</span>
+        <span class="stack__chip">Shopify</span>
+        <span class="stack__chip">Google Workspace</span>
+        <span class="stack__chip">Cloudflare</span>
+        <span class="stack__chip">Supabase</span>
+      </div>
+    </div>
+
+    <aside class="founder">
+      <div class="founder__photo">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <rect width="200" height="200" fill="#1A1611"/>
+          <circle cx="100" cy="80" r="32" fill="#F5F1E8" opacity=".9"/>
+          <path d="M40 200 Q40 130 100 130 Q160 130 160 200 Z" fill="#F5F1E8" opacity=".9"/>
+        </svg>
+      </div>
+      <div class="founder__sig mono">— signed,</div>
+      <p class="founder__quote">"We don't sell software or hours. We answer for the outcomes — every call, every booking, every dollar. If a system breaks, that's on us, not you."</p>
+      <div class="founder__name">Michael Torres</div>
+      <div class="founder__role mono mono--mute">Founder · VidaTech</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ─────────  7. FAQ  ───────── -->
+<section class="faq" id="faq">
   <div class="container">
-    <div class="contact__inner">
+    <div class="section-head">
+      <div class="mono mono--mute">06 — The Honest Questions</div>
+      <h2 class="display display--md">Before you book a call.</h2>
+    </div>
 
-      <div class="contact__left">
-        <div class="sh__label">Get Started</div>
-        <h2 class="split-title">Let's Build<br><span class="g-text">Your System.</span></h2>
-        <p>Tell us about your business. We'll show you exactly how VidaTech can automate your operations — free, no commitment.</p>
+    <div class="faq__grid">
+      <details class="qa"><summary><span>Will the receptionist sound robotic?</span><span class="qa__plus">+</span></summary><p>Listen yourself — call the demo line in the audit. It greets the way you'd greet, handles the same objections, and hands off to a human if anyone asks for one. We don't ship anything you wouldn't be proud to answer with.</p></details>
 
-        <div class="contact__trust">
-          <div class="ct-item"><div class="ct-check">✓</div>Free consultation, zero obligation</div>
-          <div class="ct-item"><div class="ct-check">✓</div>Systems live within 48–72 hours</div>
-          <div class="ct-item"><div class="ct-check">✓</div>No long-term contracts required</div>
-          <div class="ct-item"><div class="ct-check">✓</div>Full reporting from day one</div>
-        </div>
+      <details class="qa"><summary><span>What if it gets a call wrong?</span><span class="qa__plus">+</span></summary><p>Every transcript lands in your inbox. We listen too. Anything that needed to escalate gets routed to your phone within minutes. We tune the system weekly — your edge cases get fewer, never more.</p></details>
 
-        <a href="mailto:coo@vidatech.org" class="contact__email" data-cursor="link">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 5.5l6.5 4.5 6.5-4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          coo@vidatech.org
-        </a>
-      </div>
+      <details class="qa"><summary><span>How is this not just another chatbot?</span><span class="qa__plus">+</span></summary><p>Chatbots wait for someone to click a widget. Our receptionist picks up your phone. It speaks. It books on the calendar you already use. And it's accountable to the same metric a human receptionist is — booked appointments, not "interactions."</p></details>
 
-      <div class="contact__right">
-        <div class="contact__form-wrap">
-          <form class="contact__form" id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="form-field">
-                <label for="fname">Name</label>
-                <input type="text" id="fname" name="name" placeholder="John Smith" required />
-              </div>
-              <div class="form-field">
-                <label for="femail">Email</label>
-                <input type="email" id="femail" name="email" placeholder="john@company.com" required />
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="fbiz">Business</label>
-              <input type="text" id="fbiz" name="business" placeholder="Smith Auto Repair" />
-            </div>
-            <div class="form-field">
-              <label for="ftype">Industry</label>
-              <select id="ftype" name="type">
-                <option value="">Select your industry...</option>
-                <option>Dental / Medical Office</option>
-                <option>Auto Repair / Service</option>
-                <option>HVAC / Plumbing / Electrical</option>
-                <option>Law Firm / Legal</option>
-                <option>Real Estate</option>
-                <option>Salon / Spa / Beauty</option>
-                <option>Restaurant / Food</option>
-                <option>Contractor / Construction</option>
-                <option>E-commerce / Retail</option>
-                <option>SaaS / Tech</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="fmsg">What do you want to automate?</label>
-              <textarea id="fmsg" name="message" rows="4" placeholder="Tell us what's slowing your business down..."></textarea>
-            </div>
-            <div class="magnetic" style="width:100%">
-              <button type="submit" class="btn btn--gold btn--full btn--lg" id="formSubmit" data-cursor="button">
-                <span id="formBtnText">Get My Free Demo →</span>
-                <span id="formBtnLoading" style="display:none">Sending...</span>
-              </button>
-            </div>
-            <div class="form-success" id="formSuccess" style="display:none">✓ Received! We'll be in touch within 24 hours.</div>
-            <div class="form-error"   id="formError"   style="display:none">Something went wrong. Email us at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a></div>
-          </form>
-        </div>
-      </div>
+      <details class="qa"><summary><span>Is my industry supported?</span><span class="qa__plus">+</span></summary><p>Dental, auto repair, HVAC, law, real estate, salons, restaurants, contractors. If you're a service business and you take phone calls, you're supported. The audit is industry-specific — no generic templates.</p></details>
 
+      <details class="qa"><summary><span>What if I want out?</span><span class="qa__plus">+</span></summary><p>30-day notice, no contract, no questions. We keep your number, your data, your call history portable. If we're not earning our keep, we shouldn't be there.</p></details>
+
+      <details class="qa"><summary><span>Tried automation before and it failed. Why try again?</span><span class="qa__plus">+</span></summary><p>Most "automation" is one tool bolted on, run by you. We operate the whole loop — and we're the ones the alerts go to at 2am. The difference is who's accountable when something breaks.</p></details>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════ -->
+<!-- ─────────  8. FINAL CTA  ───────── -->
+<section class="close" id="contact">
+  <div class="container close__inner">
+    <div class="mono mono--mute">07 — Let's Go</div>
+    <h2 class="display display--xl">Book the<br /><em>20-minute audit.</em></h2>
+    <p class="lede lede--narrow">Tell us where your business leaks calls, leads, or revenue. You'll leave the call with a punch list — even if you never hire us.</p>
+
+    <form class="form" id="contactForm" novalidate>
+      <div class="form__row">
+        <label><span class="mono mono--mute">NAME</span><input type="text" name="name" placeholder="Your name" required /></label>
+        <label><span class="mono mono--mute">EMAIL</span><input type="email" name="email" placeholder="you@business.com" required /></label>
+      </div>
+      <div class="form__row">
+        <label><span class="mono mono--mute">BUSINESS</span><input type="text" name="business" placeholder="What's the business name?" /></label>
+        <label><span class="mono mono--mute">INDUSTRY</span>
+          <select name="type">
+            <option value="">Select…</option>
+            <option>Dental / Medical</option>
+            <option>Auto Repair</option>
+            <option>HVAC / Trades</option>
+            <option>Law Firm</option>
+            <option>Real Estate</option>
+            <option>Salon / Spa</option>
+            <option>Restaurant</option>
+            <option>Contractor</option>
+            <option>E-commerce</option>
+            <option>Other</option>
+          </select>
+        </label>
+      </div>
+      <label class="form__full"><span class="mono mono--mute">WHERE IS YOUR BUSINESS LEAKING?</span><textarea name="message" rows="3" placeholder="Missed calls, slow follow-up, manual scheduling…"></textarea></label>
+
+      <div class="form__submit-row">
+        <button type="submit" class="btn btn--ink btn--lg" id="formSubmit">
+          <span id="formBtnText">Book the audit →</span>
+          <span id="formBtnLoading" style="display:none">Sending…</span>
+        </button>
+        <div class="form__assure mono mono--mute">No contract. Cancel any time.</div>
+      </div>
+      <div class="form-success" id="formSuccess" style="display:none">✓ Received. We'll be in touch within one business day.</div>
+      <div class="form-error" id="formError" style="display:none">Something went wrong. Email us at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ─────────  FOOTER  ───────── -->
 <footer class="footer">
-  <div class="footer__bar"></div>
-  <div class="container">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <a href="#home" class="footer__logo"><span>Vida</span><span class="gold">Tech</span></a>
-        <p>Intelligent business systems for companies ready to operate at a higher level.</p>
-        <div class="footer__emails">
-          <a href="mailto:coo@vidatech.org">coo@vidatech.org</a>
-          <a href="mailto:biz@vidatech.org">biz@vidatech.org</a>
-        </div>
-      </div>
-      <div class="footer__cols">
-        <div class="footer__col">
-          <h5>Services</h5>
-          <a href="#services">Virtual Receptionist</a>
-          <a href="#services">E-commerce Automation</a>
-          <a href="#services">Business Automation</a>
-          <a href="#services">Web &amp; App Dev</a>
-          <a href="#services">Digital Marketing</a>
-        </div>
-        <div class="footer__col">
-          <h5>Industries</h5>
-          <a href="#demo">Dental &amp; Medical</a>
-          <a href="#demo">Auto Repair</a>
-          <a href="#demo">HVAC</a>
-          <a href="#demo">Law Firms</a>
-          <a href="#demo">Restaurants</a>
-        </div>
-        <div class="footer__col">
-          <h5>Company</h5>
-          <a href="#demo">Live Demo</a>
-          <a href="#how">How We Work</a>
-          <a href="#contact">Get Started</a>
-          <a href="mailto:coo@vidatech.org">Contact</a>
-        </div>
-      </div>
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="#top" class="logo logo--footer">
+        <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M9 9l7 14 7-14" stroke="#F5F1E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        <span class="logo__word">VidaTech</span>
+      </a>
+      <p class="footer__line">Operated infrastructure for service businesses.</p>
     </div>
-    <div class="footer__bottom">
-      <p>© 2025 VidaTech · All rights reserved · vidatech.org</p>
-      <p>Powered by VidaTech Technology</p>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#receptionist">Receptionist</a>
+      <a href="#services">Services</a>
+      <a href="#deploy">Process</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="footer__meta">
+      <div class="mono mono--mute">© 2026 VidaTech · vidatech.org</div>
+      <a href="mailto:coo@vidatech.org" class="mono">coo@vidatech.org</a>
     </div>
   </div>
 </footer>
 
-<script src="script.js?v=5"></script>
+<script src="script.js?v=10"></script>
 </body>
 </html>
