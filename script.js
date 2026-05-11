@@ -29,20 +29,25 @@
     initRevealFallback();
   }
 
-  /* ─── 0. LENIS SMOOTH SCROLL ─── */
+  /* ─── 0. LENIS SMOOTH SCROLL (lazy-loaded) ─── */
   function initLenis() {
-    if (reduced || !window.Lenis) return;
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: t => 1 - Math.pow(1 - t, 4),
-      smoothWheel: true,
-      smoothTouch: false,
-      wheelMultiplier: 0.92,
-      lerp: 0.085,
-    });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    window._lenis = lenis;
+    if (reduced) return;
+    const start = () => {
+      if (!window.Lenis) return;
+      const lenis = new Lenis({
+        duration: 1.1,
+        easing: t => 1 - Math.pow(1 - t, 4),
+        smoothWheel: true,
+        smoothTouch: false,
+        wheelMultiplier: 0.92,
+        lerp: 0.085,
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      window._lenis = lenis;
+    };
+    if (window.Lenis) { start(); }
+    else { document.addEventListener('lenis:ready', start, { once: true }); }
   }
 
   /* ─── 1. NAV ─── */

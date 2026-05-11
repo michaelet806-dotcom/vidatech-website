@@ -13,9 +13,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=31" />
-<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=40" />
+<script>
+  // Lazy-load Lenis after first paint to avoid blocking critical path
+  addEventListener('load', () => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js';
+    s.onload = () => document.dispatchEvent(new Event('lenis:ready'));
+    document.head.appendChild(s);
+  });
+</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D4513F'/%3E%3Cpath d='M9 9l7 14 7-14' stroke='%23F5F1E8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 </head>
 <body>
@@ -80,30 +90,22 @@
       <a href="#contact" class="link link--arrow">Book a 20-min audit <span aria-hidden="true">→</span></a>
     </div>
 
-    <div class="hero__strip">
-      <div class="hero__strip-item">
-        <div class="mono">SYSTEM 01</div>
-        <div>Receptionist</div>
+    <div class="hero__proof">
+      <div class="hero__proof-item">
+        <div class="mono mono--mute">Live in</div>
+        <div class="hero__proof-num">48 hr</div>
       </div>
-      <div class="hero__strip-item">
-        <div class="mono">SYSTEM 02</div>
-        <div>E-commerce</div>
+      <div class="hero__proof-item">
+        <div class="mono mono--mute">Pickup</div>
+        <div class="hero__proof-num">&lt;2 sec</div>
       </div>
-      <div class="hero__strip-item">
-        <div class="mono">SYSTEM 03</div>
-        <div>Automation</div>
+      <div class="hero__proof-item">
+        <div class="mono mono--mute">Coverage</div>
+        <div class="hero__proof-num">24/7</div>
       </div>
-      <div class="hero__strip-item">
-        <div class="mono">SYSTEM 04</div>
-        <div>Web &amp; App</div>
-      </div>
-      <div class="hero__strip-item">
-        <div class="mono">SYSTEM 05</div>
-        <div>Marketing</div>
-      </div>
-      <div class="hero__strip-item">
-        <div class="mono">SYSTEM 06</div>
-        <div>Brand</div>
+      <div class="hero__proof-item">
+        <div class="mono mono--mute">Missed calls</div>
+        <div class="hero__proof-num">0</div>
       </div>
     </div>
 
@@ -152,7 +154,11 @@
             <span class="live-pulse" aria-hidden="true"></span>
           </div>
           <div class="phone__chat" id="phoneChat">
-            <!-- bubbles injected by JS -->
+            <!-- Static fallback (JS replaces these with animated versions on view) -->
+            <div class="bubble bubble--caller is-in">Hi — is this Vida Auto Body?</div>
+            <div class="bubble bubble--ai is-in">Vida Auto Body, this is the front desk — how can I help?</div>
+            <div class="bubble bubble--caller is-in">My brakes are grinding. Can someone look at it?</div>
+            <div class="bubble bubble--ai is-in">Sure — I can get you in tomorrow at 2:30 or Thursday at 10.</div>
           </div>
           <div class="phone__dock">
             <button class="phone__btn phone__btn--mute" aria-label="Mute">
@@ -419,7 +425,7 @@
       <div class="founder__attribution">
         <span class="founder__rule" aria-hidden="true"></span>
         <span class="founder__name">Michael Torres</span>
-        <span class="founder__role mono mono--mute">Founder · VidaTech · est. MMXXIV</span>
+        <span class="founder__role mono mono--mute">Founder · VidaTech · est. 2024</span>
       </div>
     </aside>
   </div>
@@ -450,6 +456,35 @@
   </div>
 </section>
 
+<!-- ─────────  7.5  PRICING  ───────── -->
+<section class="pricing">
+  <div class="container pricing__inner">
+    <div class="pricing__card">
+      <div class="pricing__head">
+        <div class="mono mono--mute">VIDATECH RECEPTIONIST</div>
+        <div class="pricing__price">
+          <span class="pricing__amount">$3,500</span>
+          <span class="pricing__per mono">/month</span>
+        </div>
+        <div class="pricing__sub">Everything included. No setup fee. Cancel anytime.</div>
+      </div>
+      <ul class="pricing__features">
+        <li>Answers every call · &lt;2 second pickup · 24/7</li>
+        <li>Qualifies the lead, books straight into your calendar</li>
+        <li>SMS confirmation sent automatically</li>
+        <li>Live transcripts emailed daily — every call, every booking</li>
+        <li>Live on your existing business number in 48 hours</li>
+        <li>Human handoff anytime a caller asks</li>
+      </ul>
+      <div class="pricing__guarantee">
+        <span class="mono mono--mute">30-day pilot guarantee</span>
+        <p>If we don't book qualified leads in your first month, you don't pay for it.</p>
+      </div>
+      <a href="#contact" class="btn btn--ink btn--lg" data-magnetic>Book the audit <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
 <!-- ─────────  8. FINAL CTA  ───────── -->
 <section class="close section-folio section-folio--dark" id="contact" data-folio="07">
   <div class="container close__inner">
@@ -460,8 +495,8 @@
 
     <form class="form" id="contactForm" novalidate>
       <div class="form__row">
-        <label for="f-name"><span class="mono mono--mute">NAME</span><input id="f-name" type="text" name="name" placeholder="Your name" required autocomplete="name" /></label>
-        <label for="f-email"><span class="mono mono--mute">EMAIL</span><input id="f-email" type="email" name="email" placeholder="you@business.com" required autocomplete="email" /></label>
+        <label for="f-name"><span class="mono mono--mute">NAME</span><input id="f-name" type="text" name="name" placeholder="Your name" required autocomplete="name" enterkeyhint="next" /></label>
+        <label for="f-email"><span class="mono mono--mute">EMAIL</span><input id="f-email" type="email" name="email" placeholder="you@business.com" required autocomplete="email" inputmode="email" enterkeyhint="next" /></label>
       </div>
       <div class="form__row">
         <label for="f-business"><span class="mono mono--mute">BUSINESS</span><input id="f-business" type="text" name="business" placeholder="What's the business name?" autocomplete="organization" /></label>
@@ -481,17 +516,17 @@
           </select>
         </label>
       </div>
-      <label class="form__full" for="f-message"><span class="mono mono--mute">WHAT'S THE #1 THING YOU'D WANT FIXED FIRST? <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></span><textarea id="f-message" name="message" rows="3" placeholder="Missed calls, slow follow-up, manual scheduling…"></textarea></label>
+      <label class="form__full" for="f-message"><span class="mono mono--mute">WHAT'S THE #1 THING YOU'D WANT FIXED FIRST? <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></span><textarea id="f-message" name="message" rows="3" placeholder="Missed calls, slow follow-up, manual scheduling…" enterkeyhint="send"></textarea></label>
 
       <div class="form__submit-row">
         <button type="submit" class="btn btn--ink btn--lg" data-magnetic id="formSubmit">
           <span id="formBtnText">Book the audit <span aria-hidden="true">→</span></span>
           <span id="formBtnLoading" hidden>Sending…</span>
         </button>
-        <div class="form__assure mono mono--mute">No contract. Cancel any time.</div>
+        <div class="form__assure mono mono--mute">30-day pilot · No contract · Cancel any time</div>
       </div>
       <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Received. We'll be in touch within one business day.</div>
-      <div class="form-error" id="formError" role="alert" aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a></div>
+      <div class="form-error" id="formError" role="alert" aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:hello@vidatech.org">hello@vidatech.org</a></div>
     </form>
   </div>
 </section>
@@ -517,17 +552,17 @@
     </nav>
     <div class="footer__meta">
       <div class="mono mono--mute">© 2026 VidaTech · vidatech.org</div>
-      <a href="mailto:coo@vidatech.org" class="mono">coo@vidatech.org</a>
+      <a href="mailto:hello@vidatech.org" class="mono">hello@vidatech.org</a>
     </div>
   </div>
   <div class="container footer__crest" aria-hidden="true">
     <span class="footer__rule"></span>
     <span class="footer__mark">VT</span>
-    <span class="footer__est">EST. MMXXIV</span>
+    <span class="footer__est">EST. 2024</span>
     <span class="footer__rule"></span>
   </div>
 </footer>
 
-<script src="script.js?v=30"></script>
+<script src="script.js?v=40"></script>
 </body>
 </html>
