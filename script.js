@@ -269,8 +269,15 @@
       };
 
       if (!data.name || !data.email) {
-        errBox.hidden = false;
-        errBox.innerHTML = 'Please add your name and email.';
+        errBox.hidden = true;
+        errBox.innerHTML = '';
+        // Force re-announce by toggling
+        requestAnimationFrame(() => {
+          errBox.textContent = 'Please add your name and email.';
+          errBox.hidden = false;
+        });
+        const target = !data.name ? $('#f-name') : $('#f-email');
+        if (target) target.focus();
         return;
       }
 
@@ -287,11 +294,16 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-        if (res.ok) { form.reset(); okBox.hidden = false; }
+        if (res.ok) {
+          form.reset();
+          okBox.hidden = false;
+          okBox.setAttribute('tabindex', '-1');
+          okBox.focus();
+        }
         else throw new Error();
       } catch {
         errBox.hidden = false;
-        errBox.innerHTML = 'Something went wrong. Email us at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a>';
+        errBox.innerHTML = 'Something went wrong. Email us at <a href="mailto:hello@vidatech.org">hello@vidatech.org</a>';
       } finally {
         btnTxt.hidden = false;
         btnLoad.hidden = true;

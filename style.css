@@ -52,7 +52,7 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:80px}
 body{
   font-family:var(--sans);
   background:var(--cream);
@@ -1073,6 +1073,7 @@ ul{list-style:none}
   border-radius:4px;
 }
 .close :where(a, button, summary, input, select, textarea):focus-visible{outline-color:var(--cream)}
+main:focus-visible{outline:none}
 
 /* ─── Mobile horizontal-scroll bleed fixes ─── */
 html, body{overflow-x:clip}

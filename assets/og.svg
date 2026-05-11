@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5F1E8"/>
+      <stop offset="1" stop-color="#EFE9DC"/>
+    </linearGradient>
+    <pattern id="grain" patternUnits="userSpaceOnUse" width="120" height="120">
+      <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2"/></filter>
+      <rect width="120" height="120" filter="url(#n)" opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grain)"/>
+
+  <!-- Top-right folio -->
+  <text x="1140" y="56" text-anchor="end" font-family="ui-monospace, 'JetBrains Mono', monospace"
+        font-size="14" fill="#1A1611" opacity="0.45" letter-spacing="1.2">№ 01 / 07</text>
+
+  <!-- Top-left brand -->
+  <g transform="translate(64,60)">
+    <rect width="36" height="36" rx="8" fill="#1A1611"/>
+    <path d="M11 11l7 14 7-14" stroke="#F5F1E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="48" y="26" font-family="'IBM Plex Serif', Georgia, serif" font-size="22" font-weight="600" fill="#1A1611">VidaTech</text>
+  </g>
+
+  <!-- Eyebrow -->
+  <g transform="translate(64,206)">
+    <circle cx="6" cy="6" r="5" fill="#D4513F"/>
+    <text x="20" y="11" font-family="ui-monospace, 'JetBrains Mono', monospace"
+          font-size="14" fill="#4A4339" letter-spacing="2.4">FOR DENTAL · AUTO · HVAC · LAW · HOME SERVICES</text>
+  </g>
+
+  <!-- Headline -->
+  <text x="64" y="332" font-family="'IBM Plex Serif', Georgia, serif"
+        font-size="104" font-weight="500" fill="#1A1611" letter-spacing="-3">Never miss</text>
+  <text x="64" y="448" font-family="'IBM Plex Serif', Georgia, serif"
+        font-size="104" font-style="italic" font-weight="500" fill="#D4513F" letter-spacing="-3">another call.</text>
+
+  <!-- Hand-drawn coral underline -->
+  <path d="M 64 470 Q 240 462 480 466 T 740 464" stroke="#D4513F" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Sub -->
+  <text x="64" y="528" font-family="'Inter', sans-serif" font-size="22" fill="#4A4339" font-weight="400">
+    AI receptionist that answers in 2 seconds, qualifies the lead, and books on your calendar.
+  </text>
+  <text x="64" y="564" font-family="'Inter', sans-serif" font-size="22" fill="#4A4339" font-weight="600">
+    Live in 48 hours · $3,500/mo · Cancel anytime.
+  </text>
+
+  <!-- Bottom-right URL -->
+  <text x="1140" y="588" text-anchor="end" font-family="ui-monospace, 'JetBrains Mono', monospace"
+        font-size="14" fill="#1A1611" opacity="0.55" letter-spacing="1.2">vidatech.org</text>
+</svg>

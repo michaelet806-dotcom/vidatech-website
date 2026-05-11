@@ -4,18 +4,75 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="light" />
-<title>VidaTech — Operated Infrastructure for Service Businesses</title>
-<meta name="description" content="VidaTech builds and operates the front-office and back-office systems small businesses can't staff for — answering calls, closing leads, running daily operations on autopilot." />
-<meta property="og:title" content="VidaTech — Your business, fully staffed." />
-<meta property="og:description" content="The operating layer for service businesses. Receptionist, e-commerce, automation, dev, marketing — one team, accountable to outcomes." />
+<meta name="theme-color" content="#F5F1E8" />
+<title>VidaTech — Never miss another call. AI receptionist for service businesses.</title>
+<meta name="description" content="AI receptionist that answers your business line in under 2 seconds, qualifies the caller, and books straight into your calendar. Live in 48 hours. $3,500/mo. Cancel anytime." />
+<link rel="canonical" href="https://vidatech.org" />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="VidaTech" />
+<meta property="og:title" content="VidaTech — Never miss another call." />
+<meta property="og:description" content="AI receptionist that answers in 2 seconds, qualifies the lead, and books straight into your calendar. Live in 48 hours. $3,500/mo." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://vidatech.org" />
+<meta property="og:image" content="https://vidatech.org/assets/og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="VidaTech — Never miss another call." />
+<meta name="twitter:description" content="AI receptionist for service businesses. Live on your phone line in 48 hours." />
+<meta name="twitter:image" content="https://vidatech.org/assets/og.jpg" />
+
+<!-- Structured data: Organization + Service -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://vidatech.org/#org",
+      "name": "VidaTech",
+      "url": "https://vidatech.org",
+      "logo": "https://vidatech.org/assets/og.jpg",
+      "email": "hello@vidatech.org",
+      "foundingDate": "2024",
+      "description": "Operated infrastructure for service businesses — front-office and back-office systems that answer calls, book leads, and run operations on autopilot.",
+      "areaServed": "United States",
+      "sameAs": []
+    },
+    {
+      "@type": "Service",
+      "name": "AI Receptionist",
+      "provider": { "@id": "https://vidatech.org/#org" },
+      "description": "AI receptionist that answers business calls in under 2 seconds, qualifies callers, and books appointments into your calendar 24/7.",
+      "areaServed": "United States",
+      "serviceType": "Virtual receptionist",
+      "offers": {
+        "@type": "Offer",
+        "price": "3500",
+        "priceCurrency": "USD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "3500",
+          "priceCurrency": "USD",
+          "unitText": "MONTH"
+        },
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=40" />
+<link rel="stylesheet" href="style.css?v=50" />
 <script>
   // Lazy-load Lenis after first paint to avoid blocking critical path
   addEventListener('load', () => {
@@ -66,7 +123,7 @@
   </div>
 </header>
 
-<main id="top">
+<main id="top" tabindex="-1">
 
 <!-- ─────────  1. HERO  ───────── -->
 <section class="hero">
@@ -132,7 +189,7 @@
     </div>
 
     <div class="stage" id="callStage" aria-label="Live call demonstration">
-      <p class="sr-only">Demonstration: a customer calls asking about grinding brakes. The receptionist offers Tuesday 2:30 PM or Thursday 10 AM. The customer books 2:30 PM. The booking appears on the business dashboard as "James Reilly — Brake check, 2:30 PM, 30 min."</p>
+      <p class="sr-only">Demonstration: a customer calls asking about grinding brakes. The receptionist offers Tuesday 2:30 PM or Thursday 10 AM. The customer books 2:30 PM. The booking appears on the business dashboard alongside today's running totals: 148 calls answered, 31 bookings created, zero missed calls.</p>
       <!-- Phone -->
       <div class="phone" aria-hidden="true">
         <div class="phone__notch"></div>
@@ -161,13 +218,13 @@
             <div class="bubble bubble--ai is-in">Sure — I can get you in tomorrow at 2:30 or Thursday at 10.</div>
           </div>
           <div class="phone__dock">
-            <button class="phone__btn phone__btn--mute" aria-label="Mute">
+            <button class="phone__btn phone__btn--mute" aria-label="Mute" tabindex="-1">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
             </button>
-            <button class="phone__btn phone__btn--end" aria-label="End call">
+            <button class="phone__btn phone__btn--end" aria-label="End call" tabindex="-1">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8a14 14 0 01-2 .2 14 14 0 01-14-14 14 14 0 01.2-2L5 0 8 6l-2 3a14 14 0 005 5l3-2 6 3z"/></svg>
             </button>
-            <button class="phone__btn phone__btn--keypad" aria-label="Keypad">
+            <button class="phone__btn phone__btn--keypad" aria-label="Keypad" tabindex="-1">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="18" cy="6" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/><circle cx="6" cy="18" r="1.5"/><circle cx="12" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>
             </button>
           </div>
@@ -457,11 +514,12 @@
 </section>
 
 <!-- ─────────  7.5  PRICING  ───────── -->
-<section class="pricing">
+<section class="pricing" aria-labelledby="pricing-heading">
   <div class="container pricing__inner">
+    <h2 id="pricing-heading" class="sr-only">Pricing — VidaTech Receptionist, $3,500 per month</h2>
     <div class="pricing__card">
       <div class="pricing__head">
-        <div class="mono mono--mute">VIDATECH RECEPTIONIST</div>
+        <div class="mono mono--mute" aria-hidden="true">VIDATECH RECEPTIONIST</div>
         <div class="pricing__price">
           <span class="pricing__amount">$3,500</span>
           <span class="pricing__per mono">/month</span>
@@ -563,6 +621,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=40"></script>
+<script src="script.js?v=50"></script>
 </body>
 </html>
