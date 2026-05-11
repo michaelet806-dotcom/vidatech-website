@@ -1564,3 +1564,27 @@ html, body{overflow-x:clip}
   .pain__reframe{padding:22px 24px;font-size:1.1rem}
 }
 
+
+/* ─── Demo line callout ─── */
+.demo-line{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  margin:48px auto 0;padding:28px 36px;
+  background:var(--ink);color:var(--cream);
+  border-radius:var(--r-lg);
+  box-shadow:0 24px 48px -24px rgba(26,22,17,0.6), inset 0 1px 0 rgba(245,241,232,0.06);
+  width:fit-content;max-width:100%;
+  text-decoration:none;
+  transition:transform var(--t),background var(--t);
+}
+.demo-line:hover{transform:translateY(-2px);background:var(--coral);color:var(--cream)}
+.demo-line__label{color:rgba(245,241,232,0.55);font-size:.7rem;letter-spacing:.18em}
+.demo-line__num{
+  font-family:var(--serif);font-size:clamp(2.2rem,4.4vw,3.4rem);
+  font-weight:500;letter-spacing:-0.03em;line-height:1;color:var(--cream);
+}
+.demo-line__hint{font-size:.78rem;color:rgba(245,241,232,0.6);letter-spacing:.05em}
+.demo-line:hover .demo-line__hint{color:rgba(245,241,232,0.85)}
+@media (max-width:540px){
+  .demo-line{padding:22px 24px;width:auto;align-self:stretch}
+  .demo-line__num{font-size:clamp(1.7rem,8vw,2.2rem)}
+}

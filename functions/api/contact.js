@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         from: 'VidaTech Contact <coo@vidatech.org>',
-        to: ['vidaholdingsgroup@gmail.com'],
+        to: ['vidaholdings@gmail.com'],
         reply_to: email,
         subject: `New Inquiry — ${name}${business ? ' · ' + business : ''}`,
         html,
