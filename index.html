@@ -6,14 +6,14 @@
 <meta name="color-scheme" content="light" />
 <meta name="theme-color" content="#F5F1E8" />
 <title>VidaTech — Never miss another call. AI receptionist for service businesses.</title>
-<meta name="description" content="AI receptionist that answers your business line in under 2 seconds, qualifies the caller, and books straight into your calendar. Live in 48 hours. $3,500/mo. Cancel anytime." />
+<meta name="description" content="AI receptionist that answers your business line in under 2 seconds, qualifies the caller, and books straight into your calendar. Live in 48 hours. From $300/mo. Cancel anytime." />
 <link rel="canonical" href="https://vidatech.org" />
 <meta name="robots" content="index,follow,max-image-preview:large" />
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="VidaTech" />
 <meta property="og:title" content="VidaTech — Never miss another call." />
-<meta property="og:description" content="AI receptionist that answers in 2 seconds, qualifies the lead, and books straight into your calendar. Live in 48 hours. $3,500/mo." />
+<meta property="og:description" content="AI receptionist that answers in 2 seconds, qualifies the lead, and books straight into your calendar. Live in 48 hours. From $300/mo." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://vidatech.org" />
 <meta property="og:image" content="https://vidatech.org/assets/og.jpg" />
@@ -52,16 +52,13 @@
       "areaServed": "United States",
       "serviceType": "Virtual receptionist",
       "offers": {
-        "@type": "Offer",
-        "price": "3500",
+        "@type": "AggregateOffer",
         "priceCurrency": "USD",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "price": "3500",
-          "priceCurrency": "USD",
-          "unitText": "MONTH"
-        },
-        "availability": "https://schema.org/InStock"
+        "lowPrice": "300",
+        "highPrice": "3500",
+        "offerCount": "3",
+        "availability": "https://schema.org/InStock",
+        "description": "Pricing scales with call volume and feature set — from $300/mo for solo operators to $3,500/mo for full multi-location coverage."
       }
     }
   ]
@@ -72,7 +69,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=50" />
+<link rel="stylesheet" href="style.css?v=52" />
 <script>
   // Lazy-load Lenis after first paint to avoid blocking critical path
   addEventListener('load', () => {
@@ -139,7 +136,7 @@
     </h1>
 
     <p class="lede">
-      Our AI receptionist answers your business line in under 2 seconds, qualifies the caller, and books straight into your calendar. Live on your number in 48 hours. <strong>$3,500/mo. Cancel anytime.</strong>
+      Our AI receptionist answers your business line in under 2 seconds, qualifies the caller, and books straight into your calendar. Live on your number in 48 hours. <strong>From $300/mo. Cancel anytime.</strong>
     </p>
 
     <div class="hero__cta">
@@ -448,7 +445,7 @@
           <li><span>Books into your calendar</span><span>included</span></li>
           <li><span>SMS confirmation</span><span>included</span></li>
         </ul>
-        <div class="ledger__total"><span>$3,500/mo</span><span>$42K/yr</span></div>
+        <div class="ledger__total"><span>From $300/mo</span><span>Up to $3,500/mo</span></div>
         <div class="ledger__note mono mono--mute">Coverage: 168 hrs/wk · Live in 48 hours · Cancel anytime</div>
       </div>
     </div>
@@ -516,29 +513,80 @@
 <!-- ─────────  7.5  PRICING  ───────── -->
 <section class="pricing" aria-labelledby="pricing-heading">
   <div class="container pricing__inner">
-    <h2 id="pricing-heading" class="sr-only">Pricing — VidaTech Receptionist, $3,500 per month</h2>
-    <div class="pricing__card">
-      <div class="pricing__head">
-        <div class="mono mono--mute" aria-hidden="true">VIDATECH RECEPTIONIST</div>
-        <div class="pricing__price">
-          <span class="pricing__amount">$3,500</span>
-          <span class="pricing__per mono">/month</span>
+    <h2 id="pricing-heading" class="sr-only">Pricing — VidaTech Receptionist, from $300 to $3,500 per month based on volume</h2>
+    <div class="pricing__intro">
+      <div class="mono mono--mute">VIDATECH RECEPTIONIST</div>
+      <div class="pricing__range">
+        <span class="pricing__amount">$300</span>
+        <span class="pricing__per mono">to</span>
+        <span class="pricing__amount">$3,500</span>
+        <span class="pricing__per mono">/month</span>
+      </div>
+      <p class="pricing__sub">Scales with your call volume and feature set. Every plan includes 24/7 pickup, qualification, calendar booking, SMS confirmation, and the 30-day pilot guarantee.</p>
+    </div>
+
+    <div class="pricing__grid">
+      <article class="pricing__card pricing__card--solo">
+        <div class="pricing__head">
+          <div class="mono mono--mute" aria-hidden="true">SOLO</div>
+          <div class="pricing__price">
+            <span class="pricing__amount pricing__amount--sm">$300</span>
+            <span class="pricing__per mono">/month</span>
+          </div>
+          <div class="pricing__sub">For solo operators &amp; one-location service businesses.</div>
         </div>
-        <div class="pricing__sub">Everything included. No setup fee. Cancel anytime.</div>
-      </div>
-      <ul class="pricing__features">
-        <li>Answers every call · &lt;2 second pickup · 24/7</li>
-        <li>Qualifies the lead, books straight into your calendar</li>
-        <li>SMS confirmation sent automatically</li>
-        <li>Live transcripts emailed daily — every call, every booking</li>
-        <li>Live on your existing business number in 48 hours</li>
-        <li>Human handoff anytime a caller asks</li>
-      </ul>
-      <div class="pricing__guarantee">
-        <span class="mono mono--mute">30-day pilot guarantee</span>
-        <p>If we don't book qualified leads in your first month, you don't pay for it.</p>
-      </div>
-      <a href="#contact" class="btn btn--ink btn--lg" data-magnetic>Book the audit <span aria-hidden="true">→</span></a>
+        <ul class="pricing__features">
+          <li>Up to 200 calls/month</li>
+          <li>One business line · one calendar</li>
+          <li>Qualification + booking + SMS confirm</li>
+          <li>Daily transcript email</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost btn--lg">Start with Solo</a>
+      </article>
+
+      <article class="pricing__card pricing__card--studio">
+        <span class="pricing__badge">Most teams</span>
+        <div class="pricing__head">
+          <div class="mono mono--mute" aria-hidden="true">STUDIO</div>
+          <div class="pricing__price">
+            <span class="pricing__amount pricing__amount--sm">$1,200</span>
+            <span class="pricing__per mono">/month</span>
+          </div>
+          <div class="pricing__sub">For growing offices, mid-volume practices, multi-staff teams.</div>
+        </div>
+        <ul class="pricing__features">
+          <li>Up to 1,500 calls/month</li>
+          <li>Multi-line + multi-calendar routing</li>
+          <li>Custom voice + scripts trained on you</li>
+          <li>CRM integration + outbound follow-up</li>
+          <li>Priority support · 99.95% uptime</li>
+        </ul>
+        <a href="#contact" class="btn btn--ink btn--lg" data-magnetic>Start with Studio</a>
+      </article>
+
+      <article class="pricing__card pricing__card--ops">
+        <div class="pricing__head">
+          <div class="mono mono--mute" aria-hidden="true">OPERATIONS</div>
+          <div class="pricing__price">
+            <span class="pricing__amount pricing__amount--sm">$3,500</span>
+            <span class="pricing__per mono">/month</span>
+          </div>
+          <div class="pricing__sub">For multi-location operators, franchises, and high-volume practices.</div>
+        </div>
+        <ul class="pricing__features">
+          <li>Unlimited calls</li>
+          <li>Unlimited locations + numbers</li>
+          <li>Custom workflows + dedicated tuning</li>
+          <li>Quarterly business review</li>
+          <li>SLA-backed response &amp; uptime</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost btn--lg">Start with Operations</a>
+      </article>
+    </div>
+
+    <div class="pricing__guarantee">
+      <span class="mono mono--mute">30-day pilot guarantee</span>
+      <p>If we don't book qualified leads in your first month — on any plan — you don't pay for it.</p>
     </div>
   </div>
 </section>
