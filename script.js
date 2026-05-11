@@ -12,6 +12,7 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
+    initLenis();
     initNav();
     initPhoneClock();
     initLivingCall();
@@ -24,7 +25,24 @@
     initScrollVelocity();
     initMagnetic();
     initCursorRing();
+    initSectionReveals();
     initRevealFallback();
+  }
+
+  /* ─── 0. LENIS SMOOTH SCROLL ─── */
+  function initLenis() {
+    if (reduced || !window.Lenis) return;
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: t => 1 - Math.pow(1 - t, 4),
+      smoothWheel: true,
+      smoothTouch: false,
+      wheelMultiplier: 0.92,
+      lerp: 0.085,
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    window._lenis = lenis;
   }
 
   /* ─── 1. NAV ─── */
@@ -39,19 +57,20 @@
     window.addEventListener('scroll', onScroll, { passive: true });
 
     if (menu && drawer) {
-      menu.addEventListener('click', () => {
-        const open = menu.classList.toggle('is-open');
+      drawer.toggleAttribute('inert', true);
+      const setOpen = (open) => {
+        menu.classList.toggle('is-open', open);
         drawer.classList.toggle('is-open', open);
         drawer.setAttribute('aria-hidden', String(!open));
+        drawer.toggleAttribute('inert', !open);
         menu.setAttribute('aria-expanded', String(open));
+        menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      };
+      menu.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+      $$('a', drawer).forEach(a => a.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false);
       });
-      $$('a', drawer).forEach(a =>
-        a.addEventListener('click', () => {
-          menu.classList.remove('is-open');
-          drawer.classList.remove('is-open');
-          menu.setAttribute('aria-expanded', 'false');
-        })
-      );
     }
   }
 
@@ -78,12 +97,12 @@
     if (!chat || !stage) return;
 
     const script = [
-      { side: 'caller', text: 'Hi — is this Vida Auto Body?', delay: 600 },
-      { side: 'ai',     text: 'Vida Auto Body, this is the front desk — how can I help?', delay: 1100, typing: 700 },
-      { side: 'caller', text: "I think my brakes are grinding. Can someone look at it?", delay: 1500 },
-      { side: 'ai',     text: "Absolutely. I can get you in tomorrow at 2:30 or Thursday at 10. Which works?", delay: 1400, typing: 800 },
-      { side: 'caller', text: "Tomorrow at 2:30, please.", delay: 1500 },
-      { side: 'ai',     text: "Booked. I'll send a text confirmation now. Anything else?", delay: 1200, typing: 700, onShow: () => flyBooking() },
+      { side: 'caller', text: 'Hi — is this Vida Auto Body?', delay: 400 },
+      { side: 'ai',     text: 'Vida Auto Body, this is the front desk — how can I help?', delay: 800, typing: 500 },
+      { side: 'caller', text: "My brakes are grinding. Can someone look at it?", delay: 1000 },
+      { side: 'ai',     text: "Sure — I can get you in tomorrow at 2:30 or Thursday at 10.", delay: 1100, typing: 600 },
+      { side: 'caller', text: "Tomorrow at 2:30, please.", delay: 900 },
+      { side: 'ai',     text: "Booked. Text confirmation on its way.", delay: 900, typing: 500, onShow: () => flyBooking() },
     ];
 
     let started = false;
@@ -112,11 +131,11 @@
         }
         timeoutIds.push(setTimeout(() => showBubble(line), t));
       });
-      // Loop after a pause
+      // Loop after a pause (long enough to read the booking landed)
       timeoutIds.push(setTimeout(() => {
         started = false;
         runScript();
-      }, t + 6000));
+      }, t + 4500));
     };
 
     const showTyping = (side) => {
@@ -245,16 +264,17 @@
       };
 
       if (!data.name || !data.email) {
-        errBox.style.display = 'block';
+        errBox.hidden = false;
         errBox.innerHTML = 'Please add your name and email.';
         return;
       }
 
-      okBox.style.display  = 'none';
-      errBox.style.display = 'none';
-      btnTxt.style.display = 'none';
-      btnLoad.style.display = 'inline';
+      okBox.hidden  = true;
+      errBox.hidden = true;
+      btnTxt.hidden = true;
+      btnLoad.hidden = false;
       submit.disabled = true;
+      submit.setAttribute('aria-busy', 'true');
 
       try {
         const res = await fetch('/api/contact', {
@@ -262,15 +282,16 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
-        if (res.ok) { form.reset(); okBox.style.display = 'block'; }
+        if (res.ok) { form.reset(); okBox.hidden = false; }
         else throw new Error();
       } catch {
-        errBox.style.display = 'block';
+        errBox.hidden = false;
         errBox.innerHTML = 'Something went wrong. Email us at <a href="mailto:coo@vidatech.org">coo@vidatech.org</a>';
       } finally {
-        btnTxt.style.display = 'inline';
-        btnLoad.style.display = 'none';
+        btnTxt.hidden = false;
+        btnLoad.hidden = true;
         submit.disabled = false;
+        submit.removeAttribute('aria-busy');
       }
     });
   }
@@ -398,7 +419,20 @@
     });
   }
 
-  /* ─── 14. REVEAL FALLBACK (for browsers without animation-timeline) ─── */
+  /* ─── 14a. SECTION REVEAL OBSERVER (staggered children) ─── */
+  function initSectionReveals() {
+    const sections = $$('.section-folio');
+    if (!sections.length) return;
+    if (reduced) { sections.forEach(s => s.classList.add('is-in-view')); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    sections.forEach(s => io.observe(s));
+  }
+
+  /* ─── 14b. REVEAL FALLBACK (for browsers without animation-timeline) ─── */
   function initRevealFallback() {
     if (CSS.supports && CSS.supports('animation-timeline: view()')) return;
     const targets = $$('.in-view-target, .reveal-up, .reveal-side-l, .reveal-side-r, .reveal-scale');
