@@ -1487,3 +1487,80 @@ html, body{overflow-x:clip}
   --sans:  'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
 }
 
+/* ═══════════════════════════════════════════════════
+   v6 — Pain section + reassure list
+═══════════════════════════════════════════════════ */
+.pain{
+  padding:96px 0 104px;background:var(--cream-2);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.pain .section-head{margin-bottom:48px}
+
+.pain__list{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px 48px;
+  margin:0 0 60px;list-style:none;padding:0;
+  max-width:920px;
+}
+.pain__list li{
+  font-family:var(--serif);font-size:1.05rem;line-height:1.45;
+  color:var(--ink);
+  padding-left:24px;position:relative;
+}
+.pain__list li::before{
+  content:"";position:absolute;left:0;top:14px;
+  width:12px;height:1px;background:var(--coral);
+}
+
+.pain__receipts{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  margin-bottom:60px;
+}
+.receipt{
+  background:var(--cream);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:24px 22px;display:flex;flex-direction:column;gap:14px;
+  box-shadow:var(--shadow-1);
+}
+.receipt__time{
+  font-size:.7rem;letter-spacing:.14em;color:var(--coral-text);
+}
+.receipt p{
+  font-size:.95rem;line-height:1.5;color:var(--ink-2);flex:1;
+}
+.receipt__cost{
+  font-size:.78rem;letter-spacing:.05em;color:var(--ink);
+  padding-top:12px;border-top:1px dashed var(--line);font-weight:500;
+}
+
+.pain__reframe{
+  max-width:760px;font-family:var(--serif);font-size:clamp(1.2rem,1.9vw,1.55rem);
+  line-height:1.45;color:var(--ink);
+  padding:28px 32px;
+  border-left:3px solid var(--coral);
+  background:rgba(245,241,232,0.5);
+}
+.pain__reframe em{color:var(--coral);font-style:italic}
+.pain__reframe strong{font-weight:600}
+
+.reassure{
+  display:flex;flex-direction:column;gap:10px;
+  max-width:480px;margin:0 auto 36px;
+  list-style:none;padding:0;text-align:left;
+}
+.close .reassure li{
+  display:flex;align-items:center;gap:14px;
+  font-size:.94rem;color:rgba(245,241,232,.85);
+  padding:10px 0;border-bottom:1px solid rgba(245,241,232,.1);
+}
+.close .reassure li:last-child{border-bottom:0}
+.close .reassure .mono{
+  font-size:.66rem;letter-spacing:.14em;color:var(--coral);
+  background:rgba(212,81,63,.1);border:1px solid rgba(212,81,63,.3);
+  padding:4px 8px;border-radius:4px;
+}
+
+@media (max-width:760px){
+  .pain__list{grid-template-columns:1fr;gap:14px}
+  .pain__receipts{grid-template-columns:1fr;gap:12px}
+  .pain__reframe{padding:22px 24px;font-size:1.1rem}
+}
+
