@@ -262,7 +262,7 @@ body.cursor--drag .cursor__ring{width:70px;height:70px;border-color:var(--g2);ba
 .hero__inner{
   position:relative;z-index:2;width:100%;
   display:grid;grid-template-columns:1fr 440px;gap:60px;align-items:center;
-  padding-top:130px;padding-bottom:80px;
+  padding-top:110px;padding-bottom:50px;
 }
 
 /* Badge */
@@ -287,7 +287,8 @@ body.cursor--drag .cursor__ring{width:70px;height:70px;border-color:var(--g2);ba
 .hero__h1{
   font-family:'Playfair Display',serif;
   color:var(--wh);margin-bottom:24px;
-  font-size:clamp(2.5rem,5.5vw,4.6rem);
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  line-height:1.05;letter-spacing:-0.02em;
 }
 .hero__h1-em{
   font-style:italic;
@@ -316,7 +317,13 @@ body.cursor--drag .cursor__ring{width:70px;height:70px;border-color:var(--g2);ba
 .hcard:hover::before{opacity:1}
 .hcard--wide{grid-column:1/-1;display:flex;align-items:center;gap:20px;padding:26px}
 .hcard--live{flex-direction:column;align-items:flex-start;gap:12px}
-.hcard__icon{font-size:1.8rem;flex-shrink:0}
+.hcard__icon{
+  flex-shrink:0;width:46px;height:46px;border-radius:12px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(201,168,76,0.18),rgba(201,168,76,0.06));
+  border:1px solid rgba(201,168,76,0.3);
+  color:var(--g1);
+}
 .hcard__num{
   font-size:2.8rem;font-weight:900;letter-spacing:-.05em;line-height:1;
   background:linear-gradient(135deg,var(--g1),var(--g2));
@@ -651,7 +658,14 @@ body.cursor--drag .cursor__ring{width:70px;height:70px;border-color:var(--g2);ba
   transition:transform var(--t),box-shadow var(--t),border-color var(--t);
 }
 .process__step:hover .process__card{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:rgba(201,168,76,.2)}
-.process__emoji{font-size:1.8rem}
+.process__emoji{
+  width:56px;height:56px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(201,168,76,0.16),rgba(201,168,76,0.04));
+  border:1px solid rgba(201,168,76,0.28);
+  color:var(--g1);
+  margin-bottom:6px;
+}
 .process__card h3{color:var(--gr7);font-size:1rem}
 .process__card p{color:var(--gr5);font-size:.86rem;line-height:1.7}
 .process__tag{
