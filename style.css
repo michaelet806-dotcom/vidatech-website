@@ -1575,3 +1575,279 @@ body{
   font-family:var(--font-mono);
   font-weight:500;
 }
+
+/* ═══════════════════════════════════════════════════
+   DRIBBBLE-TIER BACKGROUND OVERHAUL
+   Layered aurora orbs · conic gradients · grain · geometric accents
+═══════════════════════════════════════════════════ */
+
+:root{
+  --orb-lime:    #C6FF3D;
+  --orb-blue:    #4D7FFF;
+  --orb-violet:  #9D5DFF;
+  --orb-cyan:    #00E0D6;
+  --orb-magenta: #FF4D9C;
+}
+
+/* SVG noise grain — applied site-wide as an after-everything overlay */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity:0.06;mix-blend-mode:overlay;
+}
+
+/* Ensure body content sits above the grain */
+.nav,main,.footer{position:relative;z-index:2}
+
+/* ── BODY: aurora canvas under everything ── */
+body{
+  background:
+    /* warm magenta lower-left */
+    radial-gradient(ellipse 50% 40% at 5% 100%, rgba(255,77,156,0.06) 0%, transparent 60%),
+    /* violet upper-right */
+    radial-gradient(ellipse 55% 45% at 100% 0%, rgba(157,93,255,0.07) 0%, transparent 60%),
+    /* canvas */
+    var(--canvas) !important;
+}
+
+/* ── HERO: cinematic aurora ── */
+.hero{
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 120%, rgba(198,255,61,0.10), transparent 65%),
+    linear-gradient(180deg, var(--canvas-deep) 0%, var(--canvas) 100%) !important;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+/* Big animated orbs behind hero text — large, blurred, mix-blend */
+.hero::before{
+  content:"";position:absolute;inset:-10%;pointer-events:none;z-index:0;
+  background:
+    /* lime orb top-left */
+    radial-gradient(circle 480px at 10% 18%, rgba(198,255,61,0.32) 0%, rgba(198,255,61,0.10) 28%, transparent 60%),
+    /* blue orb mid-right */
+    radial-gradient(circle 560px at 95% 50%, rgba(77,127,255,0.28) 0%, rgba(77,127,255,0.08) 30%, transparent 65%),
+    /* violet orb bottom */
+    radial-gradient(circle 420px at 35% 92%, rgba(157,93,255,0.24) 0%, rgba(157,93,255,0.06) 32%, transparent 60%),
+    /* cyan accent */
+    radial-gradient(circle 300px at 78% 12%, rgba(0,224,214,0.18) 0%, transparent 55%);
+  filter:blur(8px);
+  mask-image:none;-webkit-mask-image:none;
+  animation:auroraDrift 28s ease-in-out infinite alternate;
+  will-change:transform;
+}
+
+/* Conic prismatic accent overlay */
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    /* grid lines now MORE visible — 0.05 opacity, smaller squares */
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px) 0 0/56px 56px,
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0/56px 56px,
+    /* major grid */
+    linear-gradient(rgba(198,255,61,0.06) 1px, transparent 1px) 0 0/280px 280px,
+    linear-gradient(90deg, rgba(198,255,61,0.06) 1px, transparent 1px) 0 0/280px 280px;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%, #000 0%, #000 50%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 50%, #000 0%, #000 50%, transparent 100%);
+  filter:none;opacity:1;
+}
+
+/* Hero content sits above orbs */
+.hero .container{position:relative;z-index:3}
+
+@keyframes auroraDrift{
+  0%   {transform:translate(0,0) scale(1)}
+  50%  {transform:translate(2%,-1%) scale(1.04)}
+  100% {transform:translate(-1%,1%) scale(1.02)}
+}
+
+/* Floating geometric accents in hero — translucent shards */
+.hero .hero__left::after{
+  content:"";position:absolute;
+  right:-80px;top:-40px;width:120px;height:120px;
+  background:linear-gradient(135deg, rgba(198,255,61,0.15), rgba(198,255,61,0));
+  border:1px solid rgba(198,255,61,0.2);
+  transform:rotate(15deg);border-radius:14px;
+  pointer-events:none;z-index:-1;
+  backdrop-filter:blur(2px);
+}
+.hero__right{position:relative}
+.hero__right::before{
+  content:"";position:absolute;
+  left:-60px;bottom:-30px;width:100px;height:100px;
+  background:linear-gradient(135deg, rgba(77,127,255,0.18), rgba(77,127,255,0));
+  border:1px solid rgba(77,127,255,0.25);
+  transform:rotate(-12deg);border-radius:50%;
+  pointer-events:none;z-index:-1;
+}
+
+/* ── DARK section beautification: aurora continuation across the page ── */
+.broken,.floor,.skills,.initialize{
+  position:relative;isolation:isolate;
+  background:var(--canvas) !important;
+}
+
+/* Big colored glow that follows the user down the page */
+.broken{
+  background:
+    radial-gradient(ellipse 70% 50% at 90% 0%, rgba(255,77,156,0.06), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 10% 100%, rgba(255,200,87,0.05), transparent 60%),
+    var(--canvas) !important;
+}
+.floor{
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(198,255,61,0.07), transparent 65%),
+    radial-gradient(ellipse 60% 80% at 100% 50%, rgba(0,224,214,0.05), transparent 65%),
+    var(--canvas-deep) !important;
+}
+.skills{
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 50%, rgba(77,127,255,0.07), transparent 65%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(157,93,255,0.06), transparent 60%),
+    var(--canvas-deep) !important;
+}
+.initialize{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(198,255,61,0.10), transparent 65%),
+    radial-gradient(ellipse 60% 40% at 20% 0%, rgba(77,127,255,0.07), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 0%, rgba(255,77,156,0.05), transparent 60%),
+    var(--canvas-deep) !important;
+}
+
+/* Big subtle dot grid that's MORE visible on dark sections */
+.broken::before,
+.floor::before,
+.skills::before,
+.initialize::before{
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1.5px) !important;
+  background-size:24px 24px !important;
+  mask-image:linear-gradient(180deg, transparent 0, #000 12%, #000 88%, transparent 100%) !important;
+  -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 12%, #000 88%, transparent 100%) !important;
+  opacity:0.7;
+}
+
+/* Cross-hair markers at the corners of dark sections — design candy */
+.broken,.floor,.skills,.initialize{
+  background-attachment:scroll;
+}
+.floor > .container::before,
+.floor > .container::after,
+.skills > .container::before,
+.skills > .container::after{
+  content:"+";position:absolute;
+  font-family:var(--font-mono);font-size:18px;font-weight:300;
+  color:var(--accent);opacity:0.4;
+  pointer-events:none;
+}
+.floor > .container::before{top:24px;left:24px}
+.floor > .container::after{top:24px;right:24px}
+.skills > .container::before{bottom:24px;left:24px}
+.skills > .container::after{bottom:24px;right:24px}
+
+/* ── PAPER sections: dramatically more visible blueprint ── */
+.gap::before,
+.departments::before,
+.workflows::before,
+.math::before,
+.pricing::before{
+  background-image:
+    /* fine 20px grid */
+    linear-gradient(rgba(26,58,107,0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,58,107,0.14) 1px, transparent 1px),
+    /* major 100px grid */
+    linear-gradient(rgba(26,58,107,0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,58,107,0.28) 1px, transparent 1px) !important;
+  background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px !important;
+  opacity:1;
+}
+
+/* Paper sections get colored corner badges with measurement marks */
+.gap > .container::before,
+.departments > .container::before,
+.workflows > .container::before,
+.math > .container::before,
+.pricing > .container::before{
+  content:"";
+  position:absolute;top:30px;left:30px;
+  width:48px;height:48px;
+  background:
+    linear-gradient(180deg, var(--blueprint-deep) 0, var(--blueprint-deep) 1px, transparent 1px) 0 0/1px 12px no-repeat,
+    linear-gradient(90deg, var(--blueprint-deep) 0, var(--blueprint-deep) 1px, transparent 1px) 0 0/12px 1px no-repeat;
+  pointer-events:none;
+}
+.gap > .container::after,
+.departments > .container::after,
+.workflows > .container::after,
+.math > .container::after,
+.pricing > .container::after{
+  content:"";
+  position:absolute;bottom:30px;right:30px;
+  width:48px;height:48px;
+  background:
+    linear-gradient(180deg, var(--blueprint-deep) 0, var(--blueprint-deep) 1px, transparent 1px) 100% 100%/1px 12px no-repeat,
+    linear-gradient(270deg, var(--blueprint-deep) 0, var(--blueprint-deep) 1px, transparent 1px) 100% 100%/12px 1px no-repeat;
+  pointer-events:none;
+}
+
+/* Boost the receptionist card with stronger lime glow halo */
+.dept--receptionist{
+  box-shadow:
+    0 0 0 1px rgba(154,212,30,0.45),
+    0 0 60px -10px rgba(198,255,61,0.35),
+    0 28px 64px -20px rgba(10,11,13,0.20) !important;
+}
+
+/* ── FOOTER: dark with subtle continuation glow ── */
+.footer{
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(198,255,61,0.06), transparent 60%),
+    var(--canvas) !important;
+}
+
+/* ── REDUCED MOTION: kill animation but keep static beauty ── */
+@media (prefers-reduced-motion:reduce){
+  .hero::before{animation:none;filter:blur(20px)}
+}
+
+/* ── Mobile: scale orb sizes down so they don't overwhelm ── */
+@media (max-width:768px){
+  .hero::before{
+    inset:-5%;
+    background:
+      radial-gradient(circle 280px at 15% 12%, rgba(198,255,61,0.28), transparent 60%),
+      radial-gradient(circle 320px at 85% 45%, rgba(77,127,255,0.22), transparent 65%),
+      radial-gradient(circle 240px at 40% 90%, rgba(157,93,255,0.18), transparent 60%);
+    filter:blur(12px);
+  }
+  .hero .hero__left::after,
+  .hero__right::before{display:none}
+  body::after{opacity:0.04}
+}
+
+/* ── Make sure these layers stack below the content ── */
+.broken > .container,
+.floor > .container,
+.skills > .container,
+.initialize > .container,
+.gap > .container,
+.departments > .container,
+.workflows > .container,
+.math > .container,
+.pricing > .container{
+  position:relative;z-index:3;
+}
+.broken::before,
+.floor::before,
+.skills::before,
+.initialize::before,
+.gap::before,
+.departments::before,
+.workflows::before,
+.math::before,
+.pricing::before{z-index:0}
+.gap::after,
+.departments::after,
+.workflows::after,
+.math::after,
+.pricing::after{z-index:1}
