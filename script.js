@@ -328,6 +328,9 @@
       else if (window.turnstile && typeof window.turnstile.getResponse === 'function') {
         try { turnstileToken = window.turnstile.getResponse() || ''; } catch {}
       }
+      // Stub callbacks so the widget doesn't log warnings about missing handlers.
+      window.onTurnstileSuccess = window.onTurnstileSuccess || (() => {});
+      window.onTurnstileError = window.onTurnstileError || (() => {});
 
       try {
         const res = await fetch('/api/contact', {

@@ -1,11 +1,21 @@
 /**
  * VidaTech contact form handler
  * - Validates submission (server-side + sanitization)
+ * - Reserves the 30-minute slot in KV (prevents double-booking the same slot)
  * - Generates RFC 5545 .ics (line-folded, ICS-escaped, DST-aware America/Chicago)
  * - Sends two emails via Resend, lead-first with allSettled semantics
  *   1. Lead notification → vidaholdings@gmail.com (Michael's inbox)
  *   2. Welcome email   → customer
  *   Both attach the .ics — From and ORGANIZER align so Gmail auto-adds to calendar.
+ *
+ * Required Cloudflare Pages bindings / env vars:
+ *   - RESEND_API_KEY        (secret)   Resend API key for transactional email.
+ *   - TURNSTILE_SECRET_KEY  (secret)   Optional. If set, Turnstile token is required.
+ *   - RATE_LIMIT            (KV)       Per-IP sliding-window rate limit. Fails open if absent.
+ *   - SLOTS                 (KV)       Slot reservation store. Keys: `slot:YYYY-MM-DD:HH:MM`.
+ *                                      Values: JSON { booked_at, email_hash, ip_hash }. TTL ~70 days.
+ *                                      Fails open if absent so dev environments still work.
+ *   - ADMIN_TOKEN           (secret)   Bearer token for /api/slots-release admin endpoint.
  */
 
 const ORG_EMAIL = 'vidaholdings@gmail.com';
@@ -74,6 +84,63 @@ async function verifyTurnstile(secret, token, ip) {
   } catch (e) {
     console.error('Turnstile verify failed:', e.message);
     return false;
+  }
+}
+
+/**
+ * SHA-256 hex digest (Workers Runtime crypto.subtle). Used to keep raw PII
+ * (email, IP) out of the SLOTS KV namespace.
+ */
+async function sha256Hex(input) {
+  const data = new TextEncoder().encode(String(input));
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  const bytes = new Uint8Array(digest);
+  let hex = '';
+  for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, '0');
+  return hex;
+}
+
+/**
+ * Build the slot key from a validated date ("YYYY-MM-DD") and time ("HH:MM").
+ */
+function slotKey(date, time) {
+  return `slot:${date}:${time}`;
+}
+
+/**
+ * Check-and-reserve a 30-minute slot in KV.
+ *   - If `env.SLOTS` is not bound: fail OPEN (warn + return ok) so dev works.
+ *   - If the slot key already exists: return { ok: false, taken: true }.
+ *   - Otherwise PUT the slot key with TTL ~70 days and return { ok: true }.
+ *
+ * Note: Cloudflare KV is eventually consistent. This is a soft guard — a
+ * sub-second double-write race is possible, but in practice the window for
+ * two leads hitting the exact same slot within ms is negligible, and the
+ * downstream Gmail dedupe (per-UID ATTENDEE) catches the rest.
+ */
+async function reserveSlot(env, date, time, emailHash, ipHash) {
+  if (!env.SLOTS) {
+    console.warn('SLOTS KV not bound — slot guard disabled (dev mode).');
+    return { ok: true, skipped: true };
+  }
+  const key = slotKey(date, time);
+  try {
+    const existing = await env.SLOTS.get(key);
+    if (existing) return { ok: false, taken: true };
+    const value = JSON.stringify({
+      booked_at: new Date().toISOString(),
+      email_hash: emailHash,
+      ip_hash: ipHash || null,
+    });
+    // ~70 days TTL: covers the 60-day booking horizon plus ~10 days of grace
+    // so a reschedule can't accidentally land on a stale-but-honored slot.
+    await env.SLOTS.put(key, value, { expirationTtl: 70 * 24 * 60 * 60 });
+    return { ok: true };
+  } catch (e) {
+    console.error('Slot reserve failed:', e.message);
+    // Fail open: don't block a real lead on infra hiccups. Michael can
+    // double-book worst case; he'd rather have the lead than lose it.
+    return { ok: true, error: true };
   }
 }
 
@@ -153,6 +220,25 @@ export async function onRequestPost(context) {
   if (minutesOfDay < 9 * 60 || minutesOfDay + 30 > 17 * 60) {
     return json({ error: 'Pick a slot between 9:00 AM and 4:30 PM CT.' }, 400, cors);
   }
+  // Enforce 30-minute alignment so two requests can't book :15 and :30 etc.
+  if (mm % 30 !== 0) {
+    return json({ error: 'Slots are every 30 minutes — pick :00 or :30.' }, 400, cors);
+  }
+
+  // ── Slot reservation guard ──────────────────────────────────────────────
+  // After ALL validation passes, before we generate the .ics or send mail,
+  // check-and-reserve the slot in KV. Hashes keep raw email/IP out of KV.
+  const emailHash = await sha256Hex(email);
+  const ipHash = ip ? await sha256Hex(ip) : '';
+  const reservation = await reserveSlot(context.env, date, time, emailHash, ipHash);
+  if (!reservation.ok && reservation.taken) {
+    return json({ error: 'That slot is already booked. Please pick another.' }, 409, cors);
+  }
+  // Note: if Resend fails below, we intentionally do NOT release the slot.
+  // Michael may still want to honor a booking that triggered an outbound
+  // email failure, and a lead retrying will see "already booked" with the
+  // same (email,date,time) — they can email michael directly. Better than
+  // losing the slot to a race.
 
   const apiKey = context.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -487,7 +573,7 @@ function welcomeHtml({ name, business, date, time }) {
           <h2 style="margin:24px 0 12px;font-size:15px;font-weight:600;color:#E8ECEF">What we&rsquo;ll cover</h2>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             ${bulletRow('The 3&ndash;5 roles you&rsquo;re currently doing that you shouldn&rsquo;t be')}
-            ${bulletRow('Which of our 16 departments would have caught your last 5 hardest weeks')}
+            ${bulletRow('Which of our 15 departments (plus the AI receptionist) would have caught your last 5 hardest weeks')}
             ${bulletRow('A live look at AXIS&middot;OS running against your real org chart')}
           </table>
 

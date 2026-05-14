@@ -55,42 +55,45 @@ export async function onRequestPost(context) {
   if (ct.includes('application/x-www-form-urlencoded')) {
     const body = await request.text();
     const params = new URLSearchParams(body);
-    email = (params.get('email') || '').trim().toLowerCase();
+    email = (params.get('email') || '').trim();
     token = (params.get('t') || '').trim();
     source = (params.get('source') || 'form').trim().slice(0, 32);
     if (params.get('List-Unsubscribe') === 'One-Click') isOneClick = true;
   } else if (ct.includes('application/json')) {
     try {
       const j = await request.json();
-      email = String(j.email || '').trim().toLowerCase();
+      email = String(j.email || '').trim();
       token = String(j.t || '').trim();
       source = String(j.source || 'api').slice(0, 32);
     } catch {
       return text('Invalid JSON', 400, cors);
     }
   } else {
-    // RFC 8058 one-click — Gmail/Outlook may POST with no body or no Content-Type
+    // RFC 8058 one-click — Gmail/Outlook may POST with no body. The unsubscribe URL
+    // we put in List-Unsubscribe always carries the token in the query string, so we
+    // can still verify here.
     const url = new URL(request.url);
-    email = (url.searchParams.get('email') || url.searchParams.get('u') || '').trim().toLowerCase();
+    email = (url.searchParams.get('email') || url.searchParams.get('u') || '').trim();
     token = (url.searchParams.get('t') || '').trim();
     source = 'one-click';
     isOneClick = true;
   }
 
-  // If `u` came in base64url-encoded (from email link), decode it
+  // Decode base64url-encoded email BEFORE lowercasing (base64url is case-sensitive).
   if (email && !email.includes('@')) {
     try { email = b64urlDecode(email); } catch { /* ignore */ }
   }
+  email = email.toLowerCase();
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return text('Email address required.', 400, cors);
   }
 
-  // Token verification — required UNLESS this is a one-click POST from a mail provider
-  // (because Gmail/Outlook's one-click POST does not preserve the token in the body).
-  // For one-click, we trust that the URL provided in List-Unsubscribe header is unguessable,
-  // i.e. the token must have been embedded in the URL query string when we sent the email.
-  if (env.UNSUB_SECRET && !isOneClick) {
+  // Token verification — REQUIRED whenever UNSUB_SECRET is configured. The one-click
+  // POST from Gmail/Outlook keeps the URL query string intact, so we can verify the
+  // token regardless of Content-Type. This closes the unauthenticated unsubscribe-anyone
+  // vector that existed when one-click bypassed verification.
+  if (env.UNSUB_SECRET) {
     if (!token) {
       return text('Missing verification token.', 400, cors);
     }
