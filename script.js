@@ -296,6 +296,11 @@
       else if (!data.email) missing = 'email';
       else if (!data.date) missing = 'date';
       else if (!data.time) missing = 'time';
+      // Clear any prior aria-invalid markers
+      ['name','email','phone','date','time','company','type','size','msg'].forEach(id => {
+        const el = $(`#f-${id}`);
+        if (el) { el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); }
+      });
       if (missing) {
         errBox.hidden = true;
         requestAnimationFrame(() => {
@@ -303,28 +308,50 @@
           errBox.hidden = false;
         });
         const target = $(`#f-${missing}`);
-        if (target) target.focus();
+        if (target) {
+          target.setAttribute('aria-invalid', 'true');
+          target.setAttribute('aria-describedby', 'formError');
+          target.focus();
+        }
         return;
       }
+      const statusBox = $('#formStatus');
       okBox.hidden = true; errBox.hidden = true;
       btnTxt.hidden = true; btnLoad.hidden = false;
       submit.disabled = true; submit.setAttribute('aria-busy','true');
+      if (statusBox) statusBox.textContent = 'Submitting your booking…';
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...data, source: 'vidatech.org' }),
         });
-        if (res.ok) { form.reset(); okBox.hidden = false; okBox.setAttribute('tabindex','-1'); okBox.focus(); }
-        else throw new Error();
-      } catch {
+        if (res.ok) {
+          form.reset();
+          okBox.hidden = false;
+          okBox.setAttribute('tabindex','-1');
+          okBox.focus();
+          if (statusBox) statusBox.textContent = 'Booked. Calendar invite and welcome email sent.';
+        } else {
+          let errText = 'Something went wrong. Email us at vidaholdings@gmail.com';
+          try {
+            const j = await res.json();
+            if (j && j.error) errText = j.error;
+          } catch {}
+          throw new Error(errText);
+        }
+      } catch (e) {
         errBox.hidden = false;
-        errBox.innerHTML = 'Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a>';
+        errBox.innerHTML = (e && e.message) ? escapeHtml(e.message) + ' &middot; <a href="mailto:vidaholdings@gmail.com">email us</a>'
+          : 'Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a>';
+        if (statusBox) statusBox.textContent = 'Submission failed. ' + (e?.message || '');
       } finally {
         btnTxt.hidden = false; btnLoad.hidden = true;
         submit.disabled = false; submit.removeAttribute('aria-busy');
       }
     });
+    // Tiny escape util for the error message
+    function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
   }
 
 })();

@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=blueprint1" />
+<link rel="stylesheet" href="style.css?v=audit1" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
 
 <script type="application/ld+json">
@@ -601,10 +601,10 @@
       <li><span class="mono mono--mute">03</span>You'll leave with a written readout of the four roles you're currently doing that you shouldn't be — whether you sign or not.</li>
     </ul>
 
-    <form class="form" id="contactForm" action="/api/contact" method="post" novalidate>
+    <form class="form" id="contactForm" action="/api/contact" method="post" novalidate aria-describedby="formError">
       <div class="form__row">
-        <label for="f-name"><span class="mono mono--mute">NAME</span><input id="f-name" type="text" name="name" placeholder="Your name" required autocomplete="name" enterkeyhint="next" /></label>
-        <label for="f-email"><span class="mono mono--mute">EMAIL</span><input id="f-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" inputmode="email" enterkeyhint="next" /></label>
+        <label for="f-name"><span class="mono mono--mute">NAME <span class="form__opt">required</span></span><input id="f-name" type="text" name="name" placeholder="Your name" required aria-required="true" autocomplete="name" enterkeyhint="next" /></label>
+        <label for="f-email"><span class="mono mono--mute">EMAIL <span class="form__opt">required</span></span><input id="f-email" type="email" name="email" placeholder="you@company.com" required aria-required="true" autocomplete="email" inputmode="email" enterkeyhint="next" /></label>
       </div>
       <div class="form__row">
         <label for="f-phone"><span class="mono mono--mute">PHONE <span class="form__opt">optional</span></span><input id="f-phone" type="tel" name="phone" placeholder="(555) 123-4567" autocomplete="tel" inputmode="tel" enterkeyhint="next" /></label>
@@ -637,9 +637,9 @@
         </label>
       </div>
       <div class="form__row">
-        <label for="f-date"><span class="mono mono--mute">PREFERRED DATE <span class="form__opt">30-min intro call</span></span><input id="f-date" type="date" name="date" required enterkeyhint="next" /></label>
-        <label for="f-time"><span class="mono mono--mute">PREFERRED TIME <span class="form__opt">Central Time</span></span>
-          <select id="f-time" name="time" required>
+        <label for="f-date"><span class="mono mono--mute">PREFERRED DATE <span class="form__opt">required &middot; 30-min call</span></span><input id="f-date" type="date" name="date" required aria-required="true" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{2}-\d{2}" enterkeyhint="next" /></label>
+        <label for="f-time"><span class="mono mono--mute">PREFERRED TIME <span class="form__opt">required &middot; Central Time</span></span>
+          <select id="f-time" name="time" required aria-required="true">
             <option value="" disabled selected>Select a slot…</option>
             <option value="09:00">9:00 AM CT</option>
             <option value="10:00">10:00 AM CT</option>
@@ -660,6 +660,7 @@
         </button>
         <div class="form__assure mono mono--mute">Calendar invite + welcome email sent instantly. No contract.</div>
       </div>
+      <span id="formStatus" class="sr-only" aria-live="polite" aria-atomic="true"></span>
       <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Booked. Check your email for a welcome message and calendar invite. We'll see you on the call.</div>
       <div class="form-error"   id="formError"   role="alert"  aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a></div>
     </form>
@@ -693,6 +694,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=blueprint1"></script>
+<script src="script.js?v=audit1"></script>
 </body>
 </html>

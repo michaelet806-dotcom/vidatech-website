@@ -1008,7 +1008,16 @@ main:focus-visible{outline:none}
   --ink:          #0A0B0D;
   --ink-mute:     #5A6068;
   --ink-dim:      #8A8F97;
-  --accent-deep-on-paper: #5A8A00;   /* darker lime for contrast on light bg */
+  --accent-deep-on-paper: #3F6000;   /* WCAG AA on paper #F4F6F0 (≈6.2:1) */
+}
+
+/* Focus-visible scoped per theme so 2px outline always contrasts ≥3:1 */
+.gap :focus-visible,
+.departments :focus-visible,
+.workflows :focus-visible,
+.math :focus-visible,
+.pricing :focus-visible{
+  outline-color: var(--accent-deep-on-paper) !important;
 }
 
 /* Sections that flip to paper */
@@ -1283,20 +1292,21 @@ body{
   background-position: 0 0, 0 0, 0 0;
 }
 
-/* ── HERO: layered blueprint mesh + radial glow + measurement marks ── */
+/* ── HERO: blueprint mesh layered on top of base hero (defined at L257) ── */
+/* Note: base .hero{} at line 257 already sets padding/min-height/display/overflow.
+   Here we ONLY override the background paint so radial glows stack on canvas. */
 .hero{
-  position:relative;
   background:
     radial-gradient(ellipse 70% 60% at 50% 30%, rgba(198,255,61,0.08), transparent 65%),
     radial-gradient(ellipse 40% 80% at 100% 50%, rgba(107,166,255,0.05), transparent 60%),
     linear-gradient(180deg, var(--canvas-deep) 0%, var(--canvas) 60%, var(--canvas) 100%);
 }
+/* .hero::before at L266 is overridden here with a bigger grid + radial mask */
 .hero::before{
-  content:"";position:absolute;inset:0;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 80px 80px, 80px 80px;
+  background-size: 80px 80px;
   background-position: -1px -1px;
   mask-image: radial-gradient(ellipse 75% 70% at 50% 40%, #000 0%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 40%, #000 0%, transparent 80%);
@@ -1310,18 +1320,16 @@ body{
 }
 .hero .container{position:relative;z-index:2}
 
-/* ── Corner brackets on .section — technical drawing marks ── */
-.section{position:relative}
-.section .container{position:relative;z-index:2}
+/* ── .section is already position:relative (L360); .container z-index for stacking ── */
+.section > .container{position:relative;z-index:2}
 
-/* Faint section-edge measurement lines */
-.broken,.floor,.skills,.initialize{
+/* Faint section-edge measurement lines (skip .initialize — has its own ::before glow at L651) */
+.broken,.floor,.skills{
   position:relative;
 }
 .broken::before,
 .floor::before,
-.skills::before,
-.initialize::before{
+.skills::before{
   content:"";position:absolute;inset:0;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
@@ -1329,6 +1337,7 @@ body{
   background-size: 64px 64px;
   mask-image: linear-gradient(180deg, transparent 0, #000 15%, #000 85%, transparent 100%);
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 15%, #000 85%, transparent 100%);
+  -webkit-mask-mode:alpha;mask-mode:alpha;
 }
 
 /* Ops floor + skills: technical readout glow */
@@ -1401,17 +1410,19 @@ body{
   transform:translateY(-50%) rotate(45deg);opacity:0.5;
 }
 
-/* ── Department card: blueprint-style top tick ── */
+/* ── Department card: blueprint-style top tick (no overflow:hidden → preserves hover lift shadow) ── */
 .departments .dept{
-  position:relative;overflow:hidden;
+  position:relative;
 }
 .departments .dept::before{
   content:"";position:absolute;top:12px;right:12px;
   width:22px;height:1px;background:var(--blueprint-deep);opacity:0.35;
+  pointer-events:none;
 }
 .departments .dept::after{
   content:"";position:absolute;top:8px;right:30px;
   width:1px;height:8px;background:var(--blueprint-deep);opacity:0.35;
+  pointer-events:none;
 }
 
 /* Receptionist gets a stronger blueprint accent */
@@ -1490,4 +1501,77 @@ body{
 
 @media (prefers-reduced-motion:reduce){
   .hero::after{opacity:0.3}
+}
+
+/* ═══════════════════════════════════════════════════
+   POST-AUDIT POLISH (P0/P1 fixes from review squad)
+═══════════════════════════════════════════════════ */
+
+/* Screen-reader only utility (used by #formStatus live region) */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* Bump mono form labels for legibility (WCAG 1.4.4) */
+.form label .mono{font-size:.78rem;letter-spacing:.10em}
+
+/* Firefox: dark color-scheme so native date picker inverts correctly */
+.form input[type="date"]{color-scheme:dark}
+
+/* Required marker styling — same chip as "optional" but accent */
+.form__opt[data-required],
+.form__opt:not([data-required]){
+  /* base style already defined earlier; just ensure visible enough */
+}
+
+/* aria-invalid: red ring */
+.form input[aria-invalid="true"],
+.form select[aria-invalid="true"],
+.form textarea[aria-invalid="true"]{
+  border-color:#FF6B6B;
+  box-shadow:0 0 0 1px rgba(255,107,107,0.4) !important;
+}
+
+/* Tiny-screen blueprint adjustment (320–380px) */
+@media (max-width:380px){
+  .gap::after,
+  .departments::after,
+  .workflows::after,
+  .math::after,
+  .pricing::after{
+    inset:8px;opacity:0.22;
+  }
+  .gap::before,
+  .departments::before,
+  .workflows::before,
+  .math::before,
+  .pricing::before{
+    background-size: 14px 14px, 14px 14px, 56px 56px, 56px 56px;
+  }
+  .form label .mono{font-size:.72rem}
+}
+
+/* Promote corner-bracket ::after to its own GPU layer for scroll perf */
+.gap::after,
+.departments::after,
+.workflows::after,
+.math::after,
+.pricing::after{
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduced-motion: kill blur halo */
+@media (prefers-reduced-motion:reduce){
+  .hero::after{filter:none;opacity:0.25}
+}
+
+/* form__opt: explicit chip style (referenced in HTML but originally only inline) */
+.form__opt{
+  display:inline-block;margin-left:6px;
+  font-size:.62rem;letter-spacing:.12em;
+  color:var(--text-dim);text-transform:lowercase;
+  font-family:var(--font-mono);
+  font-weight:500;
 }

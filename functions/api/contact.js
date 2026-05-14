@@ -1,156 +1,261 @@
 /**
  * VidaTech contact form handler
- * - Validates submission
- * - Generates an .ics calendar invite (30-min intro call)
- * - Sends two emails via Resend:
- *   1. Welcome message + invite to the customer
- *   2. Lead notification + invite to Michael (vidaholdings@gmail.com)
- *     → Gmail auto-detects the .ics and adds the event to his Google Calendar
+ * - Validates submission (server-side + sanitization)
+ * - Generates RFC 5545 .ics (line-folded, ICS-escaped, DST-aware America/Chicago)
+ * - Sends two emails via Resend, lead-first with allSettled semantics
+ *   1. Lead notification → vidaholdings@gmail.com (Michael's inbox)
+ *   2. Welcome email   → customer
+ *   Both attach the .ics — From and ORGANIZER align so Gmail auto-adds to calendar.
  */
 
 const ORG_EMAIL = 'vidaholdings@gmail.com';
 const ORG_NAME = 'VidaTech';
-const ORG_FROM = 'VidaTech <hello@vidatech.org>';
+const SENDER_EMAIL = 'hello@vidatech.org';
+const SENDER_FROM = `VidaTech <${SENDER_EMAIL}>`;
 const DEMO_PHONE = '+18176234977';
+const DEMO_PHONE_DISPLAY = '(817) 623-4977';
+const MAILING_ADDR = 'Vida Tech LLC · Fort Worth, TX · United States';
 
-const cors = {
-  'Access-Control-Allow-Origin': 'https://vidatech.org',
-  'Access-Control-Allow-Methods': 'POST',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+const ALLOWED_ORIGINS = new Set(['https://vidatech.org', 'https://www.vidatech.org']);
+
+function corsHeaders(origin) {
+  return {
+    'Access-Control-Allow-Origin': ALLOWED_ORIGINS.has(origin) ? origin : 'https://vidatech.org',
+    'Access-Control-Allow-Methods': 'POST',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
+  };
+}
 
 export async function onRequestPost(context) {
-  try {
-    const data = await context.request.json();
-    const name = (data.name || '').toString().trim().slice(0, 120);
-    const email = (data.email || '').toString().trim().slice(0, 200);
-    const phone = (data.phone || '').toString().trim().slice(0, 40);
-    const business = (data.business || '').toString().trim().slice(0, 200);
-    const type = (data.type || '').toString().trim().slice(0, 80);
-    const size = (data.size || '').toString().trim().slice(0, 40);
-    const date = (data.date || '').toString().trim().slice(0, 10);   // YYYY-MM-DD
-    const time = (data.time || '').toString().trim().slice(0, 5);    // HH:MM
-    const message = (data.message || '').toString().trim().slice(0, 2000);
+  const origin = context.request.headers.get('Origin') || '';
+  const cors = corsHeaders(origin);
 
-    if (!name || !email || !date || !time) {
-      return json({ error: 'Name, email, preferred date, and time are required.' }, 400);
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return json({ error: 'Email looks invalid.' }, 400);
-    }
+  // Reject non-JSON or oversized bodies before parsing
+  const ct = context.request.headers.get('Content-Type') || '';
+  if (!ct.includes('application/json')) return json({ error: 'Bad request.' }, 400, cors);
+  const cl = Number(context.request.headers.get('Content-Length') || 0);
+  if (cl > 16 * 1024) return json({ error: 'Payload too large.' }, 413, cors);
 
-    const apiKey = context.env.RESEND_API_KEY;
-    if (!apiKey) return json({ error: 'Mail service not configured.' }, 500);
+  let raw;
+  try { raw = await context.request.json(); }
+  catch { return json({ error: 'Bad request.' }, 400, cors); }
 
-    const ics = buildICS({ name, email, phone, business, type, size, date, time, message });
-    const icsB64 = base64encode(ics);
+  // Strip control chars (CRLF injection defense) and cap lengths
+  const name     = clean(raw.name, 120);
+  const email    = clean(raw.email, 200).toLowerCase();
+  const phone    = clean(raw.phone, 40);
+  const business = clean(raw.business, 200);
+  const type     = clean(raw.type, 80);
+  const size     = clean(raw.size, 40);
+  const date     = clean(raw.date, 10);
+  const time     = clean(raw.time, 5);
+  const message  = clean(raw.message, 2000);
 
-    const customerHtml = welcomeHtml({ name, business, date, time, phone });
-    const leadHtml = leadHtml_({ name, email, phone, business, type, size, date, time, message });
-
-    const summary = `VidaTech intro call — ${name}${business ? ' · ' + business : ''}`;
-
-    // 1. Welcome email + invite to customer
-    const r1 = await sendEmail(apiKey, {
-      from: ORG_FROM,
-      to: [email],
-      subject: `Welcome to VidaTech — your intro call is booked`,
-      html: customerHtml,
-      reply_to: ORG_EMAIL,
-      attachments: [{
-        filename: 'vidatech-intro-call.ics',
-        content: icsB64,
-      }],
-    });
-
-    // 2. Lead notification + invite to Michael (Gmail auto-detects .ics → Google Calendar)
-    const r2 = await sendEmail(apiKey, {
-      from: ORG_FROM,
-      to: [ORG_EMAIL],
-      subject: `📅 New lead booked: ${name}${business ? ' · ' + business : ''} — ${formatHuman(date, time)}`,
-      html: leadHtml,
-      reply_to: email,
-      attachments: [{
-        filename: 'vidatech-intro-call.ics',
-        content: icsB64,
-      }],
-    });
-
-    if (!r1.ok || !r2.ok) {
-      const err1 = !r1.ok ? await r1.text() : '';
-      const err2 = !r2.ok ? await r2.text() : '';
-      return json({ error: `Mail send failed: ${err1} ${err2}` }, 502);
-    }
-
-    return json({ ok: true, scheduled: { date, time }, summary }, 200);
-  } catch (e) {
-    return json({ error: e.message || 'Unexpected error' }, 500);
+  // Required + format validation
+  if (!name || !email || !date || !time) {
+    return json({ error: 'Name, email, preferred date, and time are required.' }, 400, cors);
   }
+  if (!/^[^\s@<>"']+@[^\s@<>"']+\.[a-z]{2,}$/i.test(email)) {
+    return json({ error: 'Email looks invalid.' }, 400, cors);
+  }
+  if (phone && !/^[+\d\s().-]{7,40}$/.test(phone)) {
+    return json({ error: 'Phone looks invalid.' }, 400, cors);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) {
+    return json({ error: 'Date or time format is invalid.' }, 400, cors);
+  }
+  const start = parseLocalCT(date, time);
+  if (!start) return json({ error: 'Date or time is invalid.' }, 400, cors);
+  const nowMs = Date.now();
+  if (start.utcMs <= nowMs) {
+    return json({ error: 'Pick a future date and time.' }, 400, cors);
+  }
+  if (start.utcMs > nowMs + 60 * 24 * 60 * 60 * 1000) {
+    return json({ error: 'Bookings limited to 60 days out.' }, 400, cors);
+  }
+  // No Saturday/Sunday — JS Day in UTC for the picked wall-time
+  const localDow = new Date(start.utcMs - start.offsetMs).getUTCDay();
+  if (localDow === 0 || localDow === 6) {
+    return json({ error: 'Weekdays only.' }, 400, cors);
+  }
+  // Time-of-day window 09:00–17:00 CT
+  const [hh, mm] = time.split(':').map(Number);
+  const minutesOfDay = hh * 60 + mm;
+  if (minutesOfDay < 9 * 60 || minutesOfDay + 30 > 17 * 60) {
+    return json({ error: 'Pick a slot between 9:00 AM and 4:30 PM CT.' }, 400, cors);
+  }
+
+  const apiKey = context.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('RESEND_API_KEY missing in env.');
+    return json({ error: 'Mail service unavailable. Try again or call ' + DEMO_PHONE_DISPLAY }, 503, cors);
+  }
+
+  const eventUid = stableUid(email, date, time);
+  const ics = buildICS({ name, email, phone, business, type, size, date, time, message, start, uid: eventUid });
+  const icsB64 = base64encode(ics);
+  const summary = `VidaTech intro call — ${name}${business ? ' · ' + business : ''}`;
+
+  // List-Unsubscribe header — even transactional benefits for inbox placement
+  const unsubscribeHeaders = {
+    'List-Unsubscribe': `<mailto:${ORG_EMAIL}?subject=unsubscribe>, <https://vidatech.org/unsubscribe>`,
+    'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+  };
+
+  const customerSubject = `Your VidaTech intro call is booked — ${formatHuman(date, time)}`;
+  const leadSubject = `New lead booked: ${name}${business ? ' · ' + business : ''} — ${formatHuman(date, time)}`;
+
+  // Send LEAD first (Michael must know even if customer email fails)
+  // Then welcome — allSettled so neither blocks the other
+  const leadReq = sendEmail(apiKey, {
+    from: SENDER_FROM,
+    to: [ORG_EMAIL],
+    subject: leadSubject,
+    html: leadHtml({ name, email, phone, business, type, size, date, time, message }),
+    reply_to: email,
+    headers: unsubscribeHeaders,
+    attachments: [{ filename: 'vidatech-intro-call.ics', content: icsB64 }],
+  }, eventUid);
+
+  const welcomeReq = sendEmail(apiKey, {
+    from: SENDER_FROM,
+    to: [email],
+    subject: customerSubject,
+    html: welcomeHtml({ name, business, date, time }),
+    reply_to: ORG_EMAIL,
+    headers: unsubscribeHeaders,
+    attachments: [{ filename: 'vidatech-intro-call.ics', content: icsB64 }],
+  }, eventUid + '-welcome');
+
+  const [leadResult, welcomeResult] = await Promise.allSettled([leadReq, welcomeReq]);
+
+  const leadOk = leadResult.status === 'fulfilled' && leadResult.value.ok;
+  const welcomeOk = welcomeResult.status === 'fulfilled' && welcomeResult.value.ok;
+
+  if (!leadOk) {
+    // The critical email failed — return error so the user retries
+    const detail = leadResult.status === 'rejected'
+      ? leadResult.reason?.message || 'network'
+      : `status=${leadResult.value.status}`;
+    console.error('Lead email failed:', detail);
+    return json({ error: 'Could not record your booking. Please try again or call ' + DEMO_PHONE_DISPLAY }, 502, cors);
+  }
+  if (!welcomeOk) {
+    // Lead got through, customer welcome didn't — still a success from Michael's POV
+    console.error('Welcome email failed (lead succeeded):',
+      welcomeResult.status === 'rejected' ? welcomeResult.reason?.message : welcomeResult.value.status);
+    return json({ ok: true, partial: 'welcome_email_pending', scheduled: { date, time } }, 200, cors);
+  }
+  return json({ ok: true, scheduled: { date, time }, summary }, 200, cors);
 }
 
-export async function onRequestOptions() {
-  return new Response(null, { status: 204, headers: cors });
+export async function onRequestOptions({ request }) {
+  const origin = request.headers.get('Origin') || '';
+  return new Response(null, { status: 204, headers: corsHeaders(origin) });
 }
 
-/* ───────────── helpers ───────────── */
+/* ───────── helpers ───────── */
 
-function json(body, status) {
+function clean(v, max) {
+  return String(v ?? '')
+    .replace(/[\r\n\t\x00-\x1f\x7f]/g, ' ')
+    .trim()
+    .slice(0, max);
+}
+
+function json(body, status, cors) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { ...cors, 'Content-Type': 'application/json' },
   });
 }
 
-async function sendEmail(apiKey, payload) {
+async function sendEmail(apiKey, payload, idempotencyKey) {
   return fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${apiKey}`,
+      'Idempotency-Key': idempotencyKey,
     },
     body: JSON.stringify(payload),
   });
 }
 
-/* ── .ics generator ── */
-function buildICS({ name, email, phone, business, type, size, date, time, message }) {
-  // Customer-picked date/time interpreted in US Central Time
-  // Convert to UTC by offsetting +5h (CDT) or +6h (CST); using -05:00 wallclock + UTC offset baked into floating time + TZID.
-  // Cloudflare Workers don't have full ICU; we'll emit DTSTART with TZID America/Chicago and a VTIMEZONE block.
+function stableUid(email, date, time) {
+  // Stable per (email, date, time) so resubmits update instead of duplicating
+  const seed = `${email}|${date}|${time}`;
+  let hash = 5381;
+  for (let i = 0; i < seed.length; i++) hash = ((hash * 33) ^ seed.charCodeAt(i)) >>> 0;
+  return `vidatech-${hash.toString(36)}-${date.replace(/-/g, '')}${time.replace(':', '')}@vidatech.org`;
+}
+
+/* Parse "YYYY-MM-DD" + "HH:MM" as US Central wall-time → UTC ms */
+function parseLocalCT(date, time) {
+  const [y, m, d] = date.split('-').map(Number);
+  const [hh, mm] = time.split(':').map(Number);
+  if (!y || !m || !d || isNaN(hh) || isNaN(mm)) return null;
+  if (m < 1 || m > 12 || d < 1 || d > 31 || hh > 23 || mm > 59) return null;
+  // US DST: 2nd Sun Mar 02:00 → 1st Sun Nov 02:00 → offset = -5 (CDT), else -6 (CST)
+  const offsetHours = isCDT(y, m, d) ? 5 : 6;
+  // Build the wall-time as UTC then add offset
+  const utcMs = Date.UTC(y, m - 1, d, hh + offsetHours, mm);
+  return { utcMs, offsetMs: offsetHours * 60 * 60 * 1000 };
+}
+function isCDT(y, m, d) {
+  // 2nd Sunday of March
+  const marStart = new Date(Date.UTC(y, 2, 1));
+  const marSun2 = 1 + ((7 - marStart.getUTCDay()) % 7) + 7;
+  // 1st Sunday of November
+  const novStart = new Date(Date.UTC(y, 10, 1));
+  const novSun1 = 1 + ((7 - novStart.getUTCDay()) % 7);
+  const dateNum = m * 100 + d;
+  if (dateNum < 3 * 100 + marSun2) return false;
+  if (dateNum >= 11 * 100 + novSun1) return false;
+  return true;
+}
+
+/* ─── RFC 5545 .ics builder ─── */
+function buildICS({ name, email, phone, business, type, size, date, time, message, start, uid }) {
   const [y, m, d] = date.split('-').map(Number);
   const [hh, mm] = time.split(':').map(Number);
   const pad = (n) => String(n).padStart(2, '0');
-  const fmt = (Y, M, D, H, Mi) => `${Y}${pad(M)}${pad(D)}T${pad(H)}${pad(Mi)}00`;
 
-  const startStamp = fmt(y, m, d, hh, mm);
-  // +30 minutes
-  let endH = hh, endM = mm + 30;
-  if (endM >= 60) { endH += 1; endM -= 60; }
-  const endStamp = fmt(y, m, d, endH, endM);
+  // End = start + 30 min (use Date.UTC arithmetic so day/month rolls properly)
+  const endUtc = new Date(start.utcMs + 30 * 60 * 1000);
+  // Re-derive local CT wall time for end (offset same as start unless we cross DST mid-event — rare for 30 min)
+  const endLocal = new Date(endUtc.getTime() - start.offsetMs);
+  const endStamp =
+    endLocal.getUTCFullYear() + pad(endLocal.getUTCMonth() + 1) + pad(endLocal.getUTCDate()) +
+    'T' + pad(endLocal.getUTCHours()) + pad(endLocal.getUTCMinutes()) + '00';
 
-  // DTSTAMP in UTC
+  const startStamp = `${y}${pad(m)}${pad(d)}T${pad(hh)}${pad(mm)}00`;
+
   const now = new Date();
-  const utcStamp = now.getUTCFullYear() + pad(now.getUTCMonth() + 1) + pad(now.getUTCDate()) + 'T'
-    + pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds()) + 'Z';
+  const utcStamp =
+    now.getUTCFullYear() + pad(now.getUTCMonth() + 1) + pad(now.getUTCDate()) +
+    'T' + pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds()) + 'Z';
 
-  const uid = `vidatech-${now.getTime()}-${Math.random().toString(36).slice(2, 10)}@vidatech.org`;
+  const cn = icsCN(name);
   const safeName = icsEsc(name);
   const safeBiz = business ? icsEsc(business) : '';
 
-  const description = [
-    `VidaTech 30-minute intro call.`,
-    ``,
+  // DESCRIPTION uses real \n in the JS string — icsEsc converts to literal \\n per spec
+  const descRaw = [
+    'VidaTech 30-minute intro call.',
+    '',
     `Attendee: ${name}${business ? ' (' + business + ')' : ''}`,
     `Email: ${email}`,
     phone ? `Phone: ${phone}` : '',
     type ? `Type of business: ${type}` : '',
     size ? `Team size: ${size}` : '',
-    ``,
-    message ? `What's bleeding the most:\n${message}` : '',
-    ``,
-    `Demo line (24/7 AI receptionist): ${DEMO_PHONE}`,
-    `Booked via https://vidatech.org`,
-  ].filter(Boolean).join('\\n');
+    '',
+    message ? `What is bleeding the most:\n${message}` : '',
+    '',
+    `Demo line (24/7 AI receptionist): ${DEMO_PHONE_DISPLAY}`,
+    'Booked via https://vidatech.org',
+  ].filter(s => s !== null && s !== undefined).join('\n');
 
   const lines = [
     'BEGIN:VCALENDAR',
@@ -158,7 +263,6 @@ function buildICS({ name, email, phone, business, type, size, date, time, messag
     'PRODID:-//VidaTech//AXIS-OS Booking//EN',
     'METHOD:REQUEST',
     'CALSCALE:GREGORIAN',
-    // VTIMEZONE — America/Chicago, DST-aware (RFC 5545 sample)
     'BEGIN:VTIMEZONE',
     'TZID:America/Chicago',
     'X-LIC-LOCATION:America/Chicago',
@@ -183,11 +287,12 @@ function buildICS({ name, email, phone, business, type, size, date, time, messag
     `DTSTART;TZID=America/Chicago:${startStamp}`,
     `DTEND;TZID=America/Chicago:${endStamp}`,
     `SUMMARY:VidaTech intro call — ${safeName}${safeBiz ? ' · ' + safeBiz : ''}`,
-    `DESCRIPTION:${description}`,
-    `LOCATION:Phone / video — link will be sent before the call`,
-    `ORGANIZER;CN=${icsEsc(ORG_NAME)}:mailto:${ORG_EMAIL}`,
-    `ATTENDEE;CN=${safeName};RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:${email}`,
-    `ATTENDEE;CN=Michael Torres;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:${ORG_EMAIL}`,
+    `DESCRIPTION:${icsEsc(descRaw)}`,
+    `LOCATION:Phone or video — link sent before the call`,
+    // From == ORGANIZER (both hello@vidatech.org) so Gmail auto-adds for the recipient ATTENDEE
+    `ORGANIZER;CN=${icsCN(ORG_NAME)}:mailto:${SENDER_EMAIL}`,
+    `ATTENDEE;CN=${cn};RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:${email}`,
+    `ATTENDEE;CN="Michael Torres";RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto:${ORG_EMAIL}`,
     'STATUS:CONFIRMED',
     'TRANSP:OPAQUE',
     'SEQUENCE:0',
@@ -199,15 +304,52 @@ function buildICS({ name, email, phone, business, type, size, date, time, messag
     'END:VEVENT',
     'END:VCALENDAR',
   ];
-  return lines.join('\r\n');
+
+  return lines.map(foldLine).join('\r\n');
+}
+
+/* RFC 5545 §3.1 line folding — 75 octets max, continuation lines start with single space */
+function foldLine(line) {
+  const bytes = new TextEncoder().encode(line);
+  if (bytes.length <= 75) return line;
+  // Walk byte boundaries to chunk safely under 75 (use 73 to leave room for CRLF+space prefix)
+  const decoder = new TextDecoder('utf-8', { fatal: false });
+  const out = [];
+  let i = 0;
+  let first = true;
+  const limit = 75;
+  while (i < bytes.length) {
+    const target = first ? limit : limit - 1; // continuation has leading space → effective payload 74
+    let take = Math.min(target, bytes.length - i);
+    // Avoid splitting multi-byte UTF-8 sequences: back off until a leading-byte boundary
+    while (take > 0) {
+      const byte = bytes[i + take];
+      if (byte === undefined || (byte & 0xC0) !== 0x80) break;
+      take--;
+    }
+    if (take <= 0) take = bytes.length - i; // last resort
+    out.push(decoder.decode(bytes.subarray(i, i + take)));
+    i += take;
+    first = false;
+  }
+  return out.join('\r\n ');
 }
 
 function icsEsc(s) {
-  return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+  return String(s)
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r\n|\r|\n/g, '\\n');
+}
+
+/* CN param value: DQUOTE-wrap if it contains , ; or : per RFC 5545 §3.3.11 */
+function icsCN(s) {
+  const safe = String(s).replace(/"/g, '');
+  return /[,;:]/.test(safe) ? `"${safe}"` : safe;
 }
 
 function base64encode(str) {
-  // Workers have btoa; encode UTF-8 safely
   const bytes = new TextEncoder().encode(str);
   let bin = '';
   for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
@@ -228,81 +370,73 @@ function formatHuman(date, time) {
   } catch { return `${date} at ${time} CT`; }
 }
 
-/* ── Customer welcome email ── */
-function welcomeHtml({ name, business, date, time, phone }) {
+/* ─── Customer welcome email (Outlook-safe, dark) ─── */
+function welcomeHtml({ name, business, date, time }) {
   const when = formatHuman(date, time);
   const firstName = name.split(/\s+/)[0];
   return `<!doctype html>
-<html><body style="margin:0;background:#0A0B0D;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;color:#E8ECEF">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0B0D;padding:40px 16px">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="supported-color-schemes" content="dark light">
+  <title>Your VidaTech intro call is booked</title>
+</head>
+<body style="margin:0;padding:0;background:#0A0B0D;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;color:#E8ECEF">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0A0B0D" style="background:#0A0B0D;padding:32px 16px">
     <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#111316;border:1px solid #1F2328;border-radius:12px;overflow:hidden">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#111316" style="max-width:600px;width:100%;background:#111316;border:1px solid #1F2328;border-radius:12px">
 
-        <!-- header -->
-        <tr><td style="padding:32px 32px 16px;border-bottom:1px solid #1F2328">
-          <div style="display:inline-block;width:14px;height:14px;background:#C6FF3D;border-radius:3px;vertical-align:middle;margin-right:10px"></div>
-          <span style="font-weight:600;font-size:18px;color:#E8ECEF;letter-spacing:-0.01em;vertical-align:middle">Vida<span style="color:#7A8189">·</span>Tech</span>
-          <div style="margin-top:24px;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.14em;color:#7A8189;text-transform:uppercase">// 01 — welcome aboard</div>
+        <tr><td style="padding:28px 28px 12px;border-bottom:1px solid #1F2328">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td bgcolor="#C6FF3D" width="14" height="14" style="background:#C6FF3D;width:14px;height:14px;line-height:14px;border-radius:3px">&nbsp;</td>
+            <td style="padding-left:10px;font-weight:600;font-size:18px;color:#E8ECEF;letter-spacing:-0.01em">Vida<span style="color:#7A8189">·</span>Tech</td>
+          </tr></table>
+          <div style="margin-top:20px;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.14em;color:#7A8189;text-transform:uppercase">// 01 &mdash; welcome aboard</div>
         </td></tr>
 
-        <!-- body -->
-        <tr><td style="padding:28px 32px">
-          <h1 style="margin:0 0 18px;font-size:30px;font-weight:500;letter-spacing:-0.025em;color:#E8ECEF;line-height:1.15">
-            Hey ${escHtml(firstName)} — <span style="color:#C6FF3D;font-style:italic">your call is booked.</span>
+        <tr><td style="padding:24px 28px">
+          <h1 style="margin:0 0 16px;font-size:28px;font-weight:500;letter-spacing:-0.025em;color:#E8ECEF;line-height:1.18">
+            ${escHtml(firstName)} &mdash; <span style="color:#C6FF3D !important;font-style:italic">you&rsquo;re on the calendar.</span>
           </h1>
 
           <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#B5BAC0">
-            Thanks for reaching out to VidaTech. A 30-minute intro call has been scheduled${business ? ' for ' + escHtml(business) : ''}, and a calendar invite is attached to this email — open it on your phone or computer and it'll drop straight onto your calendar.
+            Thanks for reaching out to VidaTech${business ? ' from <strong style="color:#E8ECEF">' + escHtml(business) + '</strong>' : ''}. A 30-minute intro call has been scheduled and a calendar invite is attached &mdash; open it on phone or laptop and it&rsquo;ll drop onto your calendar.
           </p>
 
-          <!-- when -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:24px 0;background:#0A0B0D;border:1px solid #1F2328;border-radius:8px">
-            <tr><td style="padding:18px 20px">
-              <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:8px">Your call</div>
-              <div style="font-size:20px;font-weight:600;color:#C6FF3D;letter-spacing:-0.01em">${when}</div>
-              <div style="margin-top:4px;font-size:13px;color:#7A8189">30 minutes · phone or video (link before the call)</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0A0B0D" style="margin:20px 0;background:#0A0B0D;border:1px solid #1F2328;border-radius:8px">
+            <tr><td style="padding:16px 20px">
+              <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:6px">Your call</div>
+              <div style="font-size:20px;font-weight:600;color:#C6FF3D !important;letter-spacing:-0.01em">${escHtml(when)}</div>
+              <div style="margin-top:4px;font-size:13px;color:#7A8189">30 minutes &middot; phone or video (link the morning of)</div>
             </td></tr>
           </table>
 
-          <!-- what to expect -->
-          <h2 style="margin:24px 0 12px;font-size:15px;font-weight:600;color:#E8ECEF">What we'll cover</h2>
-          <ul style="margin:0 0 20px;padding:0;list-style:none">
-            <li style="padding:10px 0 10px 22px;font-size:14px;line-height:1.55;color:#B5BAC0;border-bottom:1px solid #1F2328;position:relative">
-              <span style="position:absolute;left:0;top:14px;width:6px;height:6px;background:#C6FF3D;border-radius:50%"></span>
-              The 3–5 roles you're currently doing that you shouldn't be
-            </li>
-            <li style="padding:10px 0 10px 22px;font-size:14px;line-height:1.55;color:#B5BAC0;border-bottom:1px solid #1F2328;position:relative">
-              <span style="position:absolute;left:0;top:14px;width:6px;height:6px;background:#C6FF3D;border-radius:50%"></span>
-              Which of our 16 departments would have caught your last 5 hardest weeks
-            </li>
-            <li style="padding:10px 0 10px 22px;font-size:14px;line-height:1.55;color:#B5BAC0;position:relative">
-              <span style="position:absolute;left:0;top:14px;width:6px;height:6px;background:#C6FF3D;border-radius:50%"></span>
-              A live look at AXIS·OS running against your real org chart
-            </li>
-          </ul>
+          <h2 style="margin:24px 0 12px;font-size:15px;font-weight:600;color:#E8ECEF">What we&rsquo;ll cover</h2>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            ${bulletRow('The 3&ndash;5 roles you&rsquo;re currently doing that you shouldn&rsquo;t be')}
+            ${bulletRow('Which of our 16 departments would have caught your last 5 hardest weeks')}
+            ${bulletRow('A live look at AXIS&middot;OS running against your real org chart')}
+          </table>
 
-          <!-- demo line -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:28px 0 8px;background:linear-gradient(180deg, rgba(198,255,61,0.06), rgba(198,255,61,0.01));border:1px solid rgba(198,255,61,0.3);border-radius:8px">
-            <tr><td style="padding:18px 20px">
-              <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:6px">While you wait — call our AI receptionist</div>
-              <a href="tel:${DEMO_PHONE}" style="font-size:22px;font-weight:600;color:#C6FF3D;text-decoration:none;letter-spacing:-0.01em">(817) 623-4977</a>
-              <div style="margin-top:4px;font-size:12px;color:#7A8189">Hear it answer right now. 24/7. The same one we'll put on your line.</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0F1408" style="margin:24px 0 8px;background:#0F1408;border:1px solid #2A3318;border-radius:8px">
+            <tr><td style="padding:16px 20px">
+              <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:4px">While you wait &mdash; call our AI receptionist</div>
+              <a href="tel:${DEMO_PHONE}" style="font-size:22px;font-weight:600;color:#C6FF3D !important;text-decoration:none;letter-spacing:-0.01em">${DEMO_PHONE_DISPLAY}</a>
+              <div style="margin-top:4px;font-size:12px;color:#7A8189">Hear it answer right now. 24/7. The same one we&rsquo;ll put on your line.</div>
             </td></tr>
           </table>
 
-          <p style="margin:24px 0 0;font-size:14px;line-height:1.6;color:#B5BAC0">
-            Need to reschedule? Just reply to this email — it goes straight to Michael.
-          </p>
-          <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#B5BAC0">
-            See you soon,<br>
-            <span style="color:#E8ECEF;font-weight:500">Michael &middot; VidaTech</span>
-          </p>
+          <p style="margin:22px 0 0;font-size:14px;line-height:1.6;color:#B5BAC0">I&rsquo;ll send the video link the morning of. Need to reschedule? Just reply to this email.</p>
+          <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:#B5BAC0">See you soon,<br><span style="color:#E8ECEF;font-weight:500">Michael &middot; VidaTech</span></p>
         </td></tr>
 
-        <!-- footer -->
-        <tr><td style="padding:24px 32px;background:#0A0B0D;border-top:1px solid #1F2328;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;color:#4A4F57;letter-spacing:0.04em">
-          VidaTech · <a href="https://vidatech.org" style="color:#7A8189;text-decoration:none">vidatech.org</a> · ${DEMO_PHONE} · ${ORG_EMAIL}<br>
-          You're getting this because you booked a call at vidatech.org.
+        <tr><td bgcolor="#0A0B0D" style="padding:18px 28px;background:#0A0B0D;border-top:1px solid #1F2328;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;color:#7A8189;letter-spacing:0.04em;line-height:1.6">
+          ${escHtml(MAILING_ADDR)}<br>
+          <a href="https://vidatech.org" style="color:#7A8189;text-decoration:underline">vidatech.org</a> &middot; ${DEMO_PHONE_DISPLAY} &middot; ${ORG_EMAIL}<br>
+          You&rsquo;re receiving this because you booked a call at vidatech.org.
+          <a href="https://vidatech.org/unsubscribe" style="color:#7A8189;text-decoration:underline">Unsubscribe</a>
         </td></tr>
       </table>
     </td></tr>
@@ -310,52 +444,70 @@ function welcomeHtml({ name, business, date, time, phone }) {
 </body></html>`;
 }
 
-/* ── Lead notification email (to Michael) ── */
-function leadHtml_({ name, email, phone, business, type, size, date, time, message }) {
+/* Outlook-safe bullet row: 2-col table, bgcolor TD as dot */
+function bulletRow(text) {
+  return `<tr><td style="padding:8px 0">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td valign="top" width="14" style="padding-top:7px">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td bgcolor="#C6FF3D" width="6" height="6" style="background:#C6FF3D;width:6px;height:6px;line-height:6px;font-size:6px;border-radius:50%">&nbsp;</td>
+        </tr></table>
+      </td>
+      <td style="font-size:14px;line-height:1.55;color:#B5BAC0">${text}</td>
+    </tr></table>
+  </td></tr>`;
+}
+
+/* ─── Lead notification email ─── */
+function leadHtml({ name, email, phone, business, type, size, date, time, message }) {
   const when = formatHuman(date, time);
   return `<!doctype html>
-<html><body style="margin:0;background:#0A0B0D;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;color:#E8ECEF">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0B0D;padding:40px 16px">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="supported-color-schemes" content="dark light">
+  <title>New lead booked</title>
+</head>
+<body style="margin:0;padding:0;background:#0A0B0D;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;color:#E8ECEF">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0A0B0D" style="background:#0A0B0D;padding:32px 16px">
     <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#111316;border:1px solid #1F2328;border-radius:12px;overflow:hidden">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#111316" style="max-width:600px;width:100%;background:#111316;border:1px solid #1F2328;border-radius:12px">
 
-        <tr><td style="padding:28px 32px 16px;border-bottom:1px solid #1F2328">
-          <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.14em;color:#C6FF3D;text-transform:uppercase">// new lead · booked</div>
-          <h1 style="margin:8px 0 0;font-size:24px;font-weight:500;color:#E8ECEF;letter-spacing:-0.02em">${escHtml(name)}${business ? ' <span style="color:#7A8189;font-weight:400">· ' + escHtml(business) + '</span>' : ''}</h1>
+        <tr><td style="padding:24px 28px 12px;border-bottom:1px solid #1F2328">
+          <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.14em;color:#C6FF3D !important;text-transform:uppercase">// new lead &middot; booked</div>
+          <h1 style="margin:8px 0 0;font-size:22px;font-weight:500;color:#E8ECEF;letter-spacing:-0.02em">${escHtml(name)}${business ? ' <span style="color:#7A8189;font-weight:400">&middot; ' + escHtml(business) + '</span>' : ''}</h1>
         </td></tr>
 
-        <tr><td style="padding:24px 32px">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0A0B0D;border:1px solid rgba(198,255,61,0.3);border-radius:8px;margin-bottom:24px">
-            <tr><td style="padding:16px 20px">
-              <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:6px">Booked for</div>
-              <div style="font-size:18px;font-weight:600;color:#C6FF3D">${when}</div>
-              <div style="margin-top:4px;font-size:12px;color:#7A8189">30 min · auto-added to your Google Calendar</div>
+        <tr><td style="padding:20px 28px">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0A0B0D" style="background:#0A0B0D;border:1px solid #2A3318;border-radius:8px;margin-bottom:16px">
+            <tr><td style="padding:14px 18px">
+              <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:4px">Booked for</div>
+              <div style="font-size:18px;font-weight:600;color:#C6FF3D !important">${escHtml(when)}</div>
+              <div style="margin-top:4px;font-size:12px;color:#7A8189">30 min &middot; calendar invite attached</div>
             </td></tr>
           </table>
 
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px">
+          ${(type || size) ? `<div style="margin:0 0 18px;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;color:#C6FF3D !important;letter-spacing:0.06em">[ ${escHtml(type || '—')} &middot; ${escHtml(size || '—')} ]</div>` : ''}
+
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px">
             ${rowHtml('Name', escHtml(name))}
-            ${rowHtml('Email', `<a href="mailto:${escHtml(email)}" style="color:#C6FF3D;text-decoration:none">${escHtml(email)}</a>`)}
-            ${phone ? rowHtml('Phone', `<a href="tel:${escHtml(phone)}" style="color:#C6FF3D;text-decoration:none">${escHtml(phone)}</a>`) : ''}
+            ${rowHtml('Email', `<a href="mailto:${escHtml(email)}" style="color:#C6FF3D !important;text-decoration:none">${escHtml(email)}</a>`)}
+            ${phone ? rowHtml('Phone', `<a href="tel:${escHtml(phone)}" style="color:#C6FF3D !important;text-decoration:none">${escHtml(phone)}</a>`) : ''}
             ${business ? rowHtml('Business', escHtml(business)) : ''}
-            ${type ? rowHtml('Type', escHtml(type)) : ''}
-            ${size ? rowHtml('Team size', escHtml(size)) : ''}
           </table>
 
           ${message ? `
-          <div style="margin-top:20px;padding:16px 18px;background:#0A0B0D;border-left:3px solid #C6FF3D;border-radius:6px">
-            <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:6px">What's bleeding</div>
+          <div style="margin-top:18px;padding:14px 18px;background:#0A0B0D;border-left:3px solid #C6FF3D;border-radius:6px">
+            <div style="font-family:'SFMono-Regular',Menlo,monospace;font-size:10px;letter-spacing:0.16em;color:#7A8189;text-transform:uppercase;margin-bottom:6px">What is bleeding</div>
             <div style="font-size:14px;line-height:1.6;color:#E8ECEF;white-space:pre-wrap">${escHtml(message)}</div>
           </div>` : ''}
 
-          <div style="margin-top:24px;font-size:12px;color:#7A8189">
-            Reply directly to this email — replies route to ${escHtml(email)}.
-          </div>
+          <div style="margin-top:20px;font-size:12px;color:#7A8189">Reply directly to this email &mdash; routes to ${escHtml(email)}.</div>
         </td></tr>
 
-        <tr><td style="padding:18px 32px;background:#0A0B0D;border-top:1px solid #1F2328;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;color:#4A4F57">
-          Source: vidatech.org · Generated automatically
-        </td></tr>
+        <tr><td bgcolor="#0A0B0D" style="padding:14px 28px;background:#0A0B0D;border-top:1px solid #1F2328;font-family:'SFMono-Regular',Menlo,monospace;font-size:11px;color:#4A4F57">Source: vidatech.org &middot; ${escHtml(MAILING_ADDR)}</td></tr>
       </table>
     </td></tr>
   </table>
@@ -364,8 +516,8 @@ function leadHtml_({ name, email, phone, business, type, size, date, time, messa
 
 function rowHtml(k, v) {
   return `<tr>
-    <td style="padding:10px 0;color:#7A8189;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;width:120px;border-bottom:1px solid #1F2328;vertical-align:top">${k}</td>
-    <td style="padding:10px 0;color:#E8ECEF;border-bottom:1px solid #1F2328;vertical-align:top">${v}</td>
+    <td style="padding:9px 0;color:#7A8189;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;width:110px;border-bottom:1px solid #1F2328;vertical-align:top">${k}</td>
+    <td style="padding:9px 0;color:#E8ECEF;border-bottom:1px solid #1F2328;vertical-align:top">${v}</td>
   </tr>`;
 }
 
