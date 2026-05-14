@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://challenges.cloudflare.com" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=aurora1" />
+<link rel="stylesheet" href="style.css?v=art1" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
@@ -117,6 +117,7 @@
     </div>
 
     <aside class="hero__right" aria-label="Live department grid">
+      <img class="hero__art" src="/assets/illustrations/hero.png" alt="" aria-hidden="true" loading="eager" decoding="async" width="1376" height="768" />
       <div class="grid-tiles" id="gridTiles">
         <!-- 15 tiles injected as static HTML; JS flickers them -->
         <div class="tile-mini tile-mini--hot" data-sym="RX"><span class="tile-mini__sym mono">RX</span><span class="tile-mini__lbl">AI Receptionist</span><span class="tile-mini__count mono">24/7</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
@@ -144,9 +145,12 @@
 <!-- ─────────  01.5 WHAT'S ACTUALLY BROKEN  ───────── -->
 <section class="broken section" aria-labelledby="broken-heading">
   <div class="container">
-    <header class="section-head">
-      <div class="mono mono--mute eyebrow">// 01 — Founder confessions</div>
-      <h2 id="broken-heading" class="display">It's not a discipline problem.<br /><em>It's a structural one.</em></h2>
+    <header class="section-head section-head--with-art">
+      <div class="section-head__text">
+        <div class="mono mono--mute eyebrow">// 01 — Founder confessions</div>
+        <h2 id="broken-heading" class="display">It's not a discipline problem.<br /><em>It's a structural one.</em></h2>
+      </div>
+      <img class="section-art section-art--right" src="/assets/illustrations/confessions.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
     </header>
 
     <ul class="broken__list">
@@ -331,10 +335,13 @@
 <!-- ─────────  04. THE FLOOR (signature wow)  ───────── -->
 <section class="floor section" id="floor">
   <div class="container">
-    <header class="section-head">
-      <div class="mono mono--mute eyebrow">// 04 — The Operations Floor</div>
-      <h2 class="display">Watch your company<br /><em>run itself.</em></h2>
-      <p class="lede">Every AXIS·OS subscription includes a live dashboard. Here's a 90-second loop of what an actual operating floor looks like — eight agents working in parallel, right now.</p>
+    <header class="section-head section-head--with-art">
+      <div class="section-head__text">
+        <div class="mono mono--mute eyebrow">// 04 — The Operations Floor</div>
+        <h2 class="display">Watch your company<br /><em>run itself.</em></h2>
+        <p class="lede">Every AXIS·OS subscription includes a live dashboard. Here's a 90-second loop of what an actual operating floor looks like — eight agents working in parallel, right now.</p>
+      </div>
+      <img class="section-art section-art--right" src="/assets/illustrations/ops-floor.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
     </header>
 
     <div class="ops" id="opsFloor" aria-label="Live operations dashboard demonstration">
@@ -365,10 +372,13 @@
 <!-- ─────────  05. WORKFLOWS  ───────── -->
 <section class="workflows section" id="workflows">
   <div class="container">
-    <header class="section-head">
-      <div class="mono mono--mute eyebrow">// 05 — A Real Workflow</div>
-      <h2 class="display">A new lead lands.<br /><em>Watch what happens.</em></h2>
-      <p class="lede">No human touches this until step 6. Six agents from four departments, one continuous context, four minutes end-to-end.</p>
+    <header class="section-head section-head--with-art">
+      <div class="section-head__text">
+        <div class="mono mono--mute eyebrow">// 05 — A Real Workflow</div>
+        <h2 class="display">A new lead lands.<br /><em>Watch what happens.</em></h2>
+        <p class="lede">No human touches this until step 6. Six agents from four departments, one continuous context, four minutes end-to-end.</p>
+      </div>
+      <img class="section-art section-art--right" src="/assets/illustrations/workflow.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
     </header>
 
     <ol class="flow">
@@ -593,6 +603,7 @@
 <!-- ─────────  08. INITIALIZE (FINAL CTA)  ───────── -->
 <section class="initialize section" id="initialize">
   <div class="container initialize__inner">
+    <img class="section-art section-art--center" src="/assets/illustrations/initialize.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
     <div class="mono mono--mute eyebrow">// 08 — Initialize</div>
     <h2 class="display display--xl">Stop hiring.<br /><em>Start booting.</em></h2>
     <p class="lede">Tell us about your company. We'll spec a custom AXIS·OS deployment on the call. Receptionist goes live in 7 days; full operator deployment timeline is in your written readout.</p>
