@@ -21,9 +21,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://challenges.cloudflare.com" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=audit1" />
+<link rel="stylesheet" href="style.css?v=audit2" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script type="application/ld+json">
 {
@@ -653,6 +655,10 @@
       </div>
       <label class="form__full" for="f-msg"><span class="mono mono--mute">WHAT'S THE #1 THING BLEEDING TIME OR MONEY RIGHT NOW?</span><textarea id="f-msg" name="message" rows="3" placeholder="Missed calls? Marketing on autopilot? Operations chaos? Tell us where it hurts." enterkeyhint="send"></textarea></label>
 
+      <!-- Cloudflare Turnstile — replace data-sitekey with the production site key from Cloudflare dashboard.
+           Falls back gracefully: if the widget is unconfigured, the server fails open per checkRateLimit/verifyTurnstile. -->
+      <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-theme="dark" data-callback="onTurnstileSuccess" data-error-callback="onTurnstileError" data-size="flexible"></div>
+
       <div class="form__submit-row">
         <button type="submit" class="btn btn--accent btn--lg" data-magnetic id="formSubmit">
           <span id="formBtnText">Book my intro call <span aria-hidden="true">→</span></span>
@@ -685,15 +691,18 @@
       <a href="#workflows">Workflows</a>
       <a href="#pricing">Pricing</a>
       <a href="#initialize">Initialize</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/unsubscribe">Unsubscribe</a>
     </nav>
     <div class="footer__meta">
-      <div class="mono mono--mute">© 2026 VidaTech · est. 2024</div>
+      <div class="mono mono--mute">© 2026 Vida Tech LLC · Arlington, TX</div>
       <a href="tel:+18176234977" class="mono">(817) 623-4977</a>
       <a href="mailto:vidaholdings@gmail.com" class="mono">vidaholdings@gmail.com</a>
     </div>
   </div>
 </footer>
 
-<script src="script.js?v=audit1"></script>
+<script src="script.js?v=audit2"></script>
 </body>
 </html>

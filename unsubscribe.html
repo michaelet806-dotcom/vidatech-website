@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="color-scheme" content="dark light" />
+<meta name="theme-color" content="#0A0B0D" />
+<title>Unsubscribe — VidaTech</title>
+<meta name="description" content="Unsubscribe from VidaTech marketing emails. One-click. We respect your inbox." />
+<link rel="canonical" href="https://vidatech.org/unsubscribe" />
+<meta name="robots" content="noindex,follow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=blueprint1" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
+
+<style>
+  .unsub{min-height:60vh;display:flex;align-items:center;padding:64px 0}
+  .unsub__inner{max-width:520px;margin:0 auto;text-align:left}
+  .unsub h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,3vw,2.4rem);letter-spacing:-0.025em;line-height:1.15;margin:0 0 16px}
+  .unsub h1 em{font-style:normal;color:var(--accent)}
+  .unsub p{color:var(--text-mute);font-size:1rem;line-height:1.7;margin:0 0 16px}
+  .unsub strong{color:var(--text);font-weight:500}
+  .unsub__form{margin:32px 0 24px;display:flex;gap:12px;flex-wrap:wrap}
+  .unsub__form input[type="email"]{flex:1;min-width:240px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font:inherit;font-size:1rem}
+  .unsub__form input[type="email"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+  .unsub__form button{padding:14px 22px;background:var(--accent);color:var(--canvas);border:0;border-radius:var(--r-sm);font-weight:600;font-size:0.95rem;cursor:pointer;transition:filter var(--t)}
+  .unsub__form button:hover{filter:brightness(1.08)}
+  .unsub__form button:disabled{opacity:0.5;cursor:not-allowed}
+  .unsub__state{margin-top:24px;padding:18px 20px;border-radius:var(--r-sm);font-size:0.95rem;line-height:1.55}
+  .unsub__state--ok{background:rgba(198,255,61,0.08);border:1px solid var(--border-accent);color:var(--text)}
+  .unsub__state--err{background:rgba(255,92,92,0.08);border:1px solid var(--danger);color:var(--text)}
+  .unsub__back{display:inline-block;margin-top:24px;font-family:var(--font-mono);font-size:0.85rem;color:var(--text-mute);border-bottom:1px solid transparent;transition:color var(--t),border-color var(--t)}
+  .unsub__back:hover{color:var(--accent);border-bottom-color:var(--border-accent)}
+  .unsub__eyebrow{font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.14em;color:var(--text-mute);text-transform:uppercase;margin-bottom:18px}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="nav" id="nav">
+  <div class="nav__inner container">
+    <a href="/" class="logo" aria-label="VidaTech home">
+      <span class="logo__mark" aria-hidden="true"></span>
+      <span class="logo__word"><strong>Vida</strong><span class="logo__dot"></span>Tech</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="/#departments">Departments</a>
+      <a href="/#floor">The Floor</a>
+      <a href="/#workflows">Workflows</a>
+      <a href="/#math">The Math</a>
+    </nav>
+    <a href="/#initialize" class="btn btn--accent btn--sm">Book a call</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section class="unsub">
+  <div class="container">
+    <div class="unsub__inner" id="unsubInner">
+
+      <div class="unsub__eyebrow">// Email preferences</div>
+
+      <h1 id="unsubHeading">Unsubscribe from <em>VidaTech</em> emails.</h1>
+      <p id="unsubLede">Enter the email address that received the message. We'll remove it from our marketing list immediately. Transactional emails (calendar confirmations, replies you initiated) are not affected.</p>
+
+      <form class="unsub__form" id="unsubForm" novalidate>
+        <input
+          id="unsubEmail"
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          required
+          autocomplete="email"
+          inputmode="email"
+          aria-label="Email address to unsubscribe"
+        />
+        <button type="submit" id="unsubBtn">Unsubscribe</button>
+      </form>
+
+      <div class="unsub__state unsub__state--ok" id="unsubOk" hidden role="status" aria-live="polite"></div>
+      <div class="unsub__state unsub__state--err" id="unsubErr" hidden role="alert" aria-live="assertive"></div>
+
+      <a href="/" class="unsub__back">← Back to vidatech.org</a>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="/" class="logo">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__word"><strong>Vida</strong><span class="logo__dot"></span>Tech</span>
+      </a>
+      <p class="footer__line">VidaTech runs AXIS·OS — the operating system for company-scale AI labor.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="/#departments">Departments</a>
+      <a href="/#floor">The Floor</a>
+      <a href="/#workflows">Workflows</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/unsubscribe">Unsubscribe</a>
+    </nav>
+    <div class="footer__meta">
+      <div class="mono mono--mute">© 2026 Vida Tech LLC · Arlington, TX</div>
+      <a href="tel:+18176234977" class="mono">(817) 623-4977</a>
+      <a href="mailto:vidaholdings@gmail.com" class="mono">vidaholdings@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const form = $('#unsubForm');
+  const emailInput = $('#unsubEmail');
+  const btn = $('#unsubBtn');
+  const okBox = $('#unsubOk');
+  const errBox = $('#unsubErr');
+  const heading = $('#unsubHeading');
+  const lede = $('#unsubLede');
+
+  const url = new URL(location.href);
+  const prefilledEmail = url.searchParams.get('email') || url.searchParams.get('u');
+  const token = url.searchParams.get('t');
+  const confirmed = url.searchParams.get('confirmed') === '1';
+
+  if (prefilledEmail) {
+    try { emailInput.value = atob(prefilledEmail.replace(/-/g, '+').replace(/_/g, '/')); }
+    catch { emailInput.value = prefilledEmail; }
+  }
+
+  if (confirmed) {
+    form.hidden = true;
+    heading.innerHTML = 'You’re <em>unsubscribed.</em>';
+    lede.textContent = 'Done. You will not receive further marketing emails from VidaTech. We respect your inbox.';
+    okBox.hidden = false;
+    okBox.textContent = 'Your email address has been added to our suppression list. If this was a mistake, just book another call at vidatech.org and we’ll add you back with your explicit consent.';
+  } else if (prefilledEmail && token) {
+    // Auto-submit one-click
+    submit(emailInput.value, token);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submit(emailInput.value.trim(), token || '');
+  });
+
+  async function submit(email, t) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showErr('Please enter a valid email address.');
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Unsubscribing…';
+    okBox.hidden = true;
+    errBox.hidden = true;
+
+    try {
+      const res = await fetch('/api/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email, t, source: 'web' }).toString(),
+      });
+      if (res.ok) {
+        form.hidden = true;
+        heading.innerHTML = 'You’re <em>unsubscribed.</em>';
+        lede.textContent = 'Done. You will not receive further marketing emails from VidaTech.';
+        okBox.hidden = false;
+        okBox.textContent = email + ' has been added to our suppression list.';
+      } else {
+        const text = await res.text();
+        showErr(text || 'Something went wrong. Email vidaholdings@gmail.com to unsubscribe manually.');
+      }
+    } catch {
+      showErr('Network error. Email vidaholdings@gmail.com to unsubscribe manually.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Unsubscribe';
+    }
+  }
+
+  function showErr(msg) {
+    errBox.hidden = false;
+    errBox.textContent = msg;
+  }
+})();
+</script>
+
+</body>
+</html>

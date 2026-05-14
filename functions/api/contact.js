@@ -14,7 +14,7 @@ const SENDER_EMAIL = 'hello@vidatech.org';
 const SENDER_FROM = `VidaTech <${SENDER_EMAIL}>`;
 const DEMO_PHONE = '+18176234977';
 const DEMO_PHONE_DISPLAY = '(817) 623-4977';
-const MAILING_ADDR = 'Vida Tech LLC · Fort Worth, TX · United States';
+const MAILING_ADDR = 'Vida Tech LLC · 2000 E Lamar Blvd Ste 600 · Arlington, TX 76006 · United States';
 
 const ALLOWED_ORIGINS = new Set(['https://vidatech.org', 'https://www.vidatech.org']);
 
@@ -27,6 +27,56 @@ function corsHeaders(origin) {
   };
 }
 
+/**
+ * Per-IP sliding-window rate limit using Cloudflare KV namespace `RATE_LIMIT`.
+ * Limits: 5 requests / 60s, 20 requests / 3600s. Fails open if KV not bound.
+ */
+async function checkRateLimit(env, ip) {
+  if (!env.RATE_LIMIT || !ip) return { ok: true };
+  try {
+    const minuteKey = `rl:${ip}:60s`;
+    const hourKey = `rl:${ip}:3600s`;
+    const [m, h] = await Promise.all([
+      env.RATE_LIMIT.get(minuteKey),
+      env.RATE_LIMIT.get(hourKey),
+    ]);
+    const mCount = Number(m || 0);
+    const hCount = Number(h || 0);
+    if (mCount >= 5) return { ok: false, reason: 'Too many requests in the last minute.', retryAfter: 60 };
+    if (hCount >= 20) return { ok: false, reason: 'Too many requests in the last hour.', retryAfter: 3600 };
+    // Increment counters with TTL; race-condition tolerated (this is a soft limit, not a security boundary).
+    await Promise.all([
+      env.RATE_LIMIT.put(minuteKey, String(mCount + 1), { expirationTtl: 60 }),
+      env.RATE_LIMIT.put(hourKey, String(hCount + 1), { expirationTtl: 3600 }),
+    ]);
+    return { ok: true };
+  } catch (e) {
+    console.error('Rate limit check failed:', e.message);
+    return { ok: true }; // fail open
+  }
+}
+
+/**
+ * Verify a Cloudflare Turnstile token. Returns true if valid, false otherwise.
+ */
+async function verifyTurnstile(secret, token, ip) {
+  try {
+    const body = new URLSearchParams({ secret, response: token });
+    if (ip) body.set('remoteip', ip);
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    });
+    if (!r.ok) return false;
+    const data = await r.json();
+    return data && data.success === true;
+  } catch (e) {
+    console.error('Turnstile verify failed:', e.message);
+    return false;
+  }
+}
+
 export async function onRequestPost(context) {
   const origin = context.request.headers.get('Origin') || '';
   const cors = corsHeaders(origin);
@@ -37,9 +87,27 @@ export async function onRequestPost(context) {
   const cl = Number(context.request.headers.get('Content-Length') || 0);
   if (cl > 16 * 1024) return json({ error: 'Payload too large.' }, 413, cors);
 
+  // Per-IP rate limit (Cloudflare KV-backed). Fails open if KV is not configured.
+  const ip = context.request.headers.get('CF-Connecting-IP') || '';
+  const rl = await checkRateLimit(context.env, ip);
+  if (!rl.ok) {
+    return json({ error: rl.reason || 'Too many requests. Please try again later.' }, 429, {
+      ...cors,
+      'Retry-After': String(rl.retryAfter || 60),
+    });
+  }
+
   let raw;
   try { raw = await context.request.json(); }
   catch { return json({ error: 'Bad request.' }, 400, cors); }
+
+  // Turnstile verification — fails open if TURNSTILE_SECRET_KEY is not set, fails closed otherwise.
+  if (context.env.TURNSTILE_SECRET_KEY) {
+    const token = clean(raw.turnstile_token, 2048);
+    if (!token) return json({ error: 'Bot-check token missing. Please refresh and try again.' }, 400, cors);
+    const ok = await verifyTurnstile(context.env.TURNSTILE_SECRET_KEY, token, ip);
+    if (!ok) return json({ error: 'Bot-check failed. Please refresh and try again.' }, 403, cors);
+  }
 
   // Strip control chars (CRLF injection defense) and cap lengths
   const name     = clean(raw.name, 120);
@@ -99,7 +167,7 @@ export async function onRequestPost(context) {
 
   // List-Unsubscribe header — even transactional benefits for inbox placement
   const unsubscribeHeaders = {
-    'List-Unsubscribe': `<mailto:${ORG_EMAIL}?subject=unsubscribe>, <https://vidatech.org/unsubscribe>`,
+    'List-Unsubscribe': `<mailto:${ORG_EMAIL}?subject=unsubscribe>, <https://vidatech.org/api/unsubscribe>`,
     'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
   };
 
@@ -115,7 +183,7 @@ export async function onRequestPost(context) {
     html: leadHtml({ name, email, phone, business, type, size, date, time, message }),
     reply_to: email,
     headers: unsubscribeHeaders,
-    attachments: [{ filename: 'vidatech-intro-call.ics', content: icsB64 }],
+    attachments: [{ filename: 'vidatech-intro-call.ics', content: icsB64, content_type: 'text/calendar; method=REQUEST; charset=UTF-8' }],
   }, eventUid);
 
   const welcomeReq = sendEmail(apiKey, {
@@ -125,7 +193,7 @@ export async function onRequestPost(context) {
     html: welcomeHtml({ name, business, date, time }),
     reply_to: ORG_EMAIL,
     headers: unsubscribeHeaders,
-    attachments: [{ filename: 'vidatech-intro-call.ics', content: icsB64 }],
+    attachments: [{ filename: 'vidatech-intro-call.ics', content: icsB64, content_type: 'text/calendar; method=REQUEST; charset=UTF-8' }],
   }, eventUid + '-welcome');
 
   const [leadResult, welcomeResult] = await Promise.allSettled([leadReq, welcomeReq]);
@@ -197,9 +265,12 @@ function parseLocalCT(date, time) {
   const [hh, mm] = time.split(':').map(Number);
   if (!y || !m || !d || isNaN(hh) || isNaN(mm)) return null;
   if (m < 1 || m > 12 || d < 1 || d > 31 || hh > 23 || mm > 59) return null;
+  // Round-trip validation: build the date and confirm components match exactly
+  // (catches Feb 30, Apr 31, etc. which Date.UTC would silently roll forward)
+  const probe = new Date(Date.UTC(y, m - 1, d));
+  if (probe.getUTCFullYear() !== y || probe.getUTCMonth() !== m - 1 || probe.getUTCDate() !== d) return null;
   // US DST: 2nd Sun Mar 02:00 → 1st Sun Nov 02:00 → offset = -5 (CDT), else -6 (CST)
   const offsetHours = isCDT(y, m, d) ? 5 : 6;
-  // Build the wall-time as UTC then add offset
   const utcMs = Date.UTC(y, m - 1, d, hh + offsetHours, mm);
   return { utcMs, offsetMs: offsetHours * 60 * 60 * 1000 };
 }

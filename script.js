@@ -320,11 +320,20 @@
       btnTxt.hidden = true; btnLoad.hidden = false;
       submit.disabled = true; submit.setAttribute('aria-busy','true');
       if (statusBox) statusBox.textContent = 'Submitting your booking…';
+
+      // Pull Cloudflare Turnstile token if the widget is mounted.
+      let turnstileToken = '';
+      const tsInput = form.querySelector('input[name="cf-turnstile-response"]');
+      if (tsInput && tsInput.value) turnstileToken = tsInput.value;
+      else if (window.turnstile && typeof window.turnstile.getResponse === 'function') {
+        try { turnstileToken = window.turnstile.getResponse() || ''; } catch {}
+      }
+
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...data, source: 'vidatech.org' }),
+          body: JSON.stringify({ ...data, turnstile_token: turnstileToken, source: 'vidatech.org' }),
         });
         if (res.ok) {
           form.reset();
