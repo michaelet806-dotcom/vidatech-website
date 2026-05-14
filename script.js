@@ -1,255 +1,259 @@
 /* ═══════════════════════════════════════════════
-   VidaTech v2 — Warm-Editorial · Vanilla JS
+   VidaTech AXIS·OS — Vanilla JS
 ═══════════════════════════════════════════════ */
 
 (() => {
   'use strict';
-
   const $  = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.addEventListener('DOMContentLoaded', init);
 
-  function init() {
-    initLenis();
+  function init(){
     initNav();
-    initPhoneClock();
-    initLivingCall();
-    initCounters();
-    initStepsLine();
-    initForm();
     initScrollMark();
-    initRules();
-    initUnderlines();
-    initScrollVelocity();
-    initMagnetic();
-    initCursorRing();
+    initBootTicker();
+    initGridFlicker();
+    initOpsFloor();
+    initPaletteQuery();
     initSectionReveals();
-    initRevealFallback();
+    initForm();
   }
 
-  /* ─── 0. LENIS SMOOTH SCROLL (lazy-loaded) ─── */
-  function initLenis() {
-    if (reduced) return;
-    const start = () => {
-      if (!window.Lenis) return;
-      const lenis = new Lenis({
-        duration: 1.1,
-        easing: t => 1 - Math.pow(1 - t, 4),
-        smoothWheel: true,
-        smoothTouch: false,
-        wheelMultiplier: 0.92,
-        lerp: 0.085,
-      });
-      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-      window._lenis = lenis;
-    };
-    if (window.Lenis) { start(); }
-    else { document.addEventListener('lenis:ready', start, { once: true }); }
-  }
-
-  /* ─── 1. NAV ─── */
-  function initNav() {
-    const nav = $('#nav');
-    const menu = $('#navMenu');
-    const drawer = $('#drawer');
+  /* ─── NAV ─── */
+  function initNav(){
+    const nav = $('#nav'), menu = $('#navMenu'), drawer = $('#drawer');
     if (!nav) return;
-
-    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 12);
+    const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 12);
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    if (menu && drawer) {
-      drawer.toggleAttribute('inert', true);
-      const setOpen = (open) => {
-        menu.classList.toggle('is-open', open);
-        drawer.classList.toggle('is-open', open);
-        drawer.setAttribute('aria-hidden', String(!open));
-        drawer.toggleAttribute('inert', !open);
-        menu.setAttribute('aria-expanded', String(open));
-        menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      };
-      menu.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
-      $$('a', drawer).forEach(a => a.addEventListener('click', () => setOpen(false)));
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false);
-      });
-    }
-  }
-
-  /* ─── 2. PHONE CLOCK (live) ─── */
-  function initPhoneClock() {
-    const el = $('#phoneTime');
-    if (!el) return;
-    const tick = () => {
-      const d = new Date();
-      const h = ((d.getHours() + 11) % 12) + 1;
-      const m = String(d.getMinutes()).padStart(2, '0');
-      el.textContent = `${h}:${m}`;
+    addEventListener('scroll', onScroll, { passive:true });
+    if (!menu || !drawer) return;
+    const setOpen = (open) => {
+      menu.classList.toggle('is-open', open);
+      drawer.classList.toggle('is-open', open);
+      drawer.toggleAttribute('inert', !open);
+      menu.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     };
-    tick();
-    setInterval(tick, 30000);
+    menu.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+    $$('a', drawer).forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('is-open')) setOpen(false); });
   }
 
-  /* ─── 3. THE LIVING CALL ─── */
-  function initLivingCall() {
-    const chat = $('#phoneChat');
-    const stage = $('#callStage');
-    const fly = $('#bookingFly');
-    const calNew = $('#calSlotNew');
-    if (!chat || !stage) return;
+  /* ─── SCROLL PROGRESS ─── */
+  function initScrollMark(){
+    const m = $('#scrollMark');
+    if (!m || reduced) return;
+    let raf;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      m.style.width = (max > 0 ? (scrollY / max) * 100 : 0).toFixed(2) + '%';
+    };
+    update();
+    addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive:true });
+  }
 
-    const script = [
-      { side: 'caller', text: 'Hi — is this Vida Auto Body?', delay: 400 },
-      { side: 'ai',     text: 'Vida Auto Body, this is the front desk — how can I help?', delay: 800, typing: 500 },
-      { side: 'caller', text: "My brakes are grinding. Can someone look at it?", delay: 1000 },
-      { side: 'ai',     text: "Sure — I can get you in tomorrow at 2:30 or Thursday at 10.", delay: 1100, typing: 600 },
-      { side: 'caller', text: "Tomorrow at 2:30, please.", delay: 900 },
-      { side: 'ai',     text: "Booked. Text confirmation on its way.", delay: 900, typing: 500, onShow: () => flyBooking() },
+  /* ─── BOOT TICKER (hero) ─── */
+  function initBootTicker(){
+    const text = $('#bootText');
+    if (!text || reduced) return;
+    const lines = [
+      'vidatech boot --company "your_co"',
+      '[OK] AI Receptionist online · 24/7',
+      '[OK] Chief of Staff online · 3 agents',
+      '[OK] Security/SRE online · 4 agents',
+      '[OK] Engineering online · 12 agents',
+      '[OK] Marketing online · 21 agents',
+      '[OK] 11 more departments...',
+      'vidatech ready. uptime 99.98% · 88 agents online'
     ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % lines.length;
+      text.textContent = lines[i];
+    }, 2200);
+  }
 
-    let started = false;
-    let timeoutIds = [];
+  /* ─── GRID FLICKER (hero right side) ─── */
+  function initGridFlicker(){
+    const tiles = $$('.tile-mini');
+    if (!tiles.length || reduced) return;
+    setInterval(() => {
+      const t = tiles[Math.floor(Math.random() * tiles.length)];
+      t.classList.add('is-active');
+      setTimeout(() => t.classList.remove('is-active'), 700);
+    }, 1500);
+  }
 
-    const flyBooking = () => {
-      stage.classList.remove('is-live');
-      void stage.offsetWidth;
-      stage.classList.add('is-live');
-      setTimeout(() => {
-        if (calNew) calNew.classList.add('is-in');
-      }, 2200);
+  /* ─── OPS FLOOR — streaming agent activity ─── */
+  function initOpsFloor(){
+    const floor = $('#opsFloor');
+    if (!floor) return;
+    const cells = $$('.ops__cell', floor);
+    const tasksToday = $('#tasksToday');
+    let taskCount = 1247;
+
+    // Each agent has a queue of scripted messages
+    const scripts = {
+      'SALES.outreach':   ['drafted 12 emails to Series A founders... sent.','calling 3 inbound leads — 2 booked.','responded to RFP from acme.com.','outreach to 47 prospects scheduled.','follow-up sent to deal #2284.'],
+      'FINANCE.cash':     ['runway: 14.2 months. no anomalies.','reconciled May AP — $48,200 cleared.','monthly close report ready.','vendor invoice flagged for review.','q3 forecast updated.'],
+      'LEGAL.review':     ['reviewed MSA from acme corp · 3 flags.','redlined NDA from new vendor.','indemnity clause approved.','export-control check complete.','compliance audit prep done.'],
+      'DESIGN.brand':     ['new asset approved: hero_v3.png','brand audit complete · 2 inconsistencies.','5 social variants generated.','icon set ready for review.','typography scale finalized.'],
+      'ENG.deploy':       ['shipped v2.4.1 to prod · all tests pass.','rollback ready · zero downtime.','perf regression caught + reverted.','db migration scheduled 2:00 UTC.','dependency upgrade complete.'],
+      'MKT.seo':          ['indexed 14 new programmatic pages.','core web vitals: LCP 1.4s.','keyword cluster gain: +127 ranks.','3 backlinks earned this hour.','content brief delivered.'],
+      'SECURITY.scan':    ['no anomalies · last scan 4m ago.','3 dependencies patched.','SOC2 evidence collected.','phishing simulation deployed.','firewall rules updated.'],
+      'CHIEFOFSTAFF':     ['routed 14 tasks · 0 backlog.','your weekly digest is ready.','3 decisions need your input.','calendar optimized · 2 hrs reclaimed.','team standups summarized.'],
+    };
+    const indexes = {};
+    cells.forEach(c => { indexes[c.dataset.agent] = 0; });
+
+    const renderCell = (cell) => {
+      const agent = cell.dataset.agent;
+      const queue = scripts[agent] || [];
+      const idx = indexes[agent] % queue.length;
+      const body = cell.querySelector('[data-msg]');
+      const time = cell.querySelector('.ops__cell-time');
+      if (body) typewriter(body, queue[idx], 12);
+      if (time) {
+        const now = new Date();
+        time.textContent = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
+      }
+      cell.classList.add('is-active');
+      setTimeout(() => cell.classList.remove('is-active'), 1800);
+      indexes[agent]++;
     };
 
-    const runScript = () => {
-      if (started) return;
-      started = true;
-      chat.innerHTML = '';
-      if (calNew) calNew.classList.remove('is-in');
-      if (fly) fly.classList.remove('is-flying');
-      let t = 0;
-      script.forEach(line => {
-        t += line.delay;
-        if (line.typing) {
-          timeoutIds.push(setTimeout(() => showTyping(line.side), t - line.typing));
-        }
-        timeoutIds.push(setTimeout(() => showBubble(line), t));
-      });
-      // Loop after a pause (long enough to read the booking landed)
-      timeoutIds.push(setTimeout(() => {
-        started = false;
-        runScript();
-      }, t + 4500));
+    const typewriter = (el, text, speed) => {
+      if (reduced) { el.textContent = text; return; }
+      el.textContent = '';
+      let i = 0;
+      const tick = () => {
+        if (i <= text.length) { el.textContent = text.slice(0, i); i++; setTimeout(tick, speed); }
+      };
+      tick();
     };
 
-    const showTyping = (side) => {
-      const b = document.createElement('div');
-      b.className = `bubble bubble--${side === 'caller' ? 'caller' : 'ai'} is-typing`;
-      b.innerHTML = `<span class="typing"><span></span><span></span><span></span></span>`;
-      chat.appendChild(b);
-      requestAnimationFrame(() => b.classList.add('is-in'));
-      pruneChat();
+    let intervalId = null;
+    let initialKick = null;
+    const start = () => {
+      if (intervalId) return; // Already running — don't restack
+      // Stagger initial render
+      cells.forEach((c, i) => setTimeout(() => renderCell(c), i * 360));
+      initialKick = setTimeout(() => {
+        // Then random ones every ~2.4s
+        intervalId = setInterval(() => {
+          renderCell(cells[Math.floor(Math.random() * cells.length)]);
+          if (tasksToday) {
+            taskCount += Math.floor(Math.random() * 3) + 1;
+            tasksToday.textContent = taskCount.toLocaleString();
+          }
+        }, 2400);
+      }, cells.length * 360 + 400);
     };
-
-    const showBubble = (line) => {
-      const typing = chat.querySelector('.is-typing');
-      if (typing) typing.remove();
-      const b = document.createElement('div');
-      b.className = `bubble bubble--${line.side === 'caller' ? 'caller' : 'ai'}`;
-      b.textContent = line.text;
-      chat.appendChild(b);
-      requestAnimationFrame(() => b.classList.add('is-in'));
-      pruneChat();
-      if (line.onShow) line.onShow();
-    };
-
-    const pruneChat = () => {
-      while (chat.children.length > 5) chat.removeChild(chat.firstChild);
+    const stop = () => {
+      if (intervalId) { clearInterval(intervalId); intervalId = null; }
+      if (initialKick) { clearTimeout(initialKick); initialKick = null; }
     };
 
     if (reduced) {
-      // Static state for reduced motion: show last 3 exchanges
-      script.slice(-3).forEach(line => {
-        const b = document.createElement('div');
-        b.className = `bubble bubble--${line.side === 'caller' ? 'caller' : 'ai'} is-in`;
-        b.textContent = line.text;
-        chat.appendChild(b);
+      cells.forEach(c => {
+        const agent = c.dataset.agent;
+        const body = c.querySelector('[data-msg]');
+        const time = c.querySelector('.ops__cell-time');
+        if (body) body.textContent = scripts[agent][0];
+        if (time) time.textContent = '—';
       });
-      if (calNew) calNew.classList.add('is-in');
       return;
     }
 
     const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting && !started) {
-          runScript();
-        } else if (!e.isIntersecting) {
-          // pause when offscreen
-          timeoutIds.forEach(clearTimeout);
-          timeoutIds = [];
-          started = false;
-        }
-      });
-    }, { threshold: 0.35 });
-    io.observe(stage);
+      entries.forEach(e => e.isIntersecting ? start() : stop());
+    }, { threshold:0.15 });
+    io.observe(floor);
   }
 
-  /* ─── 4. COUNTERS ─── */
-  function initCounters() {
-    const els = $$('[data-target]');
-    if (!els.length) return;
-    const run = (el) => {
-      const target = +el.dataset.target;
-      if (reduced) { el.textContent = target; return; }
-      const dur = 1600;
-      const start = performance.now();
-      const step = (t) => {
-        const p = Math.min((t - start) / dur, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.floor(eased * target);
-        if (p < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
+  /* ─── PALETTE QUERY CYCLING (with matching results) ─── */
+  function initPaletteQuery(){
+    const q = $('#paletteQuery');
+    const results = $('#paletteResults');
+    if (!q || !results || reduced) return;
+
+    const scenarios = [
+      {
+        query: 'draft a Q4 board update',
+        rows: [
+          { dept:'CS', title:'Draft quarterly board update',     deptName:'Chief of Staff', time:'~6 min' },
+          { dept:'FN', title:'Build Q4 financial summary',       deptName:'Finance',         time:'~4 min' },
+          { dept:'PR', title:'Pull Q4 product metrics',          deptName:'Product',         time:'~2 min' },
+          { dept:'SL', title:'Pipeline state & forecast',        deptName:'Sales',           time:'~3 min' },
+          { dept:'DT', title:'Cohort retention summary',         deptName:'Data',            time:'~4 min' },
+        ],
+      },
+      {
+        query: 'audit our SOC2 readiness',
+        rows: [
+          { dept:'SR', title:'Run SOC2 control gap analysis',    deptName:'Security · SRE',  time:'~12 min' },
+          { dept:'LG', title:'Review existing policy library',   deptName:'Legal',           time:'~5 min' },
+          { dept:'EN', title:'Audit access controls & logs',     deptName:'Engineering',     time:'~8 min' },
+          { dept:'CS', title:'Draft remediation plan',           deptName:'Chief of Staff',  time:'~3 min' },
+          { dept:'OP', title:'Build vendor risk register',       deptName:'Operations',      time:'~6 min' },
+        ],
+      },
+      {
+        query: 'build the marketing plan for our Q1 launch',
+        rows: [
+          { dept:'MK', title:'Build launch campaign architecture',deptName:'Marketing',      time:'~9 min' },
+          { dept:'PM', title:'Plan paid media + budget',         deptName:'Paid Media',      time:'~5 min' },
+          { dept:'DS', title:'Generate creative variants',       deptName:'Design · UX',     time:'~7 min' },
+          { dept:'CM', title:'Draft PR + press list',            deptName:'Comms · PR',      time:'~4 min' },
+          { dept:'CX', title:'Build onboarding email flow',      deptName:'Customer Success',time:'~6 min' },
+        ],
+      },
+      {
+        query: 'find churn signals in last 90 days',
+        rows: [
+          { dept:'DT', title:'Score churn risk by cohort',       deptName:'Data',            time:'~5 min' },
+          { dept:'CX', title:'Tag at-risk accounts in CRM',      deptName:'Customer Success',time:'~3 min' },
+          { dept:'PR', title:'Cross-check product usage drops',  deptName:'Product',         time:'~4 min' },
+          { dept:'SL', title:'Draft retention outreach',         deptName:'Sales',           time:'~4 min' },
+          { dept:'FN', title:'Forecast revenue impact',          deptName:'Finance',         time:'~3 min' },
+        ],
+      },
+    ];
+
+    const render = (scn) => {
+      q.textContent = scn.query;
+      results.innerHTML = scn.rows.map((r, i) =>
+        `<li class="palette__row${i === 0 ? ' palette__row--hot' : ''}">
+          <span class="mono palette__dept">${r.dept}</span>
+          <span class="palette__title">${r.title}</span>
+          <span class="mono palette__dept-name">${r.deptName}</span>
+          <span class="mono palette__time">${r.time}</span>
+        </li>`
+      ).join('');
     };
+
+    render(scenarios[0]);
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % scenarios.length;
+      render(scenarios[i]);
+    }, 4200);
+  }
+
+  /* ─── SECTION REVEALS ─── */
+  function initSectionReveals(){
+    const sections = $$('.section');
+    if (!sections.length || reduced) return;
     const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.5 });
-    els.forEach(el => io.observe(el));
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in-view'); io.unobserve(e.target); }});
+    }, { threshold:0.12 });
+    sections.forEach(s => io.observe(s));
   }
 
-  /* ─── 5. STEPS LINE DRAW ─── */
-  function initStepsLine() {
-    const line = $('#stepsLine');
-    if (!line || reduced) return;
-    const path = line.querySelector('path');
-    if (!path) return;
-    const len = path.getTotalLength();
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = len;
-    path.style.transition = 'stroke-dashoffset 1400ms cubic-bezier(0.16,1,0.3,1)';
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          path.style.strokeDashoffset = '0';
-          path.style.strokeDasharray = '3 6';
-          setTimeout(() => { path.style.strokeDashoffset = '0'; }, 1400);
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    io.observe(line);
-  }
-
-  /* ─── 6. TILE SUBTLE HOVER LIFT (already CSS, but track for cursor) ─── */
-  function initTileTilt() {
-    // Reserved for future cursor effects; CSS handles base hover.
-  }
-
-  /* ─── 7. CONTACT FORM ─── */
-  function initForm() {
+  /* ─── CONTACT FORM ─── */
+  function initForm(){
     const form    = $('#contactForm');
     const btnTxt  = $('#formBtnText');
     const btnLoad = $('#formBtnLoading');
@@ -258,7 +262,7 @@
     const submit  = $('#formSubmit');
     if (!form) return;
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const data = {
         name:     form.name?.value.trim() || '',
@@ -267,11 +271,8 @@
         type:     form.type?.value || '',
         message:  form.message?.value.trim() || '',
       };
-
       if (!data.name || !data.email) {
         errBox.hidden = true;
-        errBox.innerHTML = '';
-        // Force re-announce by toggling
         requestAnimationFrame(() => {
           errBox.textContent = 'Please add your name and email.';
           errBox.hidden = false;
@@ -280,186 +281,25 @@
         if (target) target.focus();
         return;
       }
-
-      okBox.hidden  = true;
-      errBox.hidden = true;
-      btnTxt.hidden = true;
-      btnLoad.hidden = false;
-      submit.disabled = true;
-      submit.setAttribute('aria-busy', 'true');
-
+      okBox.hidden = true; errBox.hidden = true;
+      btnTxt.hidden = true; btnLoad.hidden = false;
+      submit.disabled = true; submit.setAttribute('aria-busy','true');
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data, source: 'vidatech.org' }),
         });
-        if (res.ok) {
-          form.reset();
-          okBox.hidden = false;
-          okBox.setAttribute('tabindex', '-1');
-          okBox.focus();
-        }
+        if (res.ok) { form.reset(); okBox.hidden = false; okBox.setAttribute('tabindex','-1'); okBox.focus(); }
         else throw new Error();
       } catch {
         errBox.hidden = false;
-        errBox.innerHTML = 'Something went wrong. Email us at <a href="mailto:hello@vidatech.org">hello@vidatech.org</a>';
+        errBox.innerHTML = 'Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a>';
       } finally {
-        btnTxt.hidden = false;
-        btnLoad.hidden = true;
-        submit.disabled = false;
-        submit.removeAttribute('aria-busy');
+        btnTxt.hidden = false; btnLoad.hidden = true;
+        submit.disabled = false; submit.removeAttribute('aria-busy');
       }
     });
-  }
-
-  /* ─── 8. SCROLL PROGRESS MARK ─── */
-  function initScrollMark() {
-    const m = $('#scrollMark');
-    if (!m || reduced) return;
-    let raf;
-    const update = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      const pct = max > 0 ? (scrollY / max) * 100 : 0;
-      m.style.width = pct.toFixed(2) + '%';
-    };
-    update();
-    window.addEventListener('scroll', () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
-    }, { passive: true });
-  }
-
-  /* ─── 9. SELF-DRAWING SECTION RULES ─── */
-  function initRules() {
-    const rules = $$('.rule');
-    if (!rules.length) return;
-    if (reduced) { rules.forEach(r => r.classList.add('is-in')); return; }
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.6 });
-    rules.forEach(r => io.observe(r));
-  }
-
-  /* ─── 10. HAND-DRAWN UNDERLINE TRIGGER ─── */
-  function initUnderlines() {
-    const ems = $$('.display em');
-    if (!ems.length) return;
-    if (reduced) { ems.forEach(e => e.classList.add('is-in-view')); return; }
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('is-in-view'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.5 });
-    ems.forEach(e => io.observe(e));
-  }
-
-  /* ─── 11. SCROLL VELOCITY CSS VAR ─── */
-  function initScrollVelocity() {
-    if (reduced) return;
-    let lastY = scrollY, lastT = performance.now(), v = 0, raf;
-    const root = document.documentElement;
-    const decay = () => {
-      v *= 0.9;
-      root.style.setProperty('--scroll-velocity', v.toFixed(3));
-      if (Math.abs(v) > 0.01) raf = requestAnimationFrame(decay);
-    };
-    window.addEventListener('scroll', () => {
-      const now = performance.now();
-      const dt = Math.max(now - lastT, 1);
-      v = Math.max(-1, Math.min(1, (scrollY - lastY) / dt * 0.05));
-      lastY = scrollY; lastT = now;
-      root.style.setProperty('--scroll-velocity', v.toFixed(3));
-      cancelAnimationFrame(raf); raf = requestAnimationFrame(decay);
-    }, { passive: true });
-  }
-
-  /* ─── 12. MAGNETIC CTA ─── */
-  function initMagnetic() {
-    if (reduced) return;
-    if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-    const btns = $$('[data-magnetic]');
-    btns.forEach(btn => {
-      const strength = 0.32, radius = 90;
-      let rect, raf;
-      const update = (x, y) => {
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = x - cx, dy = y - cy;
-        const dist = Math.hypot(dx, dy);
-        if (dist < radius + Math.max(rect.width, rect.height) / 2) {
-          btn.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
-        } else {
-          btn.style.transform = '';
-        }
-      };
-      btn.addEventListener('pointerenter', () => rect = btn.getBoundingClientRect());
-      window.addEventListener('pointermove', (e) => {
-        if (!rect) return;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => update(e.clientX, e.clientY));
-      });
-      btn.addEventListener('pointerleave', () => btn.style.transform = '');
-      window.addEventListener('scroll', () => { rect = btn.getBoundingClientRect(); }, { passive: true });
-    });
-  }
-
-  /* ─── 13. CUSTOM CURSOR RING ─── */
-  function initCursorRing() {
-    if (reduced) return;
-    if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-    const ring = document.createElement('div');
-    ring.className = 'cursor-ring';
-    document.body.appendChild(ring);
-
-    let tx = 0, ty = 0, x = 0, y = 0;
-    let active = false;
-    window.addEventListener('pointermove', e => {
-      tx = e.clientX; ty = e.clientY;
-      if (!active) { active = true; ring.classList.add('is-active'); x = tx; y = ty; }
-    }, { passive: true });
-    window.addEventListener('pointerleave', () => { ring.classList.remove('is-active'); active = false; });
-
-    const tick = () => {
-      x += (tx - x) * 0.18;
-      y += (ty - y) * 0.18;
-      ring.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-      requestAnimationFrame(tick);
-    };
-    tick();
-
-    const interactive = 'a, button, [data-magnetic], input, textarea, select, summary, [role="button"], .tile';
-    document.addEventListener('pointerover', e => {
-      ring.classList.toggle('is-hot', !!e.target.closest(interactive));
-    });
-  }
-
-  /* ─── 14a. SECTION REVEAL OBSERVER (staggered children) ─── */
-  function initSectionReveals() {
-    const sections = $$('.section-folio');
-    if (!sections.length) return;
-    if (reduced) { sections.forEach(s => s.classList.add('is-in-view')); return; }
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('is-in-view'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    sections.forEach(s => io.observe(s));
-  }
-
-  /* ─── 14b. REVEAL FALLBACK (for browsers without animation-timeline) ─── */
-  function initRevealFallback() {
-    if (CSS.supports && CSS.supports('animation-timeline: view()')) return;
-    const targets = $$('.in-view-target, .reveal-up, .reveal-side-l, .reveal-side-r, .reveal-scale');
-    if (!targets.length) return;
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('is-in-view', 'in-view'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
-    targets.forEach(t => io.observe(t));
   }
 
 })();

@@ -3,688 +3,633 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<meta name="color-scheme" content="light" />
-<meta name="theme-color" content="#F5F1E8" />
-<title>VidaTech — Never miss another call. AI receptionist for service businesses.</title>
-<meta name="description" content="AI receptionist that answers your business line in under 2 seconds, qualifies the caller, and books straight into your calendar. Live in 48 hours. From $300/mo. Cancel anytime." />
+<meta name="color-scheme" content="dark light" />
+<meta name="theme-color" content="#0A0B0D" />
+<title>VidaTech — Subscribe to a company, not seats.</title>
+<meta name="description" content="VidaTech runs AXIS·OS — the operating system for company-scale AI labor. 80+ trained agents across 16 departments (including a 24/7 AI receptionist), billed like software. Your executive team initializes in 14 days." />
 <link rel="canonical" href="https://vidatech.org" />
 <meta name="robots" content="index,follow,max-image-preview:large" />
 
-<!-- Open Graph -->
 <meta property="og:site_name" content="VidaTech" />
-<meta property="og:title" content="VidaTech — Never miss another call." />
-<meta property="og:description" content="AI receptionist that answers in 2 seconds, qualifies the lead, and books straight into your calendar. Live in 48 hours. From $300/mo." />
+<meta property="og:title" content="VidaTech — Subscribe to a company, not seats." />
+<meta property="og:description" content="80+ AI agents. 16 departments. One subscription. Your executive team — plus a 24/7 AI receptionist — initializes in 14 days." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://vidatech.org" />
-<meta property="og:image" content="https://vidatech.org/assets/og.jpg" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:locale" content="en_US" />
-
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="VidaTech — Never miss another call." />
-<meta name="twitter:description" content="AI receptionist for service businesses. Live on your phone line in 48 hours." />
-<meta name="twitter:image" content="https://vidatech.org/assets/og.jpg" />
-
-<!-- Structured data: Organization + Service -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://vidatech.org/#org",
-      "name": "VidaTech",
-      "url": "https://vidatech.org",
-      "logo": "https://vidatech.org/assets/og.jpg",
-      "email": "vidaholdings@gmail.com",
-      "foundingDate": "2024",
-      "description": "Operated infrastructure for service businesses — front-office and back-office systems that answer calls, book leads, and run operations on autopilot.",
-      "areaServed": "United States",
-      "sameAs": []
-    },
-    {
-      "@type": "Service",
-      "name": "AI Receptionist",
-      "provider": { "@id": "https://vidatech.org/#org" },
-      "description": "AI receptionist that answers business calls in under 2 seconds, qualifies callers, and books appointments into your calendar 24/7.",
-      "areaServed": "United States",
-      "serviceType": "Virtual receptionist",
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "USD",
-        "lowPrice": "300",
-        "highPrice": "3500",
-        "offerCount": "3",
-        "availability": "https://schema.org/InStock",
-        "description": "Pricing scales with call volume and feature set — from $300/mo for solo operators to $3,500/mo for full multi-location coverage."
-      }
-    }
-  ]
-}
-</script>
+<meta name="twitter:title" content="VidaTech — Subscribe to a company, not seats." />
+<meta name="twitter:description" content="80+ AI agents. 16 departments. One subscription." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=61" />
-<script>
-  // Lazy-load Lenis after first paint to avoid blocking critical path
-  addEventListener('load', () => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js';
-    s.onload = () => document.dispatchEvent(new Event('lenis:ready'));
-    document.head.appendChild(s);
-  });
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=merge1" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "VidaTech",
+  "url": "https://vidatech.org",
+  "description": "VidaTech runs AXIS·OS — the operating system for company-scale AI labor. 80+ trained agents across 16 departments, including a 24/7 AI receptionist.",
+  "telephone": "+1-817-623-4977",
+  "email": "vidaholdings@gmail.com",
+  "makesOffer": {
+    "@type": "AggregateOffer",
+    "name": "VidaTech AXIS·OS subscription",
+    "priceCurrency": "USD",
+    "lowPrice": "2500",
+    "highPrice": "18000",
+    "offerCount": 4
+  }
+}
 </script>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23D4513F'/%3E%3Cpath d='M9 9l7 14 7-14' stroke='%23F5F1E8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 </head>
 <body>
 
-<a href="#top" class="skip-link">Skip to main content</a>
+<a href="#main" class="skip-link">Skip to main content</a>
 
-<!-- ─────────  EDITORIAL OVERLAYS  ───────── -->
-<svg class="grain" aria-hidden="true">
-  <filter id="grainFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
-  <rect width="100%" height="100%" filter="url(#grainFilter)"/>
-</svg>
+<!-- Top scroll progress -->
 <div id="scrollMark" class="scroll-mark" aria-hidden="true"></div>
 
 <!-- ─────────  NAV  ───────── -->
 <header class="nav" id="nav">
   <div class="nav__inner container">
     <a href="#top" class="logo" aria-label="VidaTech home">
-      <svg class="logo__mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M9 9l7 14 7-14" stroke="#F5F1E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-      <span class="logo__word">VidaTech</span>
+      <span class="logo__mark" aria-hidden="true"></span>
+      <span class="logo__word"><strong>Vida</strong><span class="logo__dot"></span>Tech</span>
     </a>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#receptionist">Receptionist</a>
-      <a href="#services">Services</a>
-      <a href="#deploy">Process</a>
-      <a href="#faq">FAQ</a>
+      <a href="#departments">Departments</a>
+      <a href="#floor">The Floor</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#math">The Math</a>
     </nav>
-    <a href="#contact" class="btn btn--ink btn--sm">Book a 20-min audit</a>
+    <a href="#initialize" class="btn btn--accent btn--sm">Book a call</a>
     <button class="nav__menu" id="navMenu" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span>
     </button>
   </div>
-  <div class="drawer" id="drawer" aria-hidden="true">
-    <a href="#receptionist">Receptionist</a>
-    <a href="#services">Services</a>
-    <a href="#deploy">Process</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact" class="btn btn--ink">Book a 20-min audit</a>
+  <div class="drawer" id="drawer" aria-hidden="true" inert>
+    <a href="#departments">Departments</a>
+    <a href="#floor">The Floor</a>
+    <a href="#workflows">Workflows</a>
+    <a href="#math">The Math</a>
+    <a href="#initialize" class="btn btn--accent">Book a call</a>
   </div>
 </header>
 
-<main id="top" tabindex="-1">
+<main id="main" tabindex="-1">
+<a id="top"></a>
 
-<!-- ─────────  1. HERO  ───────── -->
+<!-- ─────────  01. BOOT (HERO)  ───────── -->
 <section class="hero">
   <div class="container hero__inner">
-    <div class="eyebrow">
-      <span class="eyebrow__dot"></span>
-      <span>For dental, auto, HVAC, law &amp; home-service businesses</span>
-    </div>
 
-    <h1 class="display">
-      Never miss<br />
-      <em>another call.<svg class="underline" viewBox="0 0 240 8" aria-hidden="true"><path d="M3,5 Q60,2 120,4 T237,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em>
-    </h1>
-
-    <p class="lede">
-      Every missed call is a customer calling your competitor next. VidaTech answers in under two seconds, qualifies the caller, and books the job — while you stay focused on the work in front of you. <strong>From $300/mo. Unlimited calls. Cancel anytime.</strong>
-    </p>
-
-    <div class="hero__cta">
-      <a href="#receptionist" class="btn btn--ink btn--lg" data-magnetic>Hear it answer a call <span aria-hidden="true">→</span></a>
-      <a href="#contact" class="link link--arrow">Book a 20-min audit <span aria-hidden="true">→</span></a>
-    </div>
-
-    <div class="hero__proof">
-      <div class="hero__proof-item">
-        <div class="mono mono--mute">Live in</div>
-        <div class="hero__proof-num">48 hr</div>
+    <div class="hero__left">
+      <div class="ticker mono" id="bootTicker">
+        <span class="ticker__cursor" aria-hidden="true">&gt;</span>
+        <span id="bootText">vidatech boot --company "your_co"</span>
+        <span class="ticker__caret" aria-hidden="true"></span>
       </div>
-      <div class="hero__proof-item">
-        <div class="mono mono--mute">Pickup</div>
-        <div class="hero__proof-num">&lt;2 sec</div>
+
+      <h1 class="display display--hero">
+        Subscribe to a <em>company,</em><br />
+        not seats.
+      </h1>
+
+      <p class="lede">
+        VidaTech runs <strong>AXIS·OS</strong> — 80+ AI agents across <strong>16 departments</strong>, including a 24/7 AI receptionist that picks up on the first ring. The executive layer your team has been operating without.
+      </p>
+
+      <div class="hero__cta">
+        <a href="#initialize" class="btn btn--accent btn--lg" data-magnetic>
+          Book initialization call <span aria-hidden="true">→</span>
+        </a>
+        <a href="tel:+18176234977" class="link link--arrow">Call the live demo <span aria-hidden="true">→</span></a>
       </div>
-      <div class="hero__proof-item">
-        <div class="mono mono--mute">Coverage</div>
-        <div class="hero__proof-num">24/7</div>
-      </div>
-      <div class="hero__proof-item">
-        <div class="mono mono--mute">Missed calls</div>
-        <div class="hero__proof-num">0</div>
+
+      <div class="hero__meta mono mono--mute">
+        // <span class="signal-dot" aria-hidden="true"></span>80+ agents · 16 departments · live in 14 days
       </div>
     </div>
 
-    <div class="hero__wave" aria-hidden="true">
-      <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-      <div class="mono mono--mute">LIVE — Receptionist line</div>
-    </div>
+    <aside class="hero__right" aria-label="Live department grid">
+      <div class="grid-tiles" id="gridTiles">
+        <!-- 15 tiles injected as static HTML; JS flickers them -->
+        <div class="tile-mini tile-mini--hot" data-sym="RX"><span class="tile-mini__sym mono">RX</span><span class="tile-mini__lbl">AI Receptionist</span><span class="tile-mini__count mono">24/7</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="CS"><span class="tile-mini__sym mono">CS</span><span class="tile-mini__lbl">Chief of Staff</span><span class="tile-mini__count mono">3</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="SR"><span class="tile-mini__sym mono">SR</span><span class="tile-mini__lbl">Security · SRE</span><span class="tile-mini__count mono">4</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="EN"><span class="tile-mini__sym mono">EN</span><span class="tile-mini__lbl">Engineering</span><span class="tile-mini__count mono">12</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="PR"><span class="tile-mini__sym mono">PR</span><span class="tile-mini__lbl">Product</span><span class="tile-mini__count mono">8</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="DS"><span class="tile-mini__sym mono">DS</span><span class="tile-mini__lbl">Design · UX</span><span class="tile-mini__count mono">7</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="MK"><span class="tile-mini__sym mono">MK</span><span class="tile-mini__lbl">Marketing</span><span class="tile-mini__count mono">21</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="PM"><span class="tile-mini__sym mono">PM</span><span class="tile-mini__lbl">Paid Media</span><span class="tile-mini__count mono">6</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="SL"><span class="tile-mini__sym mono">SL</span><span class="tile-mini__lbl">Sales</span><span class="tile-mini__count mono">10</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="CX"><span class="tile-mini__sym mono">CX</span><span class="tile-mini__lbl">Customer Success</span><span class="tile-mini__count mono">5</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="FN"><span class="tile-mini__sym mono">FN</span><span class="tile-mini__lbl">Finance</span><span class="tile-mini__count mono">6</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="LG"><span class="tile-mini__sym mono">LG</span><span class="tile-mini__lbl">Legal</span><span class="tile-mini__count mono">3</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="QA"><span class="tile-mini__sym mono">QA</span><span class="tile-mini__lbl">Testing · QA</span><span class="tile-mini__count mono">8</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="DT"><span class="tile-mini__sym mono">DT</span><span class="tile-mini__lbl">Data</span><span class="tile-mini__count mono">5</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="OP"><span class="tile-mini__sym mono">OP</span><span class="tile-mini__lbl">Operations</span><span class="tile-mini__count mono">4</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+        <div class="tile-mini" data-sym="CM"><span class="tile-mini__sym mono">CM</span><span class="tile-mini__lbl">Comms · PR</span><span class="tile-mini__count mono">3</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
+      </div>
+    </aside>
+
   </div>
 </section>
 
-<!-- ─────────  1.5  YOU'VE BEEN DOING THIS  ───────── -->
-<section class="pain section-folio" data-folio="00">
+<!-- ─────────  01.5 WHAT'S ACTUALLY BROKEN  ───────── -->
+<section class="broken section" aria-labelledby="broken-heading">
   <div class="container">
     <header class="section-head">
-      <hr class="rule" />
-      <div class="mono mono--mute">00 — You've been doing this for years</div>
-      <h2 class="display display--md">The phone has never cared <em>how skilled you are.<svg class="underline" viewBox="0 0 380 8" aria-hidden="true"><path d="M3,5 Q90,2 190,4 T377,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
+      <div class="mono mono--mute eyebrow">// 01 — Founder confessions</div>
+      <h2 id="broken-heading" class="display">It's not a discipline problem.<br /><em>It's a structural one.</em></h2>
     </header>
-    <ul class="pain__list">
-      <li>You let the phone ring through to voicemail because you're with a customer — and the caller hangs up before the beep.</li>
-      <li>You check messages at 6 PM and call back the next morning — and they've already booked with someone who answered.</li>
-      <li>You hired a receptionist who's good, but she's one person with one lunch break and one set of sick days — and the phone doesn't care.</li>
-      <li>You tell yourself the missed calls probably weren't serious — because the alternative is admitting how much revenue walks away every week.</li>
+
+    <ul class="broken__list">
+      <li>You're the bottleneck on every <strong>$50K decision</strong> because your team has no one above them.</li>
+      <li>Your CMO seat is empty, so marketing strategy is whatever you remember to think about <strong>on Sundays</strong>.</li>
+      <li>Finance lives in three spreadsheets and your head, and reconciliation is a <strong>Saturday problem</strong>.</li>
+      <li>Legal review means you reading a contract <strong>at 10 PM</strong> and hoping you catch the bad clause.</li>
+      <li>Ops runs on tribal knowledge — yours — and breaks the <strong>week you take a vacation</strong>.</li>
+      <li>Hiring an exec takes six months and $280K. <strong>You needed the answer last Tuesday.</strong></li>
     </ul>
 
-    <div class="pain__receipts">
+    <div class="broken__receipts">
       <article class="receipt">
-        <span class="receipt__time mono">TUE · 4:47 PM</span>
-        <p>A new patient calls. You're elbow-deep in a crown prep. The phone goes to voicemail. They call the next dentist on Google.</p>
-        <span class="receipt__cost mono">— $4,800 lifetime value, gone</span>
-      </article>
-      <article class="receipt">
-        <span class="receipt__time mono">SAT · 9:12 AM</span>
-        <p>A water heater just failed. A homeowner is panic-Googling plumbers. They call you first. Three rings, voicemail, hang-up. Your competitor answers on the second ring.</p>
-        <span class="receipt__cost mono">— $1,400 job lost</span>
+        <span class="receipt__time mono">11:47 PM · TUE</span>
+        <p>You're approving an invoice. The board update you promised yourself you'd write before bed is still a blank doc.</p>
       </article>
       <article class="receipt">
-        <span class="receipt__time mono">WED · 7:48 PM</span>
-        <p>Someone needs a lawyer for a DUI by tomorrow morning. They call three firms. You're the only one who doesn't answer.</p>
-        <span class="receipt__cost mono">— $6,500 retainer signed elsewhere</span>
+        <span class="receipt__time mono">06:14 AM · FRI</span>
+        <p>You open Slack. 47 messages. You close it. You open it again at 6:16 because nobody else will.</p>
       </article>
-    </div>
-
-    <p class="pain__reframe">You're not losing customers because you're bad at the work. You're losing them because you're bad at <em>answering the phone while doing the work</em> — and nobody can do both. The dentist with the best hands in town still loses the new patient to the dentist who picked up on ring two. The phone has never cared how skilled you are. It only cares whether someone is on the other end of it. <strong>VidaTech is the someone.</strong></p>
-  </div>
-</section>
-
-<!-- ─────────  2. THE LIVING CALL  ───────── -->
-<section class="reveal section-folio" id="receptionist" data-folio="01">
-  <div class="container">
-    <div class="section-head">
-      <hr class="rule" />
-      <div class="mono mono--mute">01 — The Receptionist</div>
-      <h2 class="display display--md">
-        She answers in two seconds.<br />
-        <em>The booking lands on your calendar.<svg class="underline" viewBox="0 0 380 8" aria-hidden="true"><path d="M3,5 Q90,2 190,4 T377,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em>
-      </h2>
-      <p class="lede lede--narrow">
-        A trained front-desk system that picks up every call — greeting the caller in your business voice, qualifying the lead, and dropping the booking straight into your scheduling tool. No app to check. No missed appointments.
-      </p>
-
-      <a class="demo-line" href="tel:+18176234977" aria-label="Call the live demo receptionist at (817) 623-4977">
-        <span class="demo-line__label mono mono--mute">CALL THE LIVE DEMO LINE</span>
-        <span class="demo-line__num">(817) 623-4977</span>
-        <span class="demo-line__hint mono">→ hear it answer right now, 24/7</span>
-      </a>
-    </div>
-
-    <div class="stage" id="callStage" aria-label="Live call demonstration">
-      <p class="sr-only">Demonstration: a customer calls asking about grinding brakes. The receptionist offers Tuesday 2:30 PM or Thursday 10 AM. The customer books 2:30 PM. The booking appears on the business dashboard alongside today's running totals: 148 calls answered, 31 bookings created, zero missed calls.</p>
-      <!-- Phone -->
-      <div class="phone" aria-hidden="true">
-        <div class="phone__notch"></div>
-        <div class="phone__screen">
-          <div class="phone__status">
-            <span class="phone__time" id="phoneTime">9:41</span>
-            <span class="phone__icons">
-              <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><rect x="0" y="6" width="2" height="4" rx=".5"/><rect x="4" y="4" width="2" height="6" rx=".5"/><rect x="8" y="2" width="2" height="8" rx=".5"/><rect x="12" y="0" width="2" height="10" rx=".5"/></svg>
-              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 5a6 6 0 0112 0M3 6a4 4 0 018 0M5 7a2 2 0 014 0"/></svg>
-              <span class="phone__battery"><span></span></span>
-            </span>
-          </div>
-          <div class="phone__call-head">
-            <div class="phone__caller-av">JR</div>
-            <div>
-              <div class="phone__caller">James Reilly</div>
-              <div class="phone__num mono">Incoming · 00:14</div>
-            </div>
-            <span class="live-pulse" aria-hidden="true"></span>
-          </div>
-          <div class="phone__chat" id="phoneChat">
-            <!-- Static fallback (JS replaces these with animated versions on view) -->
-            <div class="bubble bubble--caller is-in">Hi — is this Vida Auto Body?</div>
-            <div class="bubble bubble--ai is-in">Vida Auto Body, this is the front desk — how can I help?</div>
-            <div class="bubble bubble--caller is-in">My brakes are grinding. Can someone look at it?</div>
-            <div class="bubble bubble--ai is-in">Sure — I can get you in tomorrow at 2:30 or Thursday at 10.</div>
-          </div>
-          <div class="phone__dock">
-            <button class="phone__btn phone__btn--mute" aria-label="Mute" tabindex="-1">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
-            </button>
-            <button class="phone__btn phone__btn--end" aria-label="End call" tabindex="-1">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8a14 14 0 01-2 .2 14 14 0 01-14-14 14 14 0 01.2-2L5 0 8 6l-2 3a14 14 0 005 5l3-2 6 3z"/></svg>
-            </button>
-            <button class="phone__btn phone__btn--keypad" aria-label="Keypad" tabindex="-1">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="6" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="18" cy="6" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/><circle cx="6" cy="18" r="1.5"/><circle cx="12" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Connector -->
-      <svg class="connector" viewBox="0 0 200 40" aria-hidden="true">
-        <path d="M0 20 Q100 20 200 20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="4 6" />
-      </svg>
-
-      <!-- Flying booking -->
-      <div class="booking-fly" id="bookingFly" aria-hidden="true">
-        <div class="booking-fly__inner">
-          <div class="mono">CALENDAR · Tue, Mar 12</div>
-          <div class="booking-fly__title">James Reilly — Brake check</div>
-          <div class="booking-fly__time">2:30 PM · 30 min</div>
-        </div>
-      </div>
-
-      <!-- Laptop -->
-      <div class="laptop" aria-hidden="true">
-        <div class="laptop__screen">
-          <div class="laptop__chrome">
-            <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
-            <span class="laptop__url mono">vidatech.dash / calendar</span>
-          </div>
-          <div class="laptop__body">
-            <div class="laptop__col">
-              <div class="mono mono--mute">TUE — MARCH 12</div>
-              <div class="cal-slot">10:00 — Oil change · M. Patel</div>
-              <div class="cal-slot">11:30 — Tire rotation · A. Singh</div>
-              <div class="cal-slot cal-slot--new" id="calSlotNew">
-                <span class="cal-slot__time">2:30 PM</span>
-                <span class="cal-slot__name">James Reilly — Brake check</span>
-                <span class="cal-slot__badge">NEW</span>
-              </div>
-              <div class="cal-slot">4:00 — Diagnostics · L. Tan</div>
-            </div>
-            <div class="laptop__col laptop__col--right">
-              <div class="mono mono--mute">TODAY</div>
-              <div class="metric"><span class="metric__num" data-target="148">0</span><span class="metric__lbl">calls answered</span></div>
-              <div class="metric"><span class="metric__num" data-target="31">0</span><span class="metric__lbl">bookings created</span></div>
-              <div class="metric"><span class="metric__num">0</span><span class="metric__lbl">missed</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="laptop__base"></div>
-      </div>
-    </div>
-
-    <div class="reveal__facts">
-      <div class="fact"><div class="mono mono--mute">Pickup</div><div class="fact__num">&lt; 2s</div></div>
-      <div class="fact"><div class="mono mono--mute">Coverage</div><div class="fact__num">24/7</div></div>
-      <div class="fact"><div class="mono mono--mute">Setup</div><div class="fact__num">48 hr</div></div>
-      <div class="fact"><div class="mono mono--mute">Missed calls</div><div class="fact__num">0</div></div>
+      <article class="receipt">
+        <span class="receipt__time mono">Q3 · 12 WEEKS AGO</span>
+        <p>You haven't done deep strategic thinking in four months. You can name the exact week it stopped.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ─────────  3. SERVICES BENTO  ───────── -->
-<section class="services section-folio" id="services" data-folio="02">
+<!-- ─────────  02. THE GAP  ───────── -->
+<section class="gap section" id="gap">
   <div class="container">
-    <div class="section-head section-head--row">
-      <div>
-        <hr class="rule" />
-        <div class="mono mono--mute">02 — The Suite</div>
-        <h2 class="display display--md">Six systems.<br /><em>One operator.<svg class="underline" viewBox="0 0 220 8" aria-hidden="true"><path d="M3,5 Q60,2 110,4 T217,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 02 — The Gap</div>
+      <h2 class="display">You were never supposed<br />to be doing this <em>alone.</em></h2>
+      <p class="lede pain__reframe">You're not behind because you're inefficient. You're behind because you're doing <strong>five jobs that were never meant to live in one calendar.</strong> A 12-person company needs a CEO, a CMO, a CFO, a head of legal, and a head of operations. You have one of those people. You are that person. The exhaustion isn't a discipline problem. It's a structural one.</p>
+    </header>
+
+    <div class="org-chart" aria-hidden="true">
+      <div class="org-chart__row">
+        <div class="org-node org-node--filled">CEO</div>
       </div>
-      <p class="lede lede--narrow">
-        Most agencies stop at one. VidaTech runs the stack — every system that touches a customer or a dollar, integrated and accountable to the same number: revenue captured.
-      </p>
-    </div>
-
-    <div class="bento">
-
-      <article class="tile tile--hero" data-tile="receptionist">
-        <div class="tile__head">
-          <div class="mono">SYSTEM 01</div>
-          <h3>Receptionist</h3>
-        </div>
-        <p>Picks up every call. Qualifies, books, sends the SMS. Trained on your business voice.</p>
-        <div class="tile__viz tile__viz--wave">
-          <svg viewBox="0 0 240 60" preserveAspectRatio="none"><path d="M0 30 Q15 10 30 30 T60 30 T90 30 T120 30 T150 30 T180 30 T210 30 T240 30" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-        </div>
-      </article>
-
-      <article class="tile" data-tile="ecom">
-        <div class="tile__head">
-          <div class="mono">SYSTEM 02</div>
-          <h3>E-commerce</h3>
-        </div>
-        <p>Shopify stores that research, list, and follow up — end-to-end.</p>
-        <div class="tile__viz tile__viz--cart">
-          <span class="cart-bar" style="--w:40%"></span>
-          <span class="cart-bar" style="--w:72%"></span>
-          <span class="cart-bar" style="--w:55%"></span>
-        </div>
-      </article>
-
-      <article class="tile" data-tile="auto">
-        <div class="tile__head">
-          <div class="mono">SYSTEM 03</div>
-          <h3>Automation</h3>
-        </div>
-        <p>The repetitive work — gone. Workflows that run every hour without you.</p>
-        <div class="tile__viz tile__viz--nodes">
-          <span class="node"></span><span class="node"></span><span class="node"></span><span class="node"></span>
-          <svg viewBox="0 0 200 60"><line x1="20" y1="30" x2="80" y2="30"/><line x1="80" y1="30" x2="140" y2="10"/><line x1="80" y1="30" x2="140" y2="50"/></svg>
-        </div>
-      </article>
-
-      <article class="tile" data-tile="dev">
-        <div class="tile__head">
-          <div class="mono">SYSTEM 04</div>
-          <h3>Web &amp; App</h3>
-        </div>
-        <p>From concept to deployed product. Architecture, design, infrastructure — handled.</p>
-        <div class="tile__viz tile__viz--code mono">
-          <span>$ deploy</span>
-          <span>✓ build complete</span>
-          <span>✓ live in 9.4s</span>
-        </div>
-      </article>
-
-      <article class="tile" data-tile="mkt">
-        <div class="tile__head">
-          <div class="mono">SYSTEM 05</div>
-          <h3>Marketing</h3>
-        </div>
-        <p>Rankings, content, email, social. Compounding visibility, lower ad spend.</p>
-        <div class="tile__viz tile__viz--chart">
-          <svg viewBox="0 0 200 60" preserveAspectRatio="none"><path d="M0 50 L40 42 L80 30 L120 22 L160 14 L200 6" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
-        </div>
-      </article>
-
-      <article class="tile" data-tile="brand">
-        <div class="tile__head">
-          <div class="mono">SYSTEM 06</div>
-          <h3>Brand</h3>
-        </div>
-        <p>Identity, messaging, video. The version of your business worth talking about.</p>
-        <div class="tile__viz tile__viz--brand">
-          <span class="swatch" style="--c:#1A1611"></span>
-          <span class="swatch" style="--c:#D4513F"></span>
-          <span class="swatch" style="--c:#F5F1E8"></span>
-        </div>
-      </article>
-
+      <div class="org-chart__row">
+        <div class="org-node org-node--empty">Chief of Staff</div>
+        <div class="org-node org-node--empty">CMO</div>
+        <div class="org-node org-node--empty">CFO</div>
+        <div class="org-node org-node--empty">CTO</div>
+        <div class="org-node org-node--empty">General Counsel</div>
+      </div>
+      <div class="org-chart__row">
+        <div class="org-node org-node--filled">You</div>
+        <div class="org-node org-node--filled">Your team</div>
+        <div class="org-node org-node--filled">Your team</div>
+        <div class="org-node org-node--filled">Your team</div>
+      </div>
+      <div class="org-chart__caption mono mono--mute">5 roles unfilled · $1.4M/yr to hire · 8 months to recruit</div>
     </div>
   </div>
 </section>
 
-<!-- ─────────  4. HOW IT DEPLOYS  ───────── -->
-<section class="deploy section-folio" id="deploy" data-folio="03">
+<!-- ─────────  03. MEET THE FLOORS (DEPARTMENTS)  ───────── -->
+<section class="departments section" id="departments">
   <div class="container">
-    <div class="section-head">
-      <hr class="rule" />
-      <div class="mono mono--mute">03 — How It Deploys</div>
-      <h2 class="display display--md">Live on your business in <em>48 hours.<svg class="underline" viewBox="0 0 200 8" aria-hidden="true"><path d="M3,5 Q50,2 100,4 T197,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 02 — Meet the Floors</div>
+      <h2 class="display">Sixteen departments.<br /><em>One subscription.</em></h2>
+      <p class="lede">Each "floor" is a coordinated team of agents trained on a single function. They share context, escalate to each other, and report up to your Chief of Staff agent — the only one you actually talk to.</p>
+    </header>
+
+    <div class="dept-grid">
+      <article class="dept dept--flagship dept--receptionist">
+        <div class="dept__head">
+          <span class="dept__sym mono">RX</span>
+          <div>
+            <h3 class="dept__name">AI Receptionist <span class="dept__pill mono">24/7</span></h3>
+            <span class="dept__count mono">always on</span>
+          </div>
+        </div>
+        <p class="dept__copy">Picks up on the first ring, books appointments, qualifies leads, takes messages, transfers urgent calls — never misses, never sleeps, never asks for a raise. Try it now:</p>
+        <a class="demo-line" href="tel:+18176234977" aria-label="Call the live demo receptionist at (817) 623-4977">
+          <span class="demo-line__label mono mono--mute">CALL THE LIVE DEMO LINE</span>
+          <span class="demo-line__num">(817) 623-4977</span>
+          <span class="demo-line__hint mono">→ hear it answer right now, 24/7</span>
+        </a>
+      </article>
+
+      <article class="dept dept--flagship">
+        <div class="dept__head">
+          <span class="dept__sym mono">SL</span>
+          <div>
+            <h3 class="dept__name">Sales</h3>
+            <span class="dept__count mono">10 agents</span>
+          </div>
+        </div>
+        <p class="dept__copy">Discovery, deal strategy, sales coaching, sales engineering, pipeline analysis, proposal writing, follow-up cadences.</p>
+      </article>
+
+      <article class="dept dept--flagship">
+        <div class="dept__head">
+          <span class="dept__sym mono">MK</span>
+          <div>
+            <h3 class="dept__name">Marketing</h3>
+            <span class="dept__count mono">21 agents</span>
+          </div>
+        </div>
+        <p class="dept__copy">SEO, content, social, livestream, China platforms, AI-citation, ASO. Every channel, one strategy.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">CS</span><div><h3 class="dept__name">Chief of Staff</h3><span class="dept__count mono">3 agents</span></div></div>
+        <p class="dept__copy">Routes work, files context, handles your inbox.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">EN</span><div><h3 class="dept__name">Engineering</h3><span class="dept__count mono">12 agents</span></div></div>
+        <p class="dept__copy">Senior eng, devops, security, code review, architecture.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">PR</span><div><h3 class="dept__name">Product</h3><span class="dept__count mono">8 agents</span></div></div>
+        <p class="dept__copy">PM, sprint prio, trend research, feedback synthesis.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">DS</span><div><h3 class="dept__name">Design · UX</h3><span class="dept__count mono">7 agents</span></div></div>
+        <p class="dept__copy">Brand, UI systems, UX research, accessibility, motion.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">PM</span><div><h3 class="dept__name">Paid Media</h3><span class="dept__count mono">6 agents</span></div></div>
+        <p class="dept__copy">PPC, paid social, programmatic, tracking, search query.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">FN</span><div><h3 class="dept__name">Finance</h3><span class="dept__count mono">6 agents</span></div></div>
+        <p class="dept__copy">Modeling, FP&amp;A, bookkeeping, tax, investment research.</p>
+      </article>
+
+      <article class="dept dept--flagship">
+        <div class="dept__head">
+          <span class="dept__sym mono">SR</span>
+          <div>
+            <h3 class="dept__name">Security · SRE</h3>
+            <span class="dept__count mono">4 agents</span>
+          </div>
+        </div>
+        <p class="dept__copy">Threat detection, incident response, SLO architecture, compliance auditing. The team you definitely can't afford yet — running 24/7.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">LG</span><div><h3 class="dept__name">Legal</h3><span class="dept__count mono">3 agents</span></div></div>
+        <p class="dept__copy">Client intake, document review, billing, compliance.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">CX</span><div><h3 class="dept__name">Customer Success</h3><span class="dept__count mono">5 agents</span></div></div>
+        <p class="dept__copy">Onboarding, churn prevention, expansion.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">QA</span><div><h3 class="dept__name">Testing · QA</h3><span class="dept__count mono">8 agents</span></div></div>
+        <p class="dept__copy">Accessibility, performance, API tests, evidence collection.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">DT</span><div><h3 class="dept__name">Data</h3><span class="dept__count mono">5 agents</span></div></div>
+        <p class="dept__copy">Analytics, dashboards, pipelines, observability.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">OP</span><div><h3 class="dept__name">Operations</h3><span class="dept__count mono">4 agents</span></div></div>
+        <p class="dept__copy">Workflow design, supply chain, vendor management.</p>
+      </article>
+
+      <article class="dept">
+        <div class="dept__head"><span class="dept__sym mono">CM</span><div><h3 class="dept__name">Comms · PR</h3><span class="dept__count mono">3 agents</span></div></div>
+        <p class="dept__copy">Brand voice, PR, community, crisis comms.</p>
+      </article>
     </div>
+  </div>
+</section>
 
-    <div class="steps">
-      <svg class="steps__line" id="stepsLine" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M40 30 L960 30" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 6" />
-      </svg>
+<!-- ─────────  04. THE FLOOR (signature wow)  ───────── -->
+<section class="floor section" id="floor">
+  <div class="container">
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 03 — The Operations Floor</div>
+      <h2 class="display">Watch your company<br /><em>run itself.</em></h2>
+      <p class="lede">Every AXIS·OS subscription includes a live dashboard. Here's a 90-second loop of what an actual operating floor looks like — eight agents working in parallel, right now.</p>
+    </header>
 
-      <div class="step">
-        <div class="step__num">01</div>
-        <h3>Audit</h3>
-        <p>20-min call. We map every place a customer or dollar leaks. You leave with a punch list whether you hire us or not.</p>
-        <div class="mono mono--mute">DAY 0 · FREE</div>
+    <div class="ops" id="opsFloor" aria-label="Live operations dashboard demonstration">
+      <div class="ops__chrome">
+        <div class="ops__dots" aria-hidden="true"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span></div>
+        <div class="ops__title mono">vidatech.dashboard / floor — live</div>
+        <div class="ops__status mono"><span class="live-dot"></span>operational</div>
       </div>
-
-      <div class="step">
-        <div class="step__num">02</div>
-        <h3>Build</h3>
-        <p>We wire the systems — voice agent trained, calendar synced, follow-ups armed, dashboards live. No homework on your side.</p>
-        <div class="mono mono--mute">DAY 1–2</div>
+      <div class="ops__grid" id="opsGrid">
+        <div class="ops__cell" data-agent="SALES.outreach"><div class="ops__cell-head"><span class="mono">SALES.outreach</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="FINANCE.cash"><div class="ops__cell-head"><span class="mono">FINANCE.cash</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="LEGAL.review"><div class="ops__cell-head"><span class="mono">LEGAL.review</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="DESIGN.brand"><div class="ops__cell-head"><span class="mono">DESIGN.brand</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="ENG.deploy"><div class="ops__cell-head"><span class="mono">ENG.deploy</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="MKT.seo"><div class="ops__cell-head"><span class="mono">MKT.seo</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="SECURITY.scan"><div class="ops__cell-head"><span class="mono">SECURITY.scan</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
+        <div class="ops__cell" data-agent="CHIEFOFSTAFF"><div class="ops__cell-head"><span class="mono">CHIEFOFSTAFF</span><span class="ops__cell-dot" aria-hidden="true"></span></div><div class="ops__cell-body mono" data-msg></div><div class="ops__cell-time mono"></div></div>
       </div>
-
-      <div class="step">
-        <div class="step__num">03</div>
-        <h3>Run</h3>
-        <p>The systems operate. We watch the metrics. You see the calls, the bookings, the revenue — daily.</p>
-        <div class="mono mono--mute">DAY 3 → ONGOING</div>
+      <div class="ops__footer mono">
+        <span><span class="live-dot"></span>8 agents online</span>
+        <span>uptime <span class="accent-text">99.98%</span></span>
+        <span>tasks today <span class="accent-text" id="tasksToday">1,247</span></span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─────────  5. THE $300K MATH  ───────── -->
-<section class="math section-folio" data-folio="04">
+<!-- ─────────  05. WORKFLOWS  ───────── -->
+<section class="workflows section" id="workflows">
   <div class="container">
-    <div class="section-head">
-      <hr class="rule" />
-      <div class="mono mono--mute">04 — The Math</div>
-      <h2 class="display display--md">The team you can't afford,<br /><em>without the team.<svg class="underline" viewBox="0 0 360 8" aria-hidden="true"><path d="M3,5 Q90,2 180,4 T357,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 04 — A Real Workflow</div>
+      <h2 class="display">A new lead lands.<br /><em>Watch what happens.</em></h2>
+      <p class="lede">No human touches this until step 6. Six agents from four departments, one continuous context, four minutes end-to-end.</p>
+    </header>
+
+    <ol class="flow">
+      <li class="flow__step" data-step="01">
+        <span class="flow__sym mono">00:00</span>
+        <div class="flow__body">
+          <span class="flow__agent mono">TRIGGER</span>
+          <h3>Form submission · <span class="accent-text">acme.com</span></h3>
+          <p>"Interested in enterprise pricing." Visitor fills out contact form on your site.</p>
+        </div>
+      </li>
+      <li class="flow__step" data-step="02">
+        <span class="flow__sym mono">00:14</span>
+        <div class="flow__body">
+          <span class="flow__agent mono">CX.intake</span>
+          <h3>Contact enriched</h3>
+          <p>Pulls firmographic data, identifies role (VP Eng), company size (240 ppl), funding stage (Series C).</p>
+        </div>
+      </li>
+      <li class="flow__step" data-step="03">
+        <span class="flow__sym mono">00:32</span>
+        <div class="flow__body">
+          <span class="flow__agent mono">SALES.qualifier</span>
+          <h3>ICP score: 87/100</h3>
+          <p>Cross-references against your closed-won data. Flags as priority. Routes to outreach.</p>
+        </div>
+      </li>
+      <li class="flow__step" data-step="04">
+        <span class="flow__sym mono">01:08</span>
+        <div class="flow__body">
+          <span class="flow__agent mono">MARKETING.research</span>
+          <h3>Account intelligence brief</h3>
+          <p>Pulls 10-K filings, recent press, tech stack, hiring signals. Three personalization angles surfaced.</p>
+        </div>
+      </li>
+      <li class="flow__step" data-step="05">
+        <span class="flow__sym mono">02:34</span>
+        <div class="flow__body">
+          <span class="flow__agent mono">SALES.outreach</span>
+          <h3>Email drafted</h3>
+          <p>Personalized to their reliability problem (mentioned in last earnings call). Calendar link embedded.</p>
+        </div>
+      </li>
+      <li class="flow__step flow__step--human" data-step="06">
+        <span class="flow__sym mono">03:01</span>
+        <div class="flow__body">
+          <span class="flow__agent mono">CHIEF_OF_STAFF</span>
+          <h3>Approved &amp; sent</h3>
+          <p>You see the draft in Slack with a thumbs-up button. One tap. Sent.</p>
+        </div>
+      </li>
+      <li class="flow__step flow__step--complete" data-step="07">
+        <span class="flow__sym mono">04:12</span>
+        <div class="flow__body">
+          <span class="flow__agent mono accent-text">RESULT</span>
+          <h3>Meeting booked. <span class="accent-text">$2.4M opportunity opened.</span></h3>
+          <p>Calendar invite confirmed. Deal record auto-created. Slack channel auto-provisioned.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ─────────  06. SKILLS LIBRARY  ───────── -->
+<section class="skills section" id="skills">
+  <div class="container">
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 05 — Skills Library</div>
+      <h2 class="display">Five hundred skills.<br /><em>One command line.</em></h2>
+      <p class="lede">Every agent knows hundreds of skills out of the box. Type what you want done — AXIS·OS picks the right team and ships it.</p>
+    </header>
+
+    <div class="palette" role="region" aria-label="Skills command palette demo">
+      <div class="palette__bar">
+        <span class="mono mono--mute palette__kbd">⌘K</span>
+        <div class="palette__query mono"><span id="paletteQuery">draft a Q4 board update</span><span class="palette__caret" aria-hidden="true"></span></div>
+      </div>
+      <ul class="palette__results" id="paletteResults">
+        <li class="palette__row palette__row--hot"><span class="mono palette__dept">CS</span><span class="palette__title">Draft quarterly board update</span><span class="mono palette__dept-name">Chief of Staff</span><span class="mono palette__time">~6 min</span></li>
+        <li class="palette__row"><span class="mono palette__dept">FN</span><span class="palette__title">Build Q4 financial summary</span><span class="mono palette__dept-name">Finance</span><span class="mono palette__time">~4 min</span></li>
+        <li class="palette__row"><span class="mono palette__dept">PR</span><span class="palette__title">Pull Q4 product metrics</span><span class="mono palette__dept-name">Product</span><span class="mono palette__time">~2 min</span></li>
+        <li class="palette__row"><span class="mono palette__dept">SL</span><span class="palette__title">Pipeline state &amp; forecast</span><span class="mono palette__dept-name">Sales</span><span class="mono palette__time">~3 min</span></li>
+        <li class="palette__row"><span class="mono palette__dept">DT</span><span class="palette__title">Cohort retention summary</span><span class="mono palette__dept-name">Data</span><span class="mono palette__time">~4 min</span></li>
+      </ul>
+      <div class="palette__footer mono mono--mute">
+        <span>↑ ↓ to navigate</span><span>↵ to dispatch</span><span>esc to close</span>
+      </div>
     </div>
+
+    <div class="skills__count mono mono--mute">
+      // currently indexed: <span class="accent-text">523</span> skills · 15 departments · last updated 2 minutes ago
+    </div>
+  </div>
+</section>
+
+<!-- ─────────  07. THE MATH  ───────── -->
+<section class="math section" id="math">
+  <div class="container">
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 06 — The Math</div>
+      <h2 class="display">The cost of hiring<br /><em>this org yourself.</em></h2>
+    </header>
 
     <div class="ledger">
       <div class="ledger__col">
-        <div class="ledger__title mono">ONE FRONT-DESK HIRE</div>
+        <div class="ledger__title mono">THE FRACTIONAL STACK</div>
         <ul>
-          <li><span>Salary</span><span>$42K</span></li>
-          <li><span>Benefits &amp; payroll tax</span><span>$11K</span></li>
-          <li><span>Training (~8 weeks lost)</span><span>$5K</span></li>
-          <li><span>Sick days, lunch, after-hours</span><span>uncovered</span></li>
+          <li><span>Fractional CFO (10 hrs/mo)</span><span class="mono">$6,000/mo</span></li>
+          <li><span>Fractional CMO (entry)</span><span class="mono">$7,500/mo</span></li>
+          <li><span>Executive assistant (Athena)</span><span class="mono">$3,500/mo</span></li>
+          <li><span>Content tools (Jasper, Writer)</span><span class="mono">$750/mo</span></li>
+          <li><span>AI ops layer (Lindy / Relevance)</span><span class="mono">$300/mo</span></li>
         </ul>
-        <div class="ledger__total"><span>Year 1</span><span>~$58K</span></div>
-        <div class="ledger__note mono mono--mute">Coverage: 40 hrs/wk · Turnover: avg 18 mo</div>
+        <div class="ledger__total"><span>Per month</span><span>~$18,050</span></div>
+        <div class="ledger__note mono mono--mute">5 vendors. 5 invoices. No shared context between any of them.</div>
       </div>
 
-      <div class="ledger__or"><span>vs.</span></div>
+      <div class="ledger__or mono">vs.</div>
 
       <div class="ledger__col ledger__col--us">
-        <div class="ledger__title mono">VIDATECH RECEPTIONIST</div>
+        <div class="ledger__title mono">AXIS·OS OPERATOR</div>
         <ul>
-          <li><span>Answers every call</span><span>included</span></li>
-          <li><span>Qualifies the lead</span><span>included</span></li>
-          <li><span>Books into your calendar</span><span>included</span></li>
-          <li><span>SMS confirmation</span><span>included</span></li>
+          <li><span>All 15 departments</span><span class="mono">included</span></li>
+          <li><span>5 operator seats</span><span class="mono">included</span></li>
+          <li><span>Scheduled + triggered runs</span><span class="mono">included</span></li>
+          <li><span>CRM / HRIS / Slack integrations</span><span class="mono">included</span></li>
+          <li><span>Monthly strategy review</span><span class="mono">included</span></li>
         </ul>
-        <div class="ledger__total"><span>From $300/mo</span><span>Up to $3,500/mo</span></div>
-        <div class="ledger__note mono mono--mute">Coverage: 168 hrs/wk · Live in 48 hours · Cancel anytime</div>
+        <div class="ledger__total"><span>Per month</span><span class="accent-text">$7,500</span></div>
+        <div class="ledger__note mono mono--mute">One subscription. One shared context. ~58% less than the fractional stack.</div>
       </div>
     </div>
 
-    <p class="lede" style="text-align:center;max-width:640px;margin:48px auto 0">Same money. <em>Four times the coverage.</em> Zero turnover.</p>
+    <p class="math__close">Same team. <em>One operator.</em> $10,550/mo saved.</p>
   </div>
 </section>
 
-<!-- ─────────  6. TECH STACK + FOUNDER  ───────── -->
-<section class="proof section-folio" data-folio="05">
-  <div class="container proof__inner">
-    <div class="proof__left">
-      <hr class="rule" />
-      <div class="mono mono--mute">05 — What Powers It</div>
-      <h2 class="display display--md">Built on the same stack <em>the big companies use.<svg class="underline" viewBox="0 0 380 8" aria-hidden="true"><path d="M3,5 Q90,2 190,4 T377,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
-      <p class="lede">Voice models from OpenAI &amp; Anthropic. Telephony on Twilio. Payments on Stripe. Scheduling on Calendly &amp; Google Workspace. Infrastructure on Cloudflare. Nothing fragile, nothing experimental.</p>
-      <div class="stack">
-        <span class="stack__chip">OpenAI</span>
-        <span class="stack__chip">Anthropic</span>
-        <span class="stack__chip">Twilio</span>
-        <span class="stack__chip">Stripe</span>
-        <span class="stack__chip">Shopify</span>
-        <span class="stack__chip">Google Workspace</span>
-        <span class="stack__chip">Cloudflare</span>
-        <span class="stack__chip">Supabase</span>
-      </div>
-    </div>
-
-    <aside class="founder founder--quote">
-      <blockquote class="founder__quote">We don't sell software or hours. We answer for the outcomes — every call, every booking, every dollar. If a system breaks, that's on us, not you.</blockquote>
-      <div class="founder__attribution">
-        <span class="founder__rule" aria-hidden="true"></span>
-        <span class="founder__name">Michael Torres</span>
-        <span class="founder__role mono mono--mute">Founder · VidaTech · est. 2024</span>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<!-- ─────────  7. FAQ  ───────── -->
-<section class="faq section-folio" id="faq" data-folio="06">
+<!-- ─────────  06.5  PRICING  ───────── -->
+<section class="pricing section" id="pricing" aria-labelledby="pricing-heading">
   <div class="container">
-    <div class="section-head">
-      <hr class="rule" />
-      <div class="mono mono--mute">06 — The Honest Questions</div>
-      <h2 class="display display--md">Questions every owner <em>asks us.<svg class="underline" viewBox="0 0 200 8" aria-hidden="true"><path d="M3,5 Q50,2 100,4 T197,3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></em></h2>
-    </div>
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 06.5 — Pricing</div>
+      <h2 id="pricing-heading" class="display">Four tiers.<br /><em>One subscription.</em></h2>
+      <p class="lede">From a single operator running async, up to a multi-entity org with dedicated infrastructure. Pick the floor that matches your stage — upgrade when you outgrow it.</p>
+    </header>
 
-    <div class="faq__grid">
-      <details class="qa" open><summary><span>Will the receptionist sound robotic?</span><span class="qa__plus" aria-hidden="true">+</span></summary><p>Listen yourself — call the demo line in the audit. It greets the way you'd greet, handles the same objections, and hands off to a human if anyone asks for one. We don't ship anything you wouldn't be proud to answer with.</p></details>
+    <div class="tiers">
+      <article class="tier">
+        <div class="tier__head">
+          <span class="mono mono--mute">STARTER</span>
+          <div class="tier__price"><span class="tier__amount">$2,500</span><span class="tier__per mono">/mo</span></div>
+          <p class="tier__sub">For solo founders + 5-person teams. AI receptionist + 10 departments, 1 operator seat, async runs.</p>
+        </div>
+        <ul class="tier__features">
+          <li>AI receptionist · unlimited calls</li>
+          <li>10 departments included</li>
+          <li>1 operator seat</li>
+          <li>Async agent runs</li>
+          <li>Slack delivery</li>
+        </ul>
+        <p class="tier__replaces mono mono--mute">Replaces 1 EA + answering service + scattered AI tools.</p>
+        <a href="#initialize" class="btn btn--ghost btn--lg">Book a call</a>
+      </article>
 
-      <details class="qa"><summary><span>What if it gets a call wrong?</span><span class="qa__plus" aria-hidden="true">+</span></summary><p>Every transcript lands in your inbox. We listen too. Anything that needed to escalate gets routed to your phone within minutes. We tune the system weekly — your edge cases get fewer, never more.</p></details>
+      <article class="tier tier--featured">
+        <span class="tier__badge">Most chosen</span>
+        <div class="tier__head">
+          <span class="mono mono--mute">OPERATOR</span>
+          <div class="tier__price"><span class="tier__amount">$7,500</span><span class="tier__per mono">/mo</span></div>
+          <p class="tier__sub">For 5–50 person teams ready to run with an executive layer.</p>
+        </div>
+        <ul class="tier__features">
+          <li>AI receptionist · unlimited calls</li>
+          <li>All 16 departments</li>
+          <li>5 operator seats</li>
+          <li>Scheduled + event-triggered runs</li>
+          <li>CRM, HRIS, Slack integrations</li>
+          <li>Monthly strategy review</li>
+        </ul>
+        <p class="tier__replaces mono mono--mute">Replaces fractional CFO + CMO + EA stack (~$18K/mo).</p>
+        <a href="#initialize" class="btn btn--accent btn--lg" data-magnetic>Book a call</a>
+      </article>
 
-      <details class="qa"><summary><span>How is this not just another chatbot?</span><span class="qa__plus" aria-hidden="true">+</span></summary><p>Chatbots wait for someone to click a widget. Our receptionist picks up your phone. It speaks. It books on the calendar you already use. And it's accountable to the same metric a human receptionist is — booked appointments, not "interactions."</p></details>
+      <article class="tier">
+        <div class="tier__head">
+          <span class="mono mono--mute">COMMAND</span>
+          <div class="tier__price"><span class="tier__amount">$18,000</span><span class="tier__per mono">/mo</span></div>
+          <p class="tier__sub">For growth-stage companies replacing a full fractional C-suite.</p>
+        </div>
+        <ul class="tier__features">
+          <li>Everything in Operator</li>
+          <li>Unlimited seats</li>
+          <li>Multi-line AI receptionist + custom voice</li>
+          <li>Dedicated success engineer</li>
+          <li>Custom agent training on your data</li>
+          <li>SOC 2 · 99.9% SLA · quarterly board-deck output</li>
+        </ul>
+        <p class="tier__replaces mono mono--mute">Replaces a full fractional C-suite at ~40% of the cost.</p>
+        <a href="#initialize" class="btn btn--ghost btn--lg">Book a call</a>
+      </article>
 
-      <details class="qa"><summary><span>Is my industry supported?</span><span class="qa__plus" aria-hidden="true">+</span></summary><p>Dental, auto repair, HVAC, law, real estate, salons, restaurants, contractors. If you're a service business and you take phone calls, you're supported. The audit is industry-specific — no generic templates.</p></details>
-
-      <details class="qa"><summary><span>What if I want out?</span><span class="qa__plus" aria-hidden="true">+</span></summary><p>30-day notice, no contract, no questions. We keep your number, your data, your call history portable. If we're not earning our keep, we shouldn't be there.</p></details>
-
-      <details class="qa"><summary><span>Tried automation before and it failed. Why try again?</span><span class="qa__plus" aria-hidden="true">+</span></summary><p>Most "automation" is one tool bolted on, run by you. We operate the whole loop — and we're the ones the alerts go to at 2am. The difference is who's accountable when something breaks.</p></details>
+      <article class="tier tier--enterprise">
+        <div class="tier__head">
+          <span class="mono mono--mute">ENTERPRISE</span>
+          <div class="tier__price"><span class="tier__amount tier__amount--text">Let's talk</span></div>
+          <p class="tier__sub">Multi-entity, VPC/on-prem, custom legal, procurement-friendly.</p>
+        </div>
+        <ul class="tier__features">
+          <li>Custom department mix</li>
+          <li>Private deployment</li>
+          <li>Data residency options</li>
+          <li>Custom legal + DPA</li>
+          <li>Dedicated CSM team</li>
+        </ul>
+        <p class="tier__replaces mono mono--mute">For organizations that need the system in their own infrastructure.</p>
+        <a href="#initialize" class="btn btn--ghost btn--lg">Contact sales</a>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ─────────  7.5  PRICING  ───────── -->
-<section class="pricing" aria-labelledby="pricing-heading">
-  <div class="container pricing__inner">
-    <h2 id="pricing-heading" class="sr-only">Pricing — VidaTech Receptionist, from $300 to $3,500 per month based on volume</h2>
-    <div class="pricing__intro">
-      <div class="mono mono--mute">VIDATECH RECEPTIONIST</div>
-      <div class="pricing__range">
-        <span class="pricing__amount">$300</span>
-        <span class="pricing__per mono">to</span>
-        <span class="pricing__amount">$3,500</span>
-        <span class="pricing__per mono">/month</span>
-      </div>
-      <p class="pricing__sub">Unlimited calls at every tier. Everyone else meters you by the minute and bills overage. Every plan includes 24/7 pickup, qualification, calendar booking, SMS confirmation, and the 30-day pilot guarantee.</p>
-    </div>
+<!-- ─────────  08. INITIALIZE (FINAL CTA)  ───────── -->
+<section class="initialize section" id="initialize">
+  <div class="container initialize__inner">
+    <div class="mono mono--mute eyebrow">// 07 — Initialize</div>
+    <h2 class="display display--xl">Stop hiring.<br /><em>Start booting.</em></h2>
+    <p class="lede">Tell us about your company. We'll spec a custom AXIS·OS deployment and have your executive team online in 14 days.</p>
 
-    <div class="pricing__grid">
-      <article class="pricing__card pricing__card--solo">
-        <div class="pricing__head">
-          <div class="mono mono--mute" aria-hidden="true">SOLO</div>
-          <div class="pricing__price">
-            <span class="pricing__amount pricing__amount--sm">$300</span>
-            <span class="pricing__per mono">/month</span>
-          </div>
-          <div class="pricing__sub">For the owner-operator who can't afford to miss a call.</div>
-        </div>
-        <ul class="pricing__features">
-          <li><strong>Unlimited inbound calls</strong> — no per-minute meter</li>
-          <li>&lt;2-second pickup · 24/7 coverage</li>
-          <li>Caller qualification + calendar booking</li>
-          <li>SMS confirmation to every caller</li>
-          <li>1 phone number, 1 calendar</li>
-        </ul>
-        <a href="#contact" class="btn btn--ghost btn--lg">Start with Solo</a>
-      </article>
-
-      <article class="pricing__card pricing__card--studio">
-        <span class="pricing__badge">Most popular</span>
-        <div class="pricing__head">
-          <div class="mono mono--mute" aria-hidden="true">STUDIO</div>
-          <div class="pricing__price">
-            <span class="pricing__amount pricing__amount--sm">$1,200</span>
-            <span class="pricing__per mono">/month</span>
-          </div>
-          <div class="pricing__sub">For 2–5 person teams ready to scale without hiring.</div>
-        </div>
-        <ul class="pricing__features">
-          <li>Everything in Solo</li>
-          <li>Multi-line routing + live transfer to staff</li>
-          <li>CRM sync (HubSpot, Jobber, HouseCallPro)</li>
-          <li>Custom voice + branded greeting</li>
-          <li>Intake forms, lead scoring, call summaries</li>
-          <li>Priority support · 99.95% uptime</li>
-        </ul>
-        <a href="#contact" class="btn btn--ink btn--lg" data-magnetic>Start with Studio</a>
-      </article>
-
-      <article class="pricing__card pricing__card--ops">
-        <div class="pricing__head">
-          <div class="mono mono--mute" aria-hidden="true">OPERATIONS</div>
-          <div class="pricing__price">
-            <span class="pricing__amount pricing__amount--sm">$3,500</span>
-            <span class="pricing__per mono">/month</span>
-          </div>
-          <div class="pricing__sub">For multi-location operators and franchises.</div>
-        </div>
-        <ul class="pricing__features">
-          <li>Everything in Studio</li>
-          <li>Multi-location call routing</li>
-          <li>Dedicated number pool, true unlimited</li>
-          <li>99.9% uptime SLA</li>
-          <li>Custom integrations + API access</li>
-          <li>Named CSM · monthly performance review</li>
-        </ul>
-        <a href="#contact" class="btn btn--ghost btn--lg">Start with Operations</a>
-      </article>
-    </div>
-
-    <div class="pricing__guarantee">
-      <span class="mono mono--mute">30-day pilot guarantee</span>
-      <p>If we don't book qualified leads in your first month — on any plan — you don't pay for it.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────  8. FINAL CTA  ───────── -->
-<section class="close section-folio section-folio--dark" id="contact" data-folio="07">
-  <div class="container close__inner">
-    <hr class="rule rule--cream" />
-    <div class="mono mono--mute">07 — Let's Go</div>
-    <h2 class="display display--xl">Book the<br /><em>20-minute audit.<svg class="underline" viewBox="0 0 440 8" aria-hidden="true"><path d="M3,5 Q110,2 220,4 T437,3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></em></h2>
-    <p class="lede lede--narrow">Tell us where your business leaks calls, leads, or revenue. You'll leave the call with a punch list — even if you never hire us.</p>
-
-    <ul class="reassure">
-      <li><span class="mono mono--mute">01</span>Try it on your real business line for 14 days.</li>
-      <li><span class="mono mono--mute">02</span>If it misses a call, you don't pay that month.</li>
-      <li><span class="mono mono--mute">03</span>Cancel any time. Keep every booking it made.</li>
+    <ul class="urgency">
+      <li><span class="mono mono--mute">01</span>A 30-minute call. We map your five hardest weeks of the year and show which departments would have caught them.</li>
+      <li><span class="mono mono--mute">02</span>No deck. We open AXIS·OS live against your real org chart, and you decide if it would have saved you Tuesday.</li>
+      <li><span class="mono mono--mute">03</span>You'll leave with a written readout of the four roles you're currently doing that you shouldn't be — whether you sign or not.</li>
     </ul>
 
-    <form class="form" id="contactForm" novalidate>
+    <form class="form" id="contactForm" action="/api/contact" method="post" novalidate>
       <div class="form__row">
         <label for="f-name"><span class="mono mono--mute">NAME</span><input id="f-name" type="text" name="name" placeholder="Your name" required autocomplete="name" enterkeyhint="next" /></label>
-        <label for="f-email"><span class="mono mono--mute">EMAIL</span><input id="f-email" type="email" name="email" placeholder="you@business.com" required autocomplete="email" inputmode="email" enterkeyhint="next" /></label>
+        <label for="f-email"><span class="mono mono--mute">EMAIL</span><input id="f-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" inputmode="email" enterkeyhint="next" /></label>
       </div>
       <div class="form__row">
-        <label for="f-business"><span class="mono mono--mute">BUSINESS</span><input id="f-business" type="text" name="business" placeholder="What's the business name?" autocomplete="organization" /></label>
-        <label for="f-type"><span class="mono mono--mute">INDUSTRY</span>
-          <select id="f-type" name="type">
+        <label for="f-company"><span class="mono mono--mute">COMPANY</span><input id="f-company" type="text" name="business" placeholder="Company name" autocomplete="organization" /></label>
+        <label for="f-size"><span class="mono mono--mute">TEAM SIZE</span>
+          <select id="f-size" name="type">
             <option value="" disabled selected>Select…</option>
-            <option>Dental / Medical</option>
-            <option>Auto Repair</option>
-            <option>HVAC / Trades</option>
-            <option>Law Firm</option>
-            <option>Real Estate</option>
-            <option>Salon / Spa</option>
-            <option>Restaurant</option>
-            <option>Contractor</option>
-            <option>E-commerce</option>
-            <option>Other</option>
+            <option>1–5</option>
+            <option>6–15</option>
+            <option>16–50</option>
+            <option>51–150</option>
+            <option>150+</option>
           </select>
         </label>
       </div>
-      <label class="form__full" for="f-message"><span class="mono mono--mute">WHAT'S THE #1 THING YOU'D WANT FIXED FIRST? <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></span><textarea id="f-message" name="message" rows="3" placeholder="Missed calls, slow follow-up, manual scheduling…" enterkeyhint="send"></textarea></label>
+      <label class="form__full" for="f-msg"><span class="mono mono--mute">WHICH DEPARTMENT WOULD YOU INITIALIZE FIRST?</span><textarea id="f-msg" name="message" rows="3" placeholder="Marketing? Sales? Chief of Staff? Tell us what's bleeding the most." enterkeyhint="send"></textarea></label>
 
       <div class="form__submit-row">
-        <button type="submit" class="btn btn--ink btn--lg" data-magnetic id="formSubmit">
-          <span id="formBtnText">Book the audit <span aria-hidden="true">→</span></span>
-          <span id="formBtnLoading" hidden>Sending…</span>
+        <button type="submit" class="btn btn--accent btn--lg" data-magnetic id="formSubmit">
+          <span id="formBtnText">Initialize VidaTech <span aria-hidden="true">→</span></span>
+          <span id="formBtnLoading" hidden>Booting…</span>
         </button>
-        <div class="form__assure mono mono--mute">30-day pilot · No contract · Cancel any time</div>
+        <div class="form__assure mono mono--mute">No contract. 14-day pilot. Cancel any time.</div>
       </div>
-      <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Received. We'll be in touch within one business day.</div>
-      <div class="form-error" id="formError" role="alert" aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a></div>
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Received. We'll reach out within one business day with your custom deployment spec.</div>
+      <div class="form-error"   id="formError"   role="alert"  aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a></div>
     </form>
   </div>
 </section>
@@ -695,33 +640,27 @@
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <a href="#top" class="logo logo--footer">
-        <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor"/><path d="M9 9l7 14 7-14" stroke="#F5F1E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        <span class="logo__word">VidaTech</span>
+      <a href="#top" class="logo">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__word"><strong>Vida</strong><span class="logo__dot"></span>Tech</span>
       </a>
-      <p class="footer__line">Operated infrastructure for service businesses.</p>
+      <p class="footer__line">VidaTech runs AXIS·OS — the operating system for company-scale AI labor.</p>
     </div>
     <nav class="footer__nav" aria-label="Footer">
-      <a href="#receptionist">Receptionist</a>
-      <a href="#services">Services</a>
-      <a href="#deploy">Process</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="#departments">Departments</a>
+      <a href="#floor">The Floor</a>
+      <a href="#workflows">Workflows</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#initialize">Initialize</a>
     </nav>
     <div class="footer__meta">
-      <div class="mono mono--mute">© 2026 VidaTech · vidatech.org</div>
+      <div class="mono mono--mute">© 2026 VidaTech · est. 2024</div>
       <a href="tel:+18176234977" class="mono">(817) 623-4977</a>
       <a href="mailto:vidaholdings@gmail.com" class="mono">vidaholdings@gmail.com</a>
     </div>
   </div>
-  <div class="container footer__crest" aria-hidden="true">
-    <span class="footer__rule"></span>
-    <span class="footer__mark">VT</span>
-    <span class="footer__est">EST. 2024</span>
-    <span class="footer__rule"></span>
-  </div>
 </footer>
 
-<script src="script.js?v=50"></script>
+<script src="script.js?v=merge1"></script>
 </body>
 </html>
