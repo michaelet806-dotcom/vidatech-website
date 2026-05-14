@@ -4,7 +4,7 @@
  * - Reserves the 30-minute slot in KV (prevents double-booking the same slot)
  * - Generates RFC 5545 .ics (line-folded, ICS-escaped, DST-aware America/Chicago)
  * - Sends two emails via Resend, lead-first with allSettled semantics
- *   1. Lead notification → vidaholdings@gmail.com (Michael's inbox)
+ *   1. Lead notification → vidaholdingsgroup@gmail.com (Michael's inbox)
  *   2. Welcome email   → customer
  *   Both attach the .ics — From and ORGANIZER align so Gmail auto-adds to calendar.
  *
@@ -18,7 +18,7 @@
  *   - ADMIN_TOKEN           (secret)   Bearer token for /api/slots-release admin endpoint.
  */
 
-const ORG_EMAIL = 'vidaholdings@gmail.com';
+const ORG_EMAIL = 'vidaholdingsgroup@gmail.com';
 const ORG_NAME = 'VidaTech';
 const SENDER_EMAIL = 'hello@vidatech.org';
 const SENDER_FROM = `VidaTech <${SENDER_EMAIL}>`;

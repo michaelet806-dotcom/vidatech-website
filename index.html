@@ -23,19 +23,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://challenges.cloudflare.com" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=art1" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="style.css?v=v3pop" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23D4FF3D'/%3E%3C/svg%3E" />
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": "https://vidatech.org/#organization",
   "name": "VidaTech",
+  "legalName": "Vida Tech LLC",
   "url": "https://vidatech.org",
   "description": "VidaTech runs AXIS·OS — the operating system for company-scale AI labor. 80+ trained agents across 15 departments, plus a 24/7 AI receptionist add-on.",
   "telephone": "+1-817-623-4977",
-  "email": "vidaholdings@gmail.com",
+  "email": "vidaholdingsgroup@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2000 E Lamar Blvd Ste 600",
+    "addressLocality": "Arlington",
+    "addressRegion": "TX",
+    "postalCode": "76006",
+    "addressCountry": "US"
+  },
+  "founder": { "@id": "https://vidatech.org/#michael-torres" },
   "makesOffer": {
     "@type": "AggregateOffer",
     "name": "VidaTech AXIS·OS subscription",
@@ -44,6 +55,209 @@
     "highPrice": "18000",
     "offerCount": 4
   }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://vidatech.org/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why am I approving invoices at 11:47 PM while my board update sits as a blank doc?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because you're doing five executive jobs in one calendar — CEO, CMO, CFO, head of legal, head of ops — and only one of them is yours. A 12-person company needs all five of those roles, and right now you are all five. This isn't a discipline problem; it's a structural one. VidaTech runs AXIS·OS — 80+ AI agents organized into 15 coordinated departments plus a 24/7 AI receptionist — so the other four executive jobs leave your calendar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do I open Slack at 6:14 AM, see 47 unread messages, and close it because nobody else will answer them?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because you're the bottleneck on every $50K decision — your team has no one above them, so everything routes to you. AXIS·OS gives your team a Chief of Staff agent that triages Slack, escalates only what actually needs a founder decision, and resolves the rest using the 15 coordinated department floors. You become the CEO again, not the human router."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I haven't done deep strategic thinking in four months. How do I get strategy time back?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You get strategy time back by removing the four executive roles you're currently doing that shouldn't be on your calendar. AXIS·OS replaces the fractional CFO + CMO + EA stack at roughly 58% less — about $7,500/mo on the Operator tier versus ~$18,000/mo for the fractional stack — and runs every day instead of 10 hours a month. Same team, one operator, ~$10,500 saved every month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My CMO seat is empty and marketing strategy is whatever I remember to think about on Sundays — what replaces a CMO without a 6-month, $280K hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The AXIS·OS Marketing Floor — 21 specialist agents covering SEO, content, paid social, TikTok, LinkedIn, brand, creative, and analytics — running on shared context with your Sales, CS, and Finance floors. It's part of the Operator tier at $7,500/mo. Hiring an exec takes six months and $280K. AXIS·OS initializes against a real org chart in days, not months."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Legal review means me reading a contract at 10 PM hoping I catch the bad clause — is there a way to staff a General Counsel without hiring one?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The AXIS·OS Legal Floor reviews contracts, flags risky clauses, drafts redlines, and routes anything above your risk threshold to a human attorney with full context — included in the Operator tier at $7,500/mo. You stop being the 10 PM contract reader. The Floor is one of 15 departments running on one shared context with your Finance, Ops, and Sales floors."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My ops run on tribal knowledge — mine — and break the week I take a vacation. How do I make my company run without me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "By moving the tribal knowledge into a shared-context operating system. AXIS·OS captures your SOPs, decisions, and escalation rules into the Operations and Chief of Staff floors so the company keeps running on the same logic when you're not in the room. You're still the CEO. You're just not the CFO, the head of legal, the EA, and the dispatcher anymore."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://vidatech.org/#axis-os",
+  "name": "AXIS·OS — Company-as-a-Subscription",
+  "description": "AXIS·OS is the operating system for company-scale AI labor. 80+ trained agents across 15 coordinated departments plus a 24/7 AI receptionist, sharing one context and reporting to a single Chief of Staff agent in Slack.",
+  "brand": { "@type": "Brand", "name": "VidaTech" },
+  "category": "Company-as-a-Subscription",
+  "url": "https://vidatech.org/#math",
+  "manufacturer": { "@id": "https://vidatech.org/#organization" },
+  "offers": [
+    {
+      "@type": "Offer",
+      "@id": "https://vidatech.org/#offer-starter",
+      "name": "Starter",
+      "price": "2500",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://vidatech.org/#pricing",
+      "seller": { "@id": "https://vidatech.org/#organization" },
+      "description": "For solo founders and 5-person teams. 10 departments included, 1 operator seat, async agent runs, Slack delivery, community support."
+    },
+    {
+      "@type": "Offer",
+      "@id": "https://vidatech.org/#offer-operator",
+      "name": "Operator",
+      "price": "7500",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://vidatech.org/#pricing",
+      "seller": { "@id": "https://vidatech.org/#organization" },
+      "description": "Most chosen. For 5–50 person teams. All 15 departments + AI receptionist, 5 operator seats, scheduled and event-triggered runs, CRM/HRIS/Slack integrations, monthly strategy review. Replaces the fractional CFO + CMO + EA stack (~$18,000/mo) at roughly 58% less."
+    },
+    {
+      "@type": "Offer",
+      "@id": "https://vidatech.org/#offer-command",
+      "name": "Command",
+      "price": "18000",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://vidatech.org/#pricing",
+      "seller": { "@id": "https://vidatech.org/#organization" },
+      "description": "For growth-stage companies replacing a full fractional C-suite. Everything in Operator plus unlimited seats, dedicated success engineer, custom agent training on your data, SOC 2 Type II readiness program in progress, 99.9% uptime target, quarterly board-deck output."
+    },
+    {
+      "@type": "Offer",
+      "@id": "https://vidatech.org/#offer-enterprise",
+      "name": "Enterprise",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://vidatech.org/#pricing",
+      "seller": { "@id": "https://vidatech.org/#organization" },
+      "description": "For multi-entity organizations, VPC and on-prem deployments, and regulated industries. Custom department mix, private deployment (AWS VPC, GCP, on-prem), data residency options, custom MSA/DPA/BAA on request, dedicated CSM team."
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://vidatech.org/#ai-receptionist",
+  "name": "Ulio — 24/7 AI Receptionist",
+  "alternateName": "Ulio AI Receptionist",
+  "serviceType": "AI Receptionist & Phone Intake Automation",
+  "description": "An always-on AI receptionist that answers every call in your business's voice, books appointments directly into your scheduling system, qualifies callers, handles bilingual English/Spanish intake, and sends SMS follow-up. Most customers were missing 30–50% of inbound calls before Ulio. After Ulio, they miss zero. Setup in one week.",
+  "url": "https://vidatech.org/#floor",
+  "telephone": "+1-817-623-4977",
+  "areaServed": { "@type": "Country", "name": "United States" },
+  "availableLanguage": ["en", "es"],
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "SMB service businesses — dental and orthodontic practices, med-spas, law firms, HVAC, plumbing, electrical, real-estate brokerages, home services, veterinary, chiropractic, mental-health practitioners"
+  },
+  "provider": { "@id": "https://vidatech.org/#organization" },
+  "hoursAvailable": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["https://schema.org/Monday","https://schema.org/Tuesday","https://schema.org/Wednesday","https://schema.org/Thursday","https://schema.org/Friday","https://schema.org/Saturday","https://schema.org/Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://vidatech.org/#michael-torres",
+  "name": "Michael Torres",
+  "jobTitle": "Founder, VidaTech",
+  "worksFor": { "@id": "https://vidatech.org/#organization" },
+  "url": "https://vidatech.org/#initialize",
+  "email": "vidaholdingsgroup@gmail.com",
+  "telephone": "+1-817-623-4977",
+  "workLocation": {
+    "@type": "PostalAddress",
+    "streetAddress": "2000 E Lamar Blvd Ste 600",
+    "addressLocality": "Arlington",
+    "addressRegion": "TX",
+    "postalCode": "76006",
+    "addressCountry": "US"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://vidatech.org/#vocabulary",
+  "name": "Company-as-a-Subscription",
+  "description": "The category VidaTech is creating. Not AI tools, not AI agents, not AI-powered SaaS — a coordinated executive org chart you subscribe to, billed like software.",
+  "url": "https://vidatech.org",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://vidatech.org/#term-axis-os",
+      "name": "AXIS·OS",
+      "termCode": "AXIS-OS",
+      "inDefinedTermSet": "https://vidatech.org/#vocabulary",
+      "description": "The operating system for company-scale AI labor. 80+ trained agents organized into 15 coordinated departments plus a 24/7 AI receptionist, sharing one context layer and reporting to a single Chief of Staff agent that talks to the founder in Slack."
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://vidatech.org/#term-operator-tier",
+      "name": "Operator Tier",
+      "termCode": "OPERATOR-7500",
+      "inDefinedTermSet": "https://vidatech.org/#vocabulary",
+      "description": "The default AXIS·OS subscription tier at $7,500/month for 5–50 person teams. Includes all 15 departments plus AI receptionist, 5 operator seats, scheduled and event-triggered agent runs, CRM/HRIS/Slack integrations, and a monthly strategy review. Replaces a fractional CFO + fractional CMO + executive assistant + content tooling stack that averages ~$18,000/month — roughly 58% less."
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://vidatech.org/#term-ai-receptionist-floor",
+      "name": "AI Receptionist (Ulio)",
+      "termCode": "RX-FLOOR",
+      "inDefinedTermSet": "https://vidatech.org/#vocabulary",
+      "description": "The always-on phone-intake add-on of AXIS·OS, productized for SMB service businesses as Ulio. A phone-first AI agent trained on the customer's business that answers 24/7 in a branded voice, qualifies callers, books appointments directly into the scheduler, and sends SMS follow-up. Bilingual English/Spanish by default."
+    }
+  ]
 }
 </script>
 </head>
@@ -63,8 +277,8 @@
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#departments">Departments</a>
+      <a href="#ship">What We Ship</a>
       <a href="#floor">The Floor</a>
-      <a href="#workflows">Workflows</a>
       <a href="#math">The Math</a>
     </nav>
     <a href="#initialize" class="btn btn--accent btn--sm">Book a call</a>
@@ -106,9 +320,11 @@
 
       <div class="hero__cta">
         <a href="#initialize" class="btn btn--accent btn--lg" data-magnetic>
-          Book initialization call <span aria-hidden="true">→</span>
+          Book the 30-min teardown <span aria-hidden="true">→</span>
         </a>
-        <a href="tel:+18176234977" class="link link--arrow">Call the live demo <span aria-hidden="true">→</span></a>
+        <a href="tel:+18176234977" class="btn btn--ghost btn--lg" data-magnetic aria-label="Call (817) 623-4977 — 24/7 AI receptionist demo line">
+          <span aria-hidden="true">📞</span> Call (817) 623-4977 — that voice IS the product
+        </a>
       </div>
 
       <div class="hero__meta mono mono--mute">
@@ -117,7 +333,7 @@
     </div>
 
     <aside class="hero__right" aria-label="Live department grid">
-      <img class="hero__art" src="/assets/illustrations/hero.png" alt="" aria-hidden="true" loading="eager" decoding="async" width="1376" height="768" />
+      <img class="hero__art" src="/assets/illustrations/hero.jpg" alt="" aria-hidden="true" loading="eager" decoding="async" width="1376" height="768" />
       <div class="grid-tiles" id="gridTiles">
         <!-- 15 tiles injected as static HTML; JS flickers them -->
         <div class="tile-mini tile-mini--hot" data-sym="RX"><span class="tile-mini__sym mono">RX</span><span class="tile-mini__lbl">AI Receptionist</span><span class="tile-mini__count mono">24/7</span><span class="tile-mini__dot" aria-hidden="true"></span></div>
@@ -145,12 +361,9 @@
 <!-- ─────────  01.5 WHAT'S ACTUALLY BROKEN  ───────── -->
 <section class="broken section" aria-labelledby="broken-heading">
   <div class="container">
-    <header class="section-head section-head--with-art">
-      <div class="section-head__text">
-        <div class="mono mono--mute eyebrow">// 01 — Founder confessions</div>
-        <h2 id="broken-heading" class="display">It's not a discipline problem.<br /><em>It's a structural one.</em></h2>
-      </div>
-      <img class="section-art section-art--right" src="/assets/illustrations/confessions.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 01 — Founder confessions</div>
+      <h2 id="broken-heading" class="display">It's not a discipline problem.<br /><em>It's a structural one.</em></h2>
     </header>
 
     <ul class="broken__list">
@@ -162,6 +375,7 @@
       <li>Hiring an exec takes six months and $280K. <strong>You needed the answer last Tuesday.</strong></li>
     </ul>
 
+    <!-- TODO: swap anonymous receipts for named customer testimonials once written consent is on file. -->
     <div class="broken__receipts">
       <article class="receipt">
         <span class="receipt__time mono">11:47 PM · TUE</span>
@@ -332,6 +546,71 @@
   </div>
 </section>
 
+<!-- ─────────  03.5 WHAT WE SHIP (web/app dev services)  ───────── -->
+<section class="what-we-ship section" id="ship" aria-labelledby="ship-heading">
+  <div class="container">
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 03 — What we ship</div>
+      <h2 id="ship-heading" class="display">Real software &mdash;<br /><em>not slideware.</em></h2>
+      <p class="lede">The engineering floor runs <strong>12 agents</strong> &mdash; architects, full-stack engineers, mobile specialists, QA, and a release manager &mdash; orchestrated by a human staff engineer. They build the websites, web apps, and mobile apps that the rest of AXIS&middot;OS plugs into. <em>Same operators. Same standards. No agency markup on a Webflow template.</em></p>
+    </header>
+
+    <div class="ship-grid">
+      <article class="ship-card">
+        <span class="ship-card__label">WEB.marketing</span>
+        <h3 class="ship-card__name">Marketing Sites</h3>
+        <p class="ship-card__desc">Next.js, edge-rendered, CMS-backed &mdash; built to rank, load in under a second, and convert without a redesign every six months.</p>
+      </article>
+      <article class="ship-card">
+        <span class="ship-card__label">WEB.app</span>
+        <h3 class="ship-card__name">Web Applications</h3>
+        <p class="ship-card__desc">Full-stack SaaS builds on Next.js, Convex or Supabase, and Stripe &mdash; auth, billing, and dashboards wired on day one.</p>
+      </article>
+      <article class="ship-card">
+        <span class="ship-card__label">MOBILE.native</span>
+        <h3 class="ship-card__name">iOS &amp; Android Apps</h3>
+        <p class="ship-card__desc">React Native and Expo for shared codebases &mdash; Swift or Kotlin when the use case demands native. Shipped to both stores.</p>
+      </article>
+      <article class="ship-card">
+        <span class="ship-card__label">AI.integration</span>
+        <h3 class="ship-card__name">AI Product Layers</h3>
+        <p class="ship-card__desc">Chat, voice, agent workflows, and RAG pipelines bolted into your existing product &mdash; Claude, OpenAI, or self-hosted, your call.</p>
+      </article>
+      <article class="ship-card">
+        <span class="ship-card__label">OPS.internal</span>
+        <h3 class="ship-card__name">Internal Tools &amp; Dashboards</h3>
+        <p class="ship-card__desc">Admin panels, ops dashboards, and back-office tools your team actually uses &mdash; built in days, not quarters.</p>
+      </article>
+      <article class="ship-card">
+        <span class="ship-card__label">BRAND.identity</span>
+        <h3 class="ship-card__name">Design Systems</h3>
+        <p class="ship-card__desc">Figma libraries, component kits, and brand systems that flow straight into engineering &mdash; same floor, same pipeline.</p>
+      </article>
+    </div>
+
+    <div class="ship-stats">
+      <div>
+        <div class="ship-stat__num">14 days</div>
+        <div class="ship-stat__lbl">Avg launch &mdash;<br />marketing sites</div>
+      </div>
+      <div>
+        <div class="ship-stat__num">100/100</div>
+        <div class="ship-stat__lbl">Lighthouse perf,<br />a11y, SEO default</div>
+      </div>
+      <div>
+        <div class="ship-stat__num">Fixed</div>
+        <div class="ship-stat__lbl">Scope &amp; price &mdash;<br />no hourly billing</div>
+      </div>
+      <div>
+        <div class="ship-stat__num">0</div>
+        <div class="ship-stat__lbl">Handoffs &mdash;<br />one floor, one standup</div>
+      </div>
+    </div>
+
+    <p class="ship-bridge">Every build ships with the rest of AXIS&middot;OS already attached. <a href="#floor">See the floor live <span aria-hidden="true">&rarr;</span></a></p>
+  </div>
+</section>
+
 <!-- ─────────  04. THE FLOOR (signature wow)  ───────── -->
 <section class="floor section" id="floor">
   <div class="container">
@@ -341,7 +620,7 @@
         <h2 class="display">Watch your company<br /><em>run itself.</em></h2>
         <p class="lede">Every AXIS·OS subscription includes a live dashboard. Here's a 90-second loop of what an actual operating floor looks like — eight agents working in parallel, right now.</p>
       </div>
-      <img class="section-art section-art--right" src="/assets/illustrations/ops-floor.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
+      <img class="section-art section-art--right" src="/assets/illustrations/ops-floor.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
     </header>
 
     <div class="ops" id="opsFloor" aria-label="Live operations dashboard demonstration">
@@ -372,13 +651,10 @@
 <!-- ─────────  05. WORKFLOWS  ───────── -->
 <section class="workflows section" id="workflows">
   <div class="container">
-    <header class="section-head section-head--with-art">
-      <div class="section-head__text">
-        <div class="mono mono--mute eyebrow">// 05 — A Real Workflow</div>
-        <h2 class="display">A new lead lands.<br /><em>Watch what happens.</em></h2>
-        <p class="lede">No human touches this until step 6. Six agents from four departments, one continuous context, four minutes end-to-end.</p>
-      </div>
-      <img class="section-art section-art--right" src="/assets/illustrations/workflow.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
+    <header class="section-head">
+      <div class="mono mono--mute eyebrow">// 05 — A Real Workflow</div>
+      <h2 class="display">A new lead lands.<br /><em>Watch what happens.</em></h2>
+      <p class="lede">No human touches this until step 6. Six agents from four departments, one continuous context, four minutes end-to-end.</p>
     </header>
 
     <ol class="flow">
@@ -603,7 +879,7 @@
 <!-- ─────────  08. INITIALIZE (FINAL CTA)  ───────── -->
 <section class="initialize section" id="initialize">
   <div class="container initialize__inner">
-    <img class="section-art section-art--center" src="/assets/illustrations/initialize.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
+    <img class="section-art section-art--center" src="/assets/illustrations/initialize.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" width="1376" height="768" />
     <div class="mono mono--mute eyebrow">// 08 — Initialize</div>
     <h2 class="display display--xl">Stop hiring.<br /><em>Start booting.</em></h2>
     <p class="lede">Tell us about your company. We'll spec a custom AXIS·OS deployment on the call. Receptionist goes live in 7 days; full operator deployment timeline is in your written readout.</p>
@@ -672,14 +948,14 @@
 
       <div class="form__submit-row">
         <button type="submit" class="btn btn--accent btn--lg" data-magnetic id="formSubmit">
-          <span id="formBtnText">Book my intro call <span aria-hidden="true">→</span></span>
+          <span id="formBtnText">Book my 30-min teardown <span aria-hidden="true">→</span></span>
           <span id="formBtnLoading" hidden>Booking…</span>
         </button>
-        <div class="form__assure mono mono--mute">Calendar invite + welcome email sent instantly. No contract.</div>
+        <div class="form__assure mono mono--mute">Free Four Roles Readout within 90 minutes of your call — we map which exec seats are eating your week. No contract. Calendar invite sent instantly.</div>
       </div>
       <span id="formStatus" class="sr-only" aria-live="polite" aria-atomic="true"></span>
       <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Booked. Check your email for a welcome message and calendar invite. We'll see you on the call.</div>
-      <div class="form-error"   id="formError"   role="alert"  aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a></div>
+      <div class="form-error"   id="formError"   role="alert"  aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:vidaholdingsgroup@gmail.com">vidaholdingsgroup@gmail.com</a></div>
     </form>
   </div>
 </section>
@@ -709,11 +985,11 @@
     <div class="footer__meta">
       <div class="mono mono--mute">© 2026 Vida Tech LLC · Arlington, TX</div>
       <a href="tel:+18176234977" class="mono">(817) 623-4977</a>
-      <a href="mailto:vidaholdings@gmail.com" class="mono">vidaholdings@gmail.com</a>
+      <a href="mailto:vidaholdingsgroup@gmail.com" class="mono">vidaholdingsgroup@gmail.com</a>
     </div>
   </div>
 </footer>
 
-<script src="script.js?v=audit2"></script>
+<script src="script.js?v=v3pop"></script>
 </body>
 </html>

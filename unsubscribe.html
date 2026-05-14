@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=blueprint1" />
+<link rel="stylesheet" href="style.css?v=art1" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
 
 <style>
@@ -114,7 +114,7 @@
     <div class="footer__meta">
       <div class="mono mono--mute">© 2026 Vida Tech LLC · Arlington, TX</div>
       <a href="tel:+18176234977" class="mono">(817) 623-4977</a>
-      <a href="mailto:vidaholdings@gmail.com" class="mono">vidaholdings@gmail.com</a>
+      <a href="mailto:vidaholdingsgroup@gmail.com" class="mono">vidaholdingsgroup@gmail.com</a>
     </div>
   </div>
 </footer>
@@ -180,10 +180,10 @@
         okBox.textContent = email + ' has been added to our suppression list.';
       } else {
         const text = await res.text();
-        showErr(text || 'Something went wrong. Email vidaholdings@gmail.com to unsubscribe manually.');
+        showErr(text || 'Something went wrong. Email vidaholdingsgroup@gmail.com to unsubscribe manually.');
       }
     } catch {
-      showErr('Network error. Email vidaholdings@gmail.com to unsubscribe manually.');
+      showErr('Network error. Email vidaholdingsgroup@gmail.com to unsubscribe manually.');
     } finally {
       btn.disabled = false;
       btn.textContent = 'Unsubscribe';

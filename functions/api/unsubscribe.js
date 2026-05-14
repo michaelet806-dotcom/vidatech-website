@@ -20,7 +20,7 @@
  */
 
 const ALLOWED_ORIGINS = new Set(['https://vidatech.org', 'https://www.vidatech.org']);
-const ORG_EMAIL = 'vidaholdings@gmail.com';
+const ORG_EMAIL = 'vidaholdingsgroup@gmail.com';
 
 function corsHeaders(origin) {
   const allow = ALLOWED_ORIGINS.has(origin) ? origin : 'https://vidatech.org';

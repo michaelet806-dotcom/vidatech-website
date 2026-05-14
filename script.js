@@ -18,7 +18,22 @@
     initOpsFloor();
     initPaletteQuery();
     initSectionReveals();
+    initHeroAnimPause();
     initForm();
+  }
+
+  /* ─── Pause hero decorative animations when off-screen (perf) ─── */
+  function initHeroAnimPause(){
+    const hero = document.querySelector('.hero');
+    if (!hero || reduced || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        hero.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+        // Toggle a class so CSS can pause pseudo-element animations
+        hero.classList.toggle('is-off-screen', !e.isIntersecting);
+      });
+    }, { threshold: 0 });
+    io.observe(hero);
   }
 
   /* ─── NAV ─── */
