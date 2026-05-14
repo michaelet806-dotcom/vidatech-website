@@ -262,22 +262,47 @@
     const submit  = $('#formSubmit');
     if (!form) return;
 
+    // Constrain date picker: earliest = tomorrow, latest = +60 days
+    const dateEl = $('#f-date');
+    if (dateEl) {
+      const today = new Date();
+      const min = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+      const max = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
+      const fmt = d => d.toISOString().slice(0, 10);
+      dateEl.min = fmt(min);
+      dateEl.max = fmt(max);
+      // Default to 2 business days out
+      const def = new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000);
+      if (def.getDay() === 0) def.setDate(def.getDate() + 1); // Sun → Mon
+      if (def.getDay() === 6) def.setDate(def.getDate() + 2); // Sat → Mon
+      dateEl.value = fmt(def);
+    }
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const data = {
         name:     form.name?.value.trim() || '',
         email:    form.email?.value.trim() || '',
+        phone:    form.phone?.value.trim() || '',
         business: form.business?.value.trim() || '',
         type:     form.type?.value || '',
+        size:     form.size?.value || '',
+        date:     form.date?.value || '',
+        time:     form.time?.value || '',
         message:  form.message?.value.trim() || '',
       };
-      if (!data.name || !data.email) {
+      let missing = '';
+      if (!data.name) missing = 'name';
+      else if (!data.email) missing = 'email';
+      else if (!data.date) missing = 'date';
+      else if (!data.time) missing = 'time';
+      if (missing) {
         errBox.hidden = true;
         requestAnimationFrame(() => {
-          errBox.textContent = 'Please add your name and email.';
+          errBox.textContent = `Please add your ${missing === 'date' || missing === 'time' ? 'preferred ' + missing : missing}.`;
           errBox.hidden = false;
         });
-        const target = !data.name ? $('#f-name') : $('#f-email');
+        const target = $(`#f-${missing}`);
         if (target) target.focus();
         return;
       }

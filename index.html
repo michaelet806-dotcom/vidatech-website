@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=merge1" />
+<link rel="stylesheet" href="style.css?v=blueprint1" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C6FF3D'/%3E%3C/svg%3E" />
 
 <script type="application/ld+json">
@@ -607,9 +607,26 @@
         <label for="f-email"><span class="mono mono--mute">EMAIL</span><input id="f-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" inputmode="email" enterkeyhint="next" /></label>
       </div>
       <div class="form__row">
-        <label for="f-company"><span class="mono mono--mute">COMPANY</span><input id="f-company" type="text" name="business" placeholder="Company name" autocomplete="organization" /></label>
+        <label for="f-phone"><span class="mono mono--mute">PHONE <span class="form__opt">optional</span></span><input id="f-phone" type="tel" name="phone" placeholder="(555) 123-4567" autocomplete="tel" inputmode="tel" enterkeyhint="next" /></label>
+        <label for="f-company"><span class="mono mono--mute">COMPANY / BUSINESS NAME</span><input id="f-company" type="text" name="business" placeholder="Company name" autocomplete="organization" enterkeyhint="next" /></label>
+      </div>
+      <div class="form__row">
+        <label for="f-type"><span class="mono mono--mute">TYPE OF BUSINESS</span>
+          <select id="f-type" name="type">
+            <option value="" disabled selected>Select…</option>
+            <option>Dental / Medical / Healthcare</option>
+            <option>Auto Repair / HVAC / Trades</option>
+            <option>Law Firm / Professional Services</option>
+            <option>Real Estate / Property Mgmt</option>
+            <option>Salon / Spa / Beauty</option>
+            <option>Restaurant / Hospitality</option>
+            <option>SaaS / Tech / Agency</option>
+            <option>E-commerce / DTC Brand</option>
+            <option>Other</option>
+          </select>
+        </label>
         <label for="f-size"><span class="mono mono--mute">TEAM SIZE</span>
-          <select id="f-size" name="type">
+          <select id="f-size" name="size">
             <option value="" disabled selected>Select…</option>
             <option>1–5</option>
             <option>6–15</option>
@@ -619,16 +636,31 @@
           </select>
         </label>
       </div>
-      <label class="form__full" for="f-msg"><span class="mono mono--mute">WHICH DEPARTMENT WOULD YOU INITIALIZE FIRST?</span><textarea id="f-msg" name="message" rows="3" placeholder="Marketing? Sales? Chief of Staff? Tell us what's bleeding the most." enterkeyhint="send"></textarea></label>
+      <div class="form__row">
+        <label for="f-date"><span class="mono mono--mute">PREFERRED DATE <span class="form__opt">30-min intro call</span></span><input id="f-date" type="date" name="date" required enterkeyhint="next" /></label>
+        <label for="f-time"><span class="mono mono--mute">PREFERRED TIME <span class="form__opt">Central Time</span></span>
+          <select id="f-time" name="time" required>
+            <option value="" disabled selected>Select a slot…</option>
+            <option value="09:00">9:00 AM CT</option>
+            <option value="10:00">10:00 AM CT</option>
+            <option value="11:00">11:00 AM CT</option>
+            <option value="13:00">1:00 PM CT</option>
+            <option value="14:00">2:00 PM CT</option>
+            <option value="15:00">3:00 PM CT</option>
+            <option value="16:00">4:00 PM CT</option>
+          </select>
+        </label>
+      </div>
+      <label class="form__full" for="f-msg"><span class="mono mono--mute">WHAT'S THE #1 THING BLEEDING TIME OR MONEY RIGHT NOW?</span><textarea id="f-msg" name="message" rows="3" placeholder="Missed calls? Marketing on autopilot? Operations chaos? Tell us where it hurts." enterkeyhint="send"></textarea></label>
 
       <div class="form__submit-row">
         <button type="submit" class="btn btn--accent btn--lg" data-magnetic id="formSubmit">
-          <span id="formBtnText">Initialize VidaTech <span aria-hidden="true">→</span></span>
-          <span id="formBtnLoading" hidden>Booting…</span>
+          <span id="formBtnText">Book my intro call <span aria-hidden="true">→</span></span>
+          <span id="formBtnLoading" hidden>Booking…</span>
         </button>
-        <div class="form__assure mono mono--mute">No contract. 14-day pilot. Cancel any time.</div>
+        <div class="form__assure mono mono--mute">Calendar invite + welcome email sent instantly. No contract.</div>
       </div>
-      <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Received. We'll reach out within one business day with your custom deployment spec.</div>
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>✓ Booked. Check your email for a welcome message and calendar invite. We'll see you on the call.</div>
       <div class="form-error"   id="formError"   role="alert"  aria-live="assertive" hidden>Something went wrong. Email us at <a href="mailto:vidaholdings@gmail.com">vidaholdings@gmail.com</a></div>
     </form>
   </div>
@@ -661,6 +693,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=merge1"></script>
+<script src="script.js?v=blueprint1"></script>
 </body>
 </html>
