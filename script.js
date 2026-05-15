@@ -81,7 +81,7 @@
       '[OK] Engineering online · 12 agents',
       '[OK] Marketing online · 21 agents',
       '[OK] 11 more departments...',
-      'vidatech ready. uptime 99.98% · 88 agents online'
+      'vidatech ready. uptime target 99.5% · operator tier SLA'
     ];
     let i = 0;
     setInterval(() => {
