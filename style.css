@@ -2875,3 +2875,38 @@ body{
   .tile-mini[data-sym="EN"],
   .tile-mini[data-sym="MK"]{grid-column:span 1}
 }
+
+/* ═══════════════════════════════════════════════════
+   NAV FIX — kill backdrop-filter glitch
+═══════════════════════════════════════════════════ */
+.nav{
+  background:rgba(10,11,13,0.96) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  transition:border-color var(--t) !important;
+  will-change:transform;
+  transform:translateZ(0);
+  border-bottom:1px solid transparent;
+}
+.nav.is-scrolled{
+  background:rgba(10,11,13,0.98) !important;
+  border-bottom-color:rgba(212,255,61,0.18) !important;
+}
+.nav__links a{
+  color:#D5DAE0 !important;
+  font-size:.95rem !important;
+  font-weight:500;
+}
+.nav__links a:hover{
+  color:var(--accent) !important;
+  text-shadow:0 0 12px rgba(212,255,61,0.4);
+}
+.logo__word{
+  font-size:1.12rem !important;
+  font-weight:600 !important;
+  color:#FFFFFF !important;
+}
+.logo__mark{
+  width:18px !important;height:18px !important;
+  box-shadow:0 0 16px rgba(212,255,61,0.6), inset 0 1px 0 rgba(255,255,255,0.3) !important;
+}
