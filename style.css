@@ -2910,3 +2910,615 @@ body{
   width:18px !important;height:18px !important;
   box-shadow:0 0 16px rgba(77,127,255,0.6), inset 0 1px 0 rgba(255,255,255,0.3) !important;
 }
+
+/* ═══════════════════════════════════════════════════
+   v6 — SOPHISTICATED NAVY
+   Deep navy + warm cream + soft amber. Calm, premium, editorial.
+   Overrides all prior accent treatments.
+═══════════════════════════════════════════════════ */
+
+:root{
+  /* CANVAS — deep navy with subtle warmth */
+  --canvas:        #0E1530 !important;
+  --canvas-deep:   #070A1F !important;
+  --surface:       #161E3D !important;
+  --surface-2:     #1D274A !important;
+  --surface-3:     #243056 !important;
+
+  /* Borders */
+  --border:        #243056 !important;
+  --border-hot:    #344168 !important;
+  --border-accent: rgba(212,165,116,0.40) !important;
+
+  /* TEXT — generous contrast */
+  --text:          #F2EFE5 !important;   /* warm cream on navy = high contrast, comfortable */
+  --text-mute:     #B5BBD0 !important;   /* readable muted */
+  --text-dim:      #8B92A8 !important;   /* tertiary */
+  --num-key:       #F2EFE5 !important;
+
+  /* ACCENT — soft amber, premium, no neon */
+  --accent:        #D4A574 !important;
+  --accent-hi:     #E2BC8C !important;
+  --accent-deep:   #A8855C !important;
+  --accent-glow:   rgba(212,165,116,0.18) !important;
+  --accent-bright: #E2BC8C !important;
+
+  /* SIGNAL — deep dusty navy-blue for secondary accents/links */
+  --signal:        #8FA3CC !important;
+  --signal-glow:   rgba(143,163,204,0.28) !important;
+
+  /* PAPER (warm cream for inverted sections) */
+  --paper:         #F2EFE5 !important;
+  --paper-2:       #FAF7EE !important;
+  --paper-3:       #E8E3D3 !important;
+  --paper-border:  #D8D1BD !important;
+  --paper-border-hot: #B8AE94 !important;
+  --ink:           #14130F !important;
+  --ink-mute:      #5A574D !important;
+  --ink-dim:       #8B8775 !important;
+  --accent-deep-on-paper: #7A5A2F !important;  /* amber-deep on cream, 6.9:1 AA */
+  --blueprint:        #4A6FA8 !important;
+  --blueprint-deep:   #2A4170 !important;
+  --blueprint-on-paper: rgba(42,65,112,0.08) !important;
+  --blueprint-on-paper-strong: rgba(42,65,112,0.16) !important;
+}
+
+/* ── BODY: simple navy with calm vignettes ── */
+body{
+  background:
+    radial-gradient(ellipse 65% 50% at 100% 0%, rgba(212,165,116,0.05) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(143,163,204,0.04) 0%, transparent 60%),
+    var(--canvas) !important;
+}
+
+/* Kill body grain overlay — too noisy for editorial feel */
+body::after{display:none !important}
+
+/* ── HERO: organic morphing blob, no constellation, no scan line ── */
+.hero{
+  background:linear-gradient(180deg, var(--canvas-deep) 0%, var(--canvas) 50%, var(--canvas-deep) 100%) !important;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:"";position:absolute;inset:-20%;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle 600px at 20% 30%, rgba(212,165,116,0.32) 0%, rgba(212,165,116,0.08) 35%, transparent 65%),
+    radial-gradient(circle 540px at 85% 65%, rgba(143,163,204,0.22) 0%, rgba(143,163,204,0.06) 35%, transparent 65%),
+    radial-gradient(circle 380px at 50% 50%, rgba(212,165,116,0.10) 0%, transparent 60%) !important;
+  filter:blur(20px) !important;
+  animation:morphBlob 32s ease-in-out infinite alternate !important;
+  will-change:transform;
+}
+
+@keyframes morphBlob{
+  0%   {transform:translate(0,0) scale(1)         rotate(0deg);   border-radius:60% 40% 30% 70%/60% 30% 70% 40%}
+  33%  {transform:translate(2%,-2%) scale(1.05)   rotate(60deg);  border-radius:50% 50% 60% 40%/40% 60% 50% 50%}
+  66%  {transform:translate(-2%,2%) scale(0.97)   rotate(-30deg); border-radius:40% 60% 50% 50%/55% 45% 65% 35%}
+  100% {transform:translate(1%,-1%) scale(1.02)   rotate(15deg);  border-radius:55% 45% 40% 60%/50% 50% 50% 50%}
+}
+
+/* Soft grid mesh — much subtler than before */
+.hero::after{
+  background:
+    linear-gradient(rgba(242,239,229,0.025) 1px, transparent 1px) 0 0/72px 72px,
+    linear-gradient(90deg, rgba(242,239,229,0.025) 1px, transparent 1px) 0 0/72px 72px !important;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 50%, #000 0%, #000 50%, transparent 100%) !important;
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 50%, #000 0%, #000 50%, transparent 100%) !important;
+  filter:none !important;
+}
+
+/* Kill old hero accents that fight the editorial calm */
+.hero__left::before,
+.hero__left::after,
+.hero__right::before,
+.hero .container::before,
+.hero .container::after{
+  display:none !important;
+}
+
+/* ── DARK SECTION GLOWS — soft amber + dusty blue ── */
+.broken{background:
+  radial-gradient(ellipse 60% 45% at 85% 0%, rgba(143,163,204,0.05), transparent 60%),
+  var(--canvas) !important;}
+.floor{background:
+  radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,165,116,0.06), transparent 65%),
+  var(--canvas-deep) !important;}
+.skills{background:
+  radial-gradient(ellipse 80% 60% at 0% 50%, rgba(143,163,204,0.06), transparent 65%),
+  var(--canvas-deep) !important;}
+.initialize{background:
+  radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,165,116,0.10), transparent 65%),
+  radial-gradient(ellipse 50% 40% at 50% 0%, rgba(143,163,204,0.05), transparent 60%),
+  var(--canvas-deep) !important;}
+
+/* Section dot grid — much fainter */
+.broken::before,
+.floor::before,
+.skills::before,
+.initialize::before{
+  background-image:
+    radial-gradient(circle, rgba(242,239,229,0.04) 1px, transparent 1.5px) !important;
+  background-size:32px 32px !important;
+  opacity:0.5 !important;
+}
+
+/* ── HEADLINES — calm, confident, no glow halos ── */
+.display{
+  color:#F8F5EB !important;
+  font-weight:600 !important;
+  letter-spacing:-0.028em !important;
+}
+.display em{
+  color:var(--accent) !important;
+  font-style:italic !important;
+  font-weight:500 !important;
+  text-shadow:none !important;
+}
+.display--hero{
+  font-size:clamp(3.4rem, 7vw, 6.4rem) !important;
+  font-weight:600 !important;
+  line-height:1.02 !important;
+  letter-spacing:-0.035em !important;
+}
+
+/* Paper section headlines — ink black */
+.gap .display, .departments .display, .workflows .display,
+.math .display, .pricing .display, .what-we-ship .display{
+  color:var(--ink) !important;
+}
+.gap .display em, .departments .display em, .workflows .display em,
+.math .display em, .pricing .display em, .what-we-ship .display em{
+  color:var(--accent-deep-on-paper) !important;
+}
+
+/* ── LEDE — generous contrast ── */
+.lede{
+  color:#D5D8E0 !important;
+  font-size:1.18rem !important;
+  font-weight:400 !important;
+  line-height:1.6 !important;
+}
+.lede strong{color:#F8F5EB !important; font-weight:600 !important}
+
+/* Paper lede */
+.gap .lede, .departments .lede, .workflows .lede,
+.math .lede, .pricing .lede, .what-we-ship .lede{
+  color:#4A4842 !important;
+}
+.gap .lede strong, .departments .lede strong, .workflows .lede strong,
+.math .lede strong, .pricing .lede strong, .what-we-ship .lede strong{
+  color:var(--ink) !important;
+}
+
+/* ── EYEBROWS — quiet uppercase ── */
+.eyebrow{
+  color:var(--accent) !important;
+  font-size:.82rem !important;
+  font-weight:600 !important;
+  letter-spacing:0.18em !important;
+  text-shadow:none !important;
+}
+.gap .eyebrow, .departments .eyebrow, .workflows .eyebrow,
+.math .eyebrow, .pricing .eyebrow, .what-we-ship .eyebrow{
+  color:var(--accent-deep-on-paper) !important;
+}
+
+/* ── NAV — calm, no glow ── */
+.nav{
+  background:rgba(14,21,48,0.92) !important;
+  border-bottom:1px solid transparent;
+}
+.nav.is-scrolled{
+  background:rgba(14,21,48,0.98) !important;
+  border-bottom-color:rgba(212,165,116,0.16) !important;
+}
+.nav__links a{
+  color:#C5CADC !important;
+}
+.nav__links a:hover{
+  color:var(--accent) !important;
+  text-shadow:none !important;
+}
+.logo__word{color:#F8F5EB !important}
+.logo__mark{
+  background:var(--accent) !important;
+  box-shadow:0 0 0 1px rgba(212,165,116,0.3) !important;
+}
+
+/* ── BUTTONS — editorial confident, no neon ── */
+.btn--accent{
+  background:var(--accent) !important;
+  color:#14130F !important;
+  border-color:var(--accent) !important;
+  font-weight:600 !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.15) inset,
+    0 8px 24px -10px rgba(212,165,116,0.45) !important;
+}
+.btn--accent:hover{
+  background:var(--accent-hi) !important;
+  border-color:var(--accent-hi) !important;
+  transform:translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.20) inset,
+    0 16px 32px -10px rgba(212,165,116,0.55) !important;
+}
+.btn--ghost{
+  background:transparent !important;
+  border-color:#344168 !important;
+  color:#F2EFE5 !important;
+}
+.btn--ghost:hover{
+  background:rgba(212,165,116,0.06) !important;
+  border-color:var(--accent) !important;
+  color:var(--accent) !important;
+}
+
+/* ── BENTO TILES — softer, no glow on numbers ── */
+.tile-mini{
+  background:rgba(22,30,61,0.7) !important;
+  border:1px solid rgba(212,165,116,0.15) !important;
+  border-radius:10px !important;
+}
+.tile-mini__sym{color:#F2EFE5 !important; text-shadow:none !important}
+.tile-mini__lbl{color:#D5D8E0 !important}
+.tile-mini__count{
+  color:var(--accent) !important;
+  text-shadow:none !important;
+  font-weight:600 !important;
+}
+.tile-mini--hot{
+  background:linear-gradient(135deg, rgba(212,165,116,0.20), rgba(212,165,116,0.06)) !important;
+  border-color:rgba(212,165,116,0.45) !important;
+  box-shadow:0 0 0 1px rgba(212,165,116,0.20), 0 16px 40px -16px rgba(212,165,116,0.30) !important;
+}
+.tile-mini--hot::before{
+  background:var(--accent) !important;
+  color:#14130F !important;
+}
+.tile-mini--hot .tile-mini__sym,
+.tile-mini--hot .tile-mini__count{
+  color:var(--accent) !important;
+  text-shadow:none !important;
+}
+
+/* Grid tiles wrapper — soft cream-ish glass */
+.hero__right .grid-tiles{
+  background:rgba(22,30,61,0.6) !important;
+  border:1px solid rgba(212,165,116,0.18) !important;
+  border-radius:12px !important;
+}
+
+/* ── DEPARTMENT CARDS (paper section) — soft cream with amber ticks ── */
+.departments .dept{
+  background:var(--paper-2) !important;
+  border:1px solid var(--paper-border) !important;
+  border-radius:12px !important;
+  box-shadow:0 1px 2px rgba(20,19,15,0.04), 0 16px 40px -24px rgba(20,19,15,0.15) !important;
+  transition:transform 360ms cubic-bezier(.22,1,.36,1), border-color var(--t), box-shadow var(--t) !important;
+}
+.departments .dept:hover{
+  transform:translateY(-4px) !important;
+  border-color:var(--paper-border-hot) !important;
+  box-shadow:0 1px 2px rgba(20,19,15,0.06), 0 28px 56px -24px rgba(20,19,15,0.22) !important;
+}
+.departments .dept__name{color:var(--ink) !important; font-weight:600 !important}
+.departments .dept__copy{color:#4A4842 !important; line-height:1.55 !important}
+.departments .dept__count{color:var(--accent-deep-on-paper) !important; font-weight:600 !important}
+.departments .dept__sym{
+  background:var(--paper-3) !important;
+  border:1px solid var(--paper-border) !important;
+  color:var(--ink) !important;
+}
+.departments .dept--flagship{
+  background:linear-gradient(180deg, rgba(212,165,116,0.10), rgba(212,165,116,0.02)), var(--paper-2) !important;
+  border-color:rgba(168,133,92,0.45) !important;
+}
+.departments .dept::before,
+.departments .dept::after{
+  background:var(--blueprint-deep) !important;
+  opacity:0.3 !important;
+}
+.dept--receptionist{
+  box-shadow:0 0 0 1px rgba(168,133,92,0.45), 0 0 48px -16px rgba(212,165,116,0.30), 0 24px 56px -24px rgba(20,19,15,0.18) !important;
+}
+.dept--receptionist::before,
+.dept--receptionist::after{
+  background:var(--accent-deep-on-paper) !important;
+  opacity:0.55 !important;
+}
+.dept__pill{
+  background:var(--accent-deep-on-paper) !important;
+  color:#FAF7EE !important;
+}
+
+/* Demo line phone callout — navy not lime */
+.demo-line{
+  background:var(--canvas-deep) !important;
+  border:1px solid rgba(212,165,116,0.35) !important;
+}
+.demo-line__num{
+  color:var(--accent) !important;
+  text-shadow:none !important;
+}
+
+/* ── PRICING TIERS — warm cream cards with amber featured ── */
+.pricing .tier{
+  background:var(--paper-2) !important;
+  border:1px solid var(--paper-border) !important;
+  border-radius:14px !important;
+  box-shadow:0 1px 2px rgba(20,19,15,0.04), 0 20px 48px -24px rgba(20,19,15,0.18) !important;
+}
+.pricing .tier:hover{
+  transform:translateY(-3px) !important;
+  border-color:var(--paper-border-hot) !important;
+}
+.pricing .tier__amount{
+  color:var(--ink) !important;
+  text-shadow:none !important;
+}
+.pricing .tier__sub{color:#4A4842 !important}
+.pricing .tier__per{color:#4A4842 !important}
+.pricing .tier__features{border-top-color:var(--paper-border) !important}
+.pricing .tier__features li{color:var(--ink) !important}
+.pricing .tier__features li::before{background:var(--accent-deep-on-paper) !important}
+.pricing .tier__replaces{
+  color:#5A574D !important;
+  border-top-color:var(--paper-border) !important;
+}
+.pricing .tier__replaces strong{color:var(--accent-deep-on-paper) !important}
+.pricing .tier--featured{
+  background:linear-gradient(180deg, rgba(212,165,116,0.14), rgba(212,165,116,0.02) 60%), var(--paper-2) !important;
+  border-color:rgba(168,133,92,0.55) !important;
+  box-shadow:0 0 0 1px rgba(168,133,92,0.30), 0 28px 56px -24px rgba(20,19,15,0.22) !important;
+}
+.pricing .tier--featured .tier__features li::before{background:var(--accent-deep-on-paper) !important}
+.pricing .tier__badge{
+  background:var(--accent-deep-on-paper) !important;
+  color:#FAF7EE !important;
+}
+.pricing .tier--enterprise{background:var(--paper-3) !important}
+.pricing .tier__amount--text{color:var(--accent-deep-on-paper) !important}
+.pricing .btn--ghost{
+  background:var(--paper-2) !important;
+  color:var(--ink) !important;
+  border:1px solid var(--paper-border-hot) !important;
+}
+.pricing .btn--ghost:hover{
+  background:var(--ink) !important;
+  color:var(--paper-2) !important;
+  border-color:var(--ink) !important;
+}
+
+/* ── PAPER SECTIONS BG override ── */
+.gap, .departments, .workflows, .math, .pricing, .what-we-ship{
+  background:var(--paper) !important;
+  color:var(--ink) !important;
+}
+.what-we-ship{
+  background:var(--canvas) !important;
+  color:var(--text) !important;
+}
+.what-we-ship .display{color:#F8F5EB !important}
+.what-we-ship .display em{color:var(--accent) !important}
+.what-we-ship .lede{color:#D5D8E0 !important}
+.what-we-ship .ship-card{
+  background:rgba(22,30,61,0.5) !important;
+  border:1px solid rgba(212,165,116,0.18) !important;
+}
+.what-we-ship .ship-card:hover{
+  border-color:rgba(212,165,116,0.4) !important;
+  transform:translateY(-3px) !important;
+}
+.what-we-ship .ship-card__label{color:var(--accent) !important}
+.what-we-ship .ship-card__name{color:#F8F5EB !important}
+.what-we-ship .ship-card__desc{color:#C5CADC !important}
+.what-we-ship .ship-stat__num{
+  color:var(--accent) !important;
+  text-shadow:none !important;
+}
+.what-we-ship .ship-stat__lbl{color:#B5BBD0 !important}
+.what-we-ship .ship-bridge{color:#D5D8E0 !important}
+.what-we-ship .ship-bridge a{color:var(--accent) !important}
+
+/* Paper section blueprint patterns — softer */
+.gap::before,
+.departments::before,
+.workflows::before,
+.math::before,
+.pricing::before{
+  background-image:
+    linear-gradient(rgba(42,65,112,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,65,112,0.06) 1px, transparent 1px),
+    linear-gradient(rgba(42,65,112,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,65,112,0.12) 1px, transparent 1px) !important;
+  background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px !important;
+  opacity:0.7 !important;
+}
+
+/* ── FOUNDER CONFESSIONS receipts ── */
+.receipt{
+  background:rgba(22,30,61,0.6) !important;
+  border:1px solid rgba(212,165,116,0.18) !important;
+  border-radius:10px !important;
+}
+.receipt__time{color:var(--accent) !important}
+.broken__list li{color:#D5D8E0 !important}
+.broken__list li strong{color:var(--accent) !important}
+.pain__reframe{
+  border-left:3px solid var(--accent) !important;
+  color:#F2EFE5 !important;
+}
+.pain__reframe strong{color:var(--accent) !important}
+
+/* ── OPS FLOOR — softer chrome ── */
+.ops{
+  border:1px solid rgba(212,165,116,0.20) !important;
+  border-radius:12px !important;
+}
+.ops__chrome{
+  background:var(--surface) !important;
+  border-bottom:1px solid var(--border) !important;
+}
+.ops__title{color:#C5CADC !important}
+.ops__status{color:var(--accent) !important}
+.ops__cell{
+  background:var(--surface) !important;
+  border:1px solid var(--border) !important;
+}
+.ops__cell-head .mono{color:var(--accent) !important}
+.ops__cell-body{color:#F2EFE5 !important}
+.ops__cell-time{color:#8B92A8 !important}
+.ops__footer{
+  background:var(--surface-2) !important;
+  border-top:1px solid var(--border) !important;
+  color:#C5CADC !important;
+}
+.ops__footer .accent-text, #tasksToday{
+  color:var(--accent) !important;
+  text-shadow:none !important;
+}
+.live-dot, .signal-dot, .live-pulse{
+  background:var(--accent) !important;
+  box-shadow:0 0 8px rgba(212,165,116,0.55) !important;
+}
+
+/* ── SKILLS PALETTE — softer ── */
+.palette{
+  background:var(--surface) !important;
+  border:1px solid rgba(212,165,116,0.22) !important;
+}
+.palette__bar{background:var(--surface-2) !important; border-bottom-color:var(--border) !important}
+.palette__kbd{color:var(--accent) !important; background:var(--surface-3) !important; border:1px solid var(--border)}
+.palette__query{color:#F2EFE5 !important}
+.palette__row:hover{background:var(--surface-2) !important}
+.palette__row--hot{background:rgba(212,165,116,0.10) !important}
+.palette__dept{color:var(--accent) !important; background:var(--surface-2) !important}
+.palette__title{color:#F2EFE5 !important}
+.palette__dept-name{color:#B5BBD0 !important}
+.palette__time{color:#8B92A8 !important}
+.palette__footer{background:var(--surface-2) !important; border-top-color:var(--border) !important; color:#8B92A8 !important}
+
+/* ── WORKFLOW STEPS (paper) ── */
+.workflows .flow__step{
+  background:var(--paper-2) !important;
+  border:1.5px solid var(--paper-border) !important;
+  border-radius:10px !important;
+  color:var(--ink) !important;
+}
+.workflows .flow__sym{
+  background:var(--paper-3) !important;
+  border:1px solid var(--paper-border) !important;
+  color:var(--ink) !important;
+  text-shadow:none !important;
+}
+.workflows .flow__step h3{color:var(--ink) !important}
+.workflows .flow__step p{color:#4A4842 !important}
+.workflows .flow__agent{color:var(--accent-deep-on-paper) !important}
+.workflows .flow__step--human .flow__sym{
+  background:var(--accent-deep-on-paper) !important;
+  color:#FAF7EE !important;
+  border-color:var(--accent-deep-on-paper) !important;
+}
+.workflows .flow__step--complete{
+  background:linear-gradient(180deg, rgba(212,165,116,0.10), rgba(212,165,116,0.02)), var(--paper-2) !important;
+  border-color:rgba(168,133,92,0.45) !important;
+}
+
+/* ── MATH LEDGER (paper) ── */
+.math .ledger__col{
+  background:var(--paper-2) !important;
+  border:1px solid var(--paper-border) !important;
+  border-radius:12px !important;
+  color:var(--ink) !important;
+}
+.math .ledger__title{color:var(--ink-mute) !important}
+.math .ledger__col li{color:var(--ink) !important; border-bottom-color:var(--paper-border) !important}
+.math .ledger__total{border-top-color:var(--ink) !important; color:var(--ink) !important}
+.math .ledger__col--us{
+  background:linear-gradient(180deg, rgba(212,165,116,0.10), rgba(212,165,116,0.02)), var(--paper-2) !important;
+  border-color:rgba(168,133,92,0.50) !important;
+}
+.math .ledger__col--us .ledger__total span:last-child{
+  color:var(--accent-deep-on-paper) !important;
+}
+.math .ledger__or{color:var(--ink-mute) !important}
+.math__close{color:var(--ink) !important}
+.math__close em{color:var(--accent-deep-on-paper) !important}
+.math .ledger__note{color:var(--ink-mute) !important}
+
+/* ── FORM — warm + readable ── */
+.form input, .form select, .form textarea{
+  background:rgba(22,30,61,0.5) !important;
+  border:1px solid var(--border) !important;
+  color:var(--text) !important;
+}
+.form input::placeholder, .form textarea::placeholder{color:#8B92A8 !important}
+.form input:focus, .form select:focus, .form textarea:focus{
+  outline:none !important;
+  border-color:var(--accent) !important;
+  box-shadow:0 0 0 4px rgba(212,165,116,0.12), inset 0 0 0 1px var(--canvas) !important;
+}
+.form label .mono{color:#B5BBD0 !important}
+.form__opt{color:var(--accent) !important}
+
+/* ── ROBOT ILLUSTRATIONS — duotone filter to match palette ── */
+.hero__art, .section-art{
+  filter:saturate(0.55) sepia(0.35) hue-rotate(-12deg) brightness(0.94) contrast(1.08) !important;
+  border:1px solid rgba(212,165,116,0.22) !important;
+  border-radius:16px !important;
+  box-shadow:
+    0 0 0 1px rgba(212,165,116,0.08),
+    0 24px 64px -20px rgba(7,10,31,0.7),
+    0 0 80px -32px rgba(212,165,116,0.25) !important;
+}
+
+/* ── ORGANIC CARD HOVER — soft cubic-bezier across all cards ── */
+.dept, .tier, .ship-card, .receipt, .flow__step{
+  transition:transform 420ms cubic-bezier(.22,1,.36,1),
+             border-color 240ms ease,
+             box-shadow 360ms cubic-bezier(.22,1,.36,1) !important;
+}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--canvas-deep) !important;
+  border-top:1px solid var(--border) !important;
+}
+.footer__line{color:#B5BBD0 !important}
+.footer__nav a{color:#B5BBD0 !important}
+.footer__nav a:hover{color:var(--accent) !important}
+.footer__meta a{color:var(--accent) !important}
+
+/* ── KILL ALL REMAINING TEXT-SHADOW GLOWS ── */
+.display, .display em, .display--hero, .display--xl,
+.eyebrow,
+.tile-mini__sym, .tile-mini__count, .tile-mini__lbl,
+.dept__count, .ops__footer .accent-text, #tasksToday,
+.flow__sym, .ledger__total span:last-child,
+.tier__amount,
+.ship-stat__num,
+.btn--accent,
+.hero__meta,
+.demo-line__num,
+.skills__count{
+  text-shadow:none !important;
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion:reduce){
+  .hero::before{animation:none !important}
+}
+
+/* ── MOBILE — calm the orb size ── */
+@media (max-width:768px){
+  .hero::before{
+    inset:-10%;
+    filter:blur(28px) !important;
+    background:
+      radial-gradient(circle 320px at 20% 20%, rgba(212,165,116,0.28), transparent 65%),
+      radial-gradient(circle 280px at 80% 70%, rgba(143,163,204,0.20), transparent 65%) !important;
+  }
+}
