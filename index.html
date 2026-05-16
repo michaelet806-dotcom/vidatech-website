@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://challenges.cloudflare.com" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=v4nav" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23D4FF3D'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="style.css?v=v5blue" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234D7FFF'/%3E%3C/svg%3E" />
 <!-- Turnstile script intentionally omitted until a production site key is configured.
      When ready: add <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
      AND replace the data-sitekey on .cf-turnstile below with the real key from
@@ -170,6 +170,11 @@
       "@id": "https://vidatech.org/#offer-enterprise",
       "name": "Enterprise",
       "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "priceCurrency": "USD",
+        "description": "Custom pricing — multi-entity, VPC / on-prem, regulated industries. Contact sales."
+      },
       "availability": "https://schema.org/InStock",
       "url": "https://vidatech.org/#pricing",
       "seller": { "@id": "https://vidatech.org/#organization" },
@@ -285,7 +290,7 @@
       <a href="#floor">The Floor</a>
       <a href="#math">The Math</a>
     </nav>
-    <a href="https://app.vidatech.org/signup" class="btn btn--accent btn--sm" rel="noopener">Start free trial</a>
+    <a href="#initialize" class="btn btn--accent btn--sm">Book a call</a>
     <button class="nav__menu" id="navMenu" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span>
     </button>
@@ -295,7 +300,7 @@
     <a href="#floor">The Floor</a>
     <a href="#workflows">Workflows</a>
     <a href="#math">The Math</a>
-    <a href="https://app.vidatech.org/signup" class="btn btn--accent" rel="noopener">Start free trial</a>
+    <a href="#initialize" class="btn btn--accent">Book a call</a>
     <a href="#initialize">Book a call</a>
   </div>
 </header>
@@ -324,8 +329,8 @@
       </p>
 
       <div class="hero__cta">
-        <a href="https://app.vidatech.org/signup" class="btn btn--accent btn--lg" data-magnetic rel="noopener">
-          Start free trial <span aria-hidden="true">→</span>
+        <a href="#initialize" class="btn btn--accent btn--lg" data-magnetic>
+          Book initialization call <span aria-hidden="true">→</span>
         </a>
         <a href="#initialize" class="btn btn--ghost btn--lg" data-magnetic>
           Book the 30-min teardown
@@ -805,26 +810,26 @@
   <div class="container">
     <header class="section-head">
       <div class="mono mono--mute eyebrow">// 09 — Pricing</div>
-      <h2 id="pricing-heading" class="display">Four tiers.<br /><em>One subscription.</em></h2>
-      <p class="lede">From a single operator running async, up to a multi-entity org with dedicated infrastructure. Pick the floor that matches your stage — upgrade when you outgrow it.</p>
+      <h2 id="pricing-heading" class="display">Start with the receptionist.<br /><em>Earn the rest.</em></h2>
+      <p class="lede">Everyone begins at <strong>$2,500/mo with the AI Receptionist</strong>. After 3 months — once we've proven we can answer your phones perfectly — you can unlock AXIS·OS and bring on departments. No surprise upgrades, no big-bang rollouts.</p>
     </header>
 
     <div class="tiers">
       <article class="tier">
         <div class="tier__head">
-          <span class="mono mono--mute">STARTER</span>
+          <span class="mono mono--mute">AI RECEPTIONIST</span>
           <div class="tier__price"><span class="tier__amount">$2,500</span><span class="tier__per mono">/mo</span></div>
-          <p class="tier__sub">For solo founders + 5-person teams. AI receptionist + 10 departments, 1 operator seat, async runs.</p>
+          <p class="tier__sub">24/7 receptionist on your business line. Picks up first ring, books appointments, qualifies leads, transfers urgent calls.</p>
         </div>
         <ul class="tier__features">
-          <li>AI receptionist · unlimited calls</li>
-          <li>10 departments included</li>
-          <li>1 operator seat</li>
-          <li>Async agent runs</li>
-          <li>Slack delivery</li>
+          <li>Unlimited inbound calls</li>
+          <li>Custom voice + script trained on your business</li>
+          <li>Appointment booking + lead capture</li>
+          <li>Daily call summary &amp; CRM sync</li>
+          <li>Live transfer to your team</li>
         </ul>
-        <p class="tier__replaces mono mono--mute">Replaces 1 EA + answering service + scattered AI tools.</p>
-        <a href="https://app.vidatech.org/pricing?tier=starter" class="btn btn--ghost btn--lg" rel="noopener">Start with Starter →</a>
+        <p class="tier__replaces mono mono--mute"><strong>Upgrade path:</strong> After 3 months, unlock AXIS·OS — 10 departments added at the next tier. Receptionist-only to start so we earn the rest.</p>
+        <a href="#initialize" class="btn btn--ghost btn--lg">Book a call</a>
       </article>
 
       <article class="tier tier--featured">
@@ -1000,6 +1005,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=v4pop"></script>
+<script src="script.js?v=v5blue"></script>
 </body>
 </html>
