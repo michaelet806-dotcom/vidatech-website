@@ -3522,3 +3522,239 @@ body::after{display:none !important}
       radial-gradient(circle 280px at 80% 70%, rgba(143,163,204,0.20), transparent 65%) !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   v7 — REFINE (post-audit, lock the palette)
+   Brand Guardian: amber→honey, signal→cooler/lower-chroma
+   Accessibility: contrast fixes for text-dim, paper-borders, link hover
+   Frontend Dev P0s: animation-play-state !important, drop border-radius
+                     from morphBlob, reverse mobile blur
+   UI Designer: hierarchy gap, section rhythm, strip vibe-coded tells
+═══════════════════════════════════════════════════ */
+
+:root{
+  /* PALETTE LOCK (Brand Guardian) — honey amber + recessive cool blue */
+  --accent:        #C9985C !important;   /* honey, less recliner */
+  --accent-hi:     #D7AC74 !important;
+  --accent-deep:   #A07D44 !important;
+  --accent-glow:   rgba(201,152,92,0.18) !important;
+  --signal:        #A8B5D1 !important;   /* lower chroma, clearly secondary */
+  --signal-glow:   rgba(168,181,209,0.24) !important;
+
+  /* CONTRAST FIXES (Accessibility) — lift dim tone to 4.6:1+ */
+  --text-dim:      #A8AEC4 !important;
+
+  /* PAPER UI BOUNDARIES — paper-border lifted from 1.2:1 → 3.2:1 */
+  --paper-border:        #A89E82 !important;
+  --paper-border-hot:    #8B8068 !important;
+}
+
+/* ── HONEY accent everywhere old amber lived (RGB sweep) ── */
+.btn--accent{
+  background:var(--accent) !important;
+  border-color:var(--accent) !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.12) inset,
+    0 6px 16px -8px rgba(201,152,92,0.40) !important;
+}
+.btn--accent:hover{
+  background:var(--accent-hi) !important;
+  border-color:var(--accent-hi) !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.18) inset,
+    0 10px 24px -8px rgba(201,152,92,0.48) !important;
+}
+
+/* All amber rgba glow refs swept to honey RGB (201,152,92) */
+.tile-mini--hot{
+  background:linear-gradient(135deg, rgba(201,152,92,0.20), rgba(201,152,92,0.05)) !important;
+  border-color:rgba(201,152,92,0.45) !important;
+  box-shadow:0 0 0 1px rgba(201,152,92,0.20), 0 16px 40px -16px rgba(201,152,92,0.30) !important;
+}
+.dept--receptionist{
+  box-shadow:0 0 0 1px rgba(160,125,68,0.45), 0 24px 56px -24px rgba(20,19,15,0.18) !important;
+}
+.tile-mini--hot::before{background:var(--accent) !important;color:#14130F !important}
+.hero::before{
+  background:
+    radial-gradient(circle 600px at 20% 30%, rgba(201,152,92,0.32) 0%, rgba(201,152,92,0.08) 35%, transparent 65%),
+    radial-gradient(circle 540px at 85% 65%, rgba(168,181,209,0.18) 0%, rgba(168,181,209,0.05) 35%, transparent 65%),
+    radial-gradient(circle 380px at 50% 50%, rgba(201,152,92,0.08) 0%, transparent 60%) !important;
+}
+
+/* ── LINK HOVER on paper — scope to deep-amber so AA passes ── */
+.gap a:hover, .gap a:focus-visible,
+.departments a:hover, .departments a:focus-visible,
+.workflows a:hover, .workflows a:focus-visible,
+.math a:hover, .math a:focus-visible,
+.pricing a:hover, .pricing a:focus-visible{
+  color:var(--accent-deep-on-paper) !important;
+}
+
+/* ── FEATURED TIER rim — bump alpha so it's actually distinguishable ── */
+.pricing .tier--featured{
+  background:linear-gradient(180deg, rgba(201,152,92,0.16), rgba(201,152,92,0.02) 60%), var(--paper-2) !important;
+  border:1.5px solid rgba(122,90,47,0.65) !important;
+  box-shadow:0 0 0 1px rgba(122,90,47,0.35), 0 28px 56px -24px rgba(20,19,15,0.22) !important;
+}
+.departments .dept--flagship{
+  background:linear-gradient(180deg, rgba(201,152,92,0.10), rgba(201,152,92,0.02)), var(--paper-2) !important;
+  border:1.5px solid rgba(122,90,47,0.55) !important;
+}
+
+/* ── PERF P0 — kill morphBlob border-radius (causes per-frame paint) ── */
+@keyframes morphBlob{
+  0%   {transform:translate(0,0) scale(1)         rotate(0deg)}
+  33%  {transform:translate(2%,-2%) scale(1.05)   rotate(60deg)}
+  66%  {transform:translate(-2%,2%) scale(0.97)   rotate(-30deg)}
+  100% {transform:translate(1%,-1%) scale(1.02)   rotate(15deg)}
+}
+
+/* PERF P0 — off-screen pause hook needs !important to beat L2991 */
+.hero.is-off-screen::before,
+.hero.is-off-screen::after,
+.hero.is-off-screen .hero__left::before,
+.hero.is-off-screen .hero__left::after,
+.hero.is-off-screen .hero__right::before{
+  animation-play-state:paused !important;
+}
+
+/* PERF P0 — reverse mobile blur (was making it worse) */
+@media (max-width:768px){
+  .hero::before{
+    inset:-8% !important;
+    filter:blur(10px) !important;
+  }
+}
+
+/* ── EDITORIAL HIERARCHY (UI Designer P0s) ── */
+:root{
+  --fs-display: clamp(2.8rem, 5.2vw, 4.6rem) !important;
+}
+.display{
+  font-weight:500 !important;
+  letter-spacing:-0.032em !important;
+}
+.display em{
+  font-weight:500 !important;
+}
+.display--hero{
+  font-size:clamp(3.6rem, 7.4vw, 6.8rem) !important;
+  font-weight:600 !important;
+  line-height:1.0 !important;
+  letter-spacing:-0.04em !important;
+}
+.lede{
+  font-size:1.24rem !important;
+  line-height:1.65 !important;
+  max-width:62ch;
+}
+.section-head{margin-bottom:88px !important}
+
+/* ── SECTION RHYTHM — asymmetric padding for editorial flow ── */
+.broken{padding:96px 0 !important}
+.gap{padding:160px 0 !important}
+.departments{padding:144px 0 !important}
+.what-we-ship{padding:120px 0 !important}
+.floor{padding:160px 0 !important}
+.workflows{padding:120px 0 !important}
+.skills{padding:112px 0 !important}
+.math{padding:160px 0 !important}
+.pricing{padding:144px 0 !important}
+.initialize{padding:144px 0 96px !important}
+
+/* ── KILL VIBE-CODED TELLS ── */
+/* Fake macOS chrome dots on Ops Floor */
+.ops__dots{display:none !important}
+
+/* "// DEMO FLOOR" floating mono caption above grid-tiles */
+.grid-tiles::before{display:none !important;content:none !important}
+
+/* Animated caret on boot ticker — twitchy distraction */
+.ticker__caret{display:none !important}
+
+/* ── BENTO GRID — give Marketing a second flagship spot ── */
+.tile-mini[data-sym="MK"]{
+  grid-column:span 2 !important;
+  grid-row:span 2 !important;
+  background:linear-gradient(135deg, rgba(168,181,209,0.18), rgba(168,181,209,0.04)) !important;
+  border-color:rgba(168,181,209,0.40) !important;
+  padding:18px 16px !important;
+}
+.tile-mini[data-sym="MK"] .tile-mini__sym{
+  font-size:1.4rem !important;
+  color:var(--signal) !important;
+}
+.tile-mini[data-sym="MK"] .tile-mini__lbl{
+  font-size:1.02rem !important;
+  font-weight:600 !important;
+  margin-top:8px;
+}
+.tile-mini[data-sym="MK"] .tile-mini__count{
+  font-size:1.4rem !important;
+  font-weight:700 !important;
+  color:var(--signal) !important;
+}
+.tile-mini[data-sym="EN"]{
+  grid-column:span 2 !important;
+  grid-row:auto !important;
+}
+
+/* ── PRICING — bump amounts so they own the moment ── */
+.tier__amount{
+  font-size:clamp(2.6rem, 3.4vw, 3.4rem) !important;
+  font-weight:700 !important;
+  letter-spacing:-0.03em !important;
+}
+
+/* ── UPGRADE GATE — make .tier__replaces visually distinct as path, not footnote ── */
+.tier__replaces{
+  font-weight:500 !important;
+  border-top:1px solid var(--paper-border) !important;
+  padding-top:18px !important;
+  margin-top:8px !important;
+  position:relative;
+}
+.tier__replaces::before{
+  content:"↑";
+  display:inline-block;
+  margin-right:6px;
+  color:var(--accent-deep-on-paper);
+  font-weight:700;
+}
+.tier__replaces strong{
+  color:var(--accent-deep-on-paper) !important;
+  font-weight:600 !important;
+}
+
+/* ── REMOVE pulse glow from live-dot/signal-dot (residual vibe-coded tell) ── */
+.live-dot, .signal-dot, .live-pulse{
+  background:var(--accent) !important;
+  box-shadow:none !important;
+  width:6px !important;height:6px !important;
+}
+
+/* ── ORG CHART hierarchy (UI Designer P2) ── */
+.org-node--filled{font-weight:600 !important}
+.org-node--empty{
+  font-weight:400 !important;
+  font-style:italic !important;
+  opacity:0.78;
+}
+
+/* Mid-page CTA after Math comparison */
+.math__cta{
+  margin-top:32px;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.math__cta-line{
+  font-size:.78rem !important;
+  letter-spacing:0.14em;
+  color:var(--ink-mute) !important;
+  text-transform:uppercase;
+}
+
+/* Standardize Book the call links — ensure clean monospace optional caption */
+@media (max-width:560px){
+  .math__cta .btn{width:100%}
+}
